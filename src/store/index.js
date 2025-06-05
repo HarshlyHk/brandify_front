@@ -1,0 +1,20 @@
+import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "../features/userSlice";
+import cartReducer from "../features/cartSlice";
+import addressReducer from "../features/addressSlice";
+import checkoutReducer from "@/features/checkoutSlice";
+import orderReducer from "@/features/OrderSlice";
+import abandonedCartReducer from "@/features/abandonedCartSlice";
+
+const store = configureStore({
+  reducer: {
+    user: userReducer,
+    cart: cartReducer,
+    address: addressReducer,
+    checkout: checkoutReducer,
+    orders: orderReducer,
+    abandonedCart: abandonedCartReducer,
+  },
+});
+
+export default store;

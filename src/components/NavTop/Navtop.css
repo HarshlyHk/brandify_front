@@ -1,0 +1,19 @@
+.nav-top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  animation: comeTopToBottom 8s ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes comeTopToBottom {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+
+}
