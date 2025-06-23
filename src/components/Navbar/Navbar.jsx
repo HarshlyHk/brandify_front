@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { UserRound, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -123,83 +123,85 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="backdrop-blur-[10px]  shadow-md w-full sticky top-0 z-20">
-        <div className=" px-6 md:px-20 h-[80px] flex justify-between items-center">
-          {/* Logo */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <nav className="backdrop-blur-[10px]  shadow-md w-full sticky top-0 z-20">
+          <div className=" px-6 md:px-20 h-[80px] flex justify-between items-center">
+            {/* Logo */}
 
-          <div>
-            <DesktopNavbar user={user} handleLogout={handleLogout} />
-          </div>
-
-          <Link href="/" className=" absolute left-[50%] -translate-x-1/2">
-            <div className="font-phonk md:text-lg text-sm">
-              <Logo className="text-black" />
+            <div>
+              <DesktopNavbar user={user} handleLogout={handleLogout} />
             </div>
-          </Link>
 
-          <div className="md:hidden flex gap-3 ">
-            <Link
-              href="/cart"
-              className="flex items-center space-x-2 relative text-sm"
-            >
-              <span className="absolute -top-2 -right-3 text-[12px] ">
-                {totalCartItems > 0 ? totalCartItems : ""}
-              </span>
-              <ShoppingBag
-                size={18}
-                className="transition-all cursor-pointer"
-              />
+            <Link href="/" className=" absolute left-[50%] -translate-x-1/2">
+              <div className="font-phonk md:text-lg text-sm">
+                <Logo className="text-black" />
+              </div>
             </Link>
-            {user ? (
-              ""
-            ) : (
-              <Link href="/login" className="flex items-center space-x-2 text-sm">
-                <UserRound
-                  size={18}
-                  className="transition-all cursor-pointer"
-                />
-              </Link>
-            )}
-            <ProductSearch size={18} />
-          </div>
 
-          <div className="hidden md:flex items-center relative gap-4">
-            <div className="hidden md:flex items-center relative gap-4">
+            <div className="md:hidden flex gap-3 ">
               <Link
                 href="/cart"
                 className="flex items-center space-x-2 relative text-sm"
               >
                 <span className="absolute -top-2 -right-3 text-[12px] ">
                   {totalCartItems > 0 ? totalCartItems : ""}
-                </span>{" "}
+                </span>
                 <ShoppingBag
-                  size={20}
+                  size={18}
                   className="transition-all cursor-pointer"
                 />
               </Link>
-
-              <div className="relative group cursor-pointer">
-                {user ? (
-                  <p className="text-sm after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#000] after:transition-all after:duration-500 group-hover:after:w-full relative w-fit block text-black font-medium uppercase">
-                    {user?.name}
-                  </p>
-                ) : (
-                  <Link
-                    href="/login"
-                    className="flex items-center space-x-2 text-sm"
-                  >
-                    <UserRound
-                      size={22}
-                      className="transition-all cursor-pointer"
-                    />
-                  </Link>
-                )}
-              </div>
+              {user ? (
+                ""
+              ) : (
+                <Link href="/login" className="flex items-center space-x-2 text-sm">
+                  <UserRound
+                    size={18}
+                    className="transition-all cursor-pointer"
+                  />
+                </Link>
+              )}
+              <ProductSearch size={18} />
             </div>
-            <ProductSearch size={22} />
+
+            <div className="hidden md:flex items-center relative gap-4">
+              <div className="hidden md:flex items-center relative gap-4">
+                <Link
+                  href="/cart"
+                  className="flex items-center space-x-2 relative text-sm"
+                >
+                  <span className="absolute -top-2 -right-3 text-[12px] ">
+                    {totalCartItems > 0 ? totalCartItems : ""}
+                  </span>{" "}
+                  <ShoppingBag
+                    size={20}
+                    className="transition-all cursor-pointer"
+                  />
+                </Link>
+
+                <div className="relative group cursor-pointer">
+                  {user ? (
+                    <p className="text-sm after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#000] after:transition-all after:duration-500 group-hover:after:w-full relative w-fit block text-black font-medium uppercase">
+                      {user?.name}
+                    </p>
+                  ) : (
+                    <Link
+                      href="/login"
+                      className="flex items-center space-x-2 text-sm"
+                    >
+                      <UserRound
+                        size={22}
+                        className="transition-all cursor-pointer"
+                      />
+                    </Link>
+                  )}
+                </div>
+              </div>
+              <ProductSearch size={22} />
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </Suspense>
 
       {!userToken && (
         <div className="hidden justify-center items-center gap-10 bg-white py-2">
