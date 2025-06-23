@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import {
   Select,
@@ -95,11 +94,9 @@ const FrequentlyBought = ({ frequentlyBought }) => {
                 className="mr-3 accent-red-500"
               />
               {/* Product Image */}
-              <Link
-                href={`/${item._id}?name=${item.name.replace(/[\s–]+/g, "-")}`}
-              >
+              <Link href={`/product-details/${item._id}?name=${item.name?.replace(/[\s–]+/g, "-")}`}>
                 <img
-                  src={item?.images[0]}
+                  src={item?.thumbnails[0]}
                   alt={item?.name}
                   className="md:w-20 w-14 h-14   md:h-20 rounded object-cover"
                 />

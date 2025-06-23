@@ -82,7 +82,7 @@ const BottomsCarousel = () => {
         <div ref={sliderRef} className="keen-slider pl-4">
           {data.map((product) => (
             <Link
-              href={`/product-details/${product?.name?.replace(/[\s–]+/g, "-")}/${product?._id}`}
+              href={`/product-details/${product?._id}?name=${product?.name?.replace(/[\s–]+/g, "-")}`}
               key={product._id}
               className="keen-slider__slide flex flex-col items-center group relative  pb-10"
             >

@@ -45,7 +45,7 @@ const NewArrivals = () => {
         {data.map((product) => (
           <div
             key={product._id}
-            onClick={() => navigate.push(`/product-details/product/${product._id}`)}
+            onClick={() => navigate.push(`/product-details/${product._id}?name=${product.name.replace(/[\s–]+/g, "-")}`)}
             className="flex-shrink-0 w-[300px] h-[360px] flex flex-col items-center group relative"
           >
             {product?.specialSale && (
