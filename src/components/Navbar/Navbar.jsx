@@ -1,14 +1,8 @@
+"use client";
 import React, { useEffect, useState } from "react";
-import {
-  UserRound,
-  SearchIcon,
-  X,
-  Heart,
-  LogOut,
-  Menu,
-  ShoppingBag,
-} from "lucide-react";
-import { Link, useNavigate, useSearchParams } from "react-router";
+import { UserRound, ShoppingBag } from "lucide-react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { loginWithGoogle, logout } from "@/features/userSlice";
 import { fetchAddresses } from "@/features/addressSlice";
@@ -39,12 +33,14 @@ const Navbar = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { addresses } = useSelector((state) => state.address);
   const [totalCartItems, setTotalCartItems] = useState(0);
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
+    router.push("/login");
   };
+
   const userToken =
     typeof window !== "undefined" && localStorage.getItem("drip_access_token");
 
@@ -135,7 +131,7 @@ const Navbar = () => {
             <DesktopNavbar user={user} handleLogout={handleLogout} />
           </div>
 
-          <Link to="/" className=" absolute left-[50%] -translate-x-1/2">
+          <Link href="/" className=" absolute left-[50%] -translate-x-1/2">
             <div className="font-phonk md:text-lg text-sm">
               <Logo className="text-black" />
             </div>
@@ -143,7 +139,7 @@ const Navbar = () => {
 
           <div className="md:hidden flex gap-3 ">
             <Link
-              to="/cart"
+              href="/cart"
               className="flex items-center space-x-2 relative text-sm"
             >
               <span className="absolute -top-2 -right-3 text-[12px] ">
@@ -157,7 +153,7 @@ const Navbar = () => {
             {user ? (
               ""
             ) : (
-              <Link to="/login" className="flex items-center space-x-2 text-sm">
+              <Link href="/login" className="flex items-center space-x-2 text-sm">
                 <UserRound
                   size={18}
                   className="transition-all cursor-pointer"
@@ -170,7 +166,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center relative gap-4">
             <div className="hidden md:flex items-center relative gap-4">
               <Link
-                to="/cart"
+                href="/cart"
                 className="flex items-center space-x-2 relative text-sm"
               >
                 <span className="absolute -top-2 -right-3 text-[12px] ">
@@ -189,7 +185,7 @@ const Navbar = () => {
                   </p>
                 ) : (
                   <Link
-                    to="/login"
+                    href="/login"
                     className="flex items-center space-x-2 text-sm"
                   >
                     <UserRound

@@ -1,20 +1,39 @@
-"use client";
-
+"use client"
 import React, { useEffect, useState } from "react";
 import axiosInstance from "@/config/axiosInstance";
 import { Skeleton } from "../ui/skeleton";
 import ProductCard from "../CardComponents/ProductCard";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const HomeBlanks = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const [limit, setLimit] = useState(() => {
+    // Retrieve the limit from localStorage or default to 8
+    return parseInt(localStorage.getItem("productLimit")) || 8;
+  });
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const newLimit = windowWidth <= 1024 ? 6 : 8;
+    setLimit(newLimit);
+    localStorage.setItem("productLimit", newLimit); // Save the limit to localStorage
+  }, [windowWidth]);
 
   const getProduct = async () => {
     setLoading(true);
     try {
       const { data } = await axiosInstance.get(
-        "product/get-product-category/blanks?limit=6&filter=priority"
+        `product/get-product-category/blanks?limit=${limit}&filter=priority`
       );
       setData(data.data.products);
     } catch (error) {
@@ -26,7 +45,7 @@ const HomeBlanks = () => {
 
   useEffect(() => {
     getProduct();
-  }, []);
+  }, [limit]);
 
   return (
     <div>
@@ -34,14 +53,14 @@ const HomeBlanks = () => {
 
       {loading ? (
         <div className="flex flex-wrap justify-center gap-[5px]">
-          {Array.from({ length: 6 }).map((_, index) => (
+          {Array.from({ length: limit }).map((_, index) => (
             <div key={index} className="w-[350px] h-[350px]">
               <Skeleton className="w-full h-full" />
             </div>
           ))}
         </div>
       ) : (
-        <div className="flex flex-wrap justify-center gap-[5px]">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-[5px] gap-y-[30px] md:gap-y-[30px]">
           {data &&
             data.map((item) => (
               <ProductCard
@@ -52,13 +71,13 @@ const HomeBlanks = () => {
             ))}
         </div>
       )}
-      <div>
+      <div className="flex justify-center items-center mt-8">
         <Link
           href="/all-products/blanks"
           onClick={() => window.scrollTo(0, 0)}
-          className="flex justify-center items-center mt-4 py-2 px-4 rounded-md underline underline-offset-4 "
+          className="flex justify-center items-center w-fit py-[12px] px-[30px] text-[12px] tracking-[0.2em]  bg-black text-white border-transparent border-[1px] "
         >
-          VIEW ALL
+          VIEW ALL PRODUCTS
         </Link>
       </div>
     </div>

@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useRouter } from "next/navigation";
 import { checkAuth } from "../features/userSlice";
 
 const useAuthHook = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     const token =
@@ -19,7 +19,7 @@ const useAuthHook = () => {
           if (typeof window !== "undefined") {
             localStorage.removeItem("drip_access_token");
           }
-          navigate("/login");
+          router.push("/login");
         });
     }
   }, []);

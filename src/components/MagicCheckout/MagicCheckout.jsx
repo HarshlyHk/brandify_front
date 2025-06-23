@@ -5,7 +5,7 @@ import {
 } from "../../utils/loadRazorpay";
 import axiosInstance from "@/config/axiosInstance";
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import { useRouter } from "next/navigation";
 import Lottie from "lottie-react"; // Import Lottie
 import paymentAnimation from "@/assets/lottie/Payment.json"; // Import your animation JSON file
 
@@ -23,7 +23,7 @@ const MagicCheckoutButton = ({
     console.log(checkoutItem);
     loadRazorpayMagicScript().then((loaded) => setIsRazorpayLoaded(loaded));
   }, []);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handlePayment = async () => {
     if (typeof window !== "undefined") {
@@ -95,7 +95,7 @@ const MagicCheckoutButton = ({
                 toast.success("Order Placed Successfully!");
                 //! Send purchase pixel to Meta
                 const order = res.data.data.updatedOrder;
-                navigate("/order-success/" + res?.data?.data?.navigateOrderId);
+                router.push("/order-success/" + res?.data?.data?.navigateOrderId);
               } else {
                 toast.error("Payment verification failed");
               }

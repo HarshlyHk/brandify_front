@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 @font-face {
   font-family: "Eurostile";
@@ -45,7 +46,7 @@
 
 @font-face {
   font-family: "Phonk";
-  src: url("../assets/fonts/Phonk.otf");
+  src: url("../assets/fonts/Emilio.ttf");
 }
 @font-face {
   font-family: "Emillio";
@@ -60,9 +61,11 @@ body {
   background-color: #f9f9f9;
   color: #000000;
   overflow-x: hidden !important;
+  /* letter-spacing: 1px; */
 }
 
 h2 {
+  /* letter-spacing: 3px; */
   font-size: 1.8rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -109,6 +112,9 @@ h2 {
 
 .font-helvetica {
   font-family: "Helvetica", sans-serif;
+}
+.font-helvetica-nue {
+  font-family: "Helvetica-nue", sans-serif;
 }
 
 .font-engravers {
@@ -195,18 +201,45 @@ button {
   width: 6px !important;
 }
 
+.swiper-height {
+  height: 80vh !important;
+}
+
+@media (min-width: 768px) {
+  .swiper-pagination-fraction,
+  .swiper-pagination-custom,
+  .swiper-horizontal > .swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: -30px !important;
+    left: 0px !important;
+    right: 0px !important;
+    text-align: center !important;
+  }
+  .swiper-pagination-bullet {
+    background: #565656 !important;
+    opacity: 0.5 !important;
+  }
+  .swiper-pagination-bullet-active {
+    background: rgb(0, 0, 0) !important;
+    opacity: 1 !important;
+  }
+  .swiper {
+    margin-bottom: 50px !important ;
+  }
+}
+
 body {
   scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ffffff;
+  background: #000000;
   border-radius: 0px;
 }
 
 ::-webkit-scrollbar {
-  background: black;
-  width: 2px;
+  background: rgb(255, 255, 255);
+  width: 6px;
 }
 @media screen and (max-width: 768px) {
   ::-webkit-scrollbar {
@@ -221,12 +254,12 @@ body {
 /* Existing styles for small-scrollbar */
 .small-scrollbar::-webkit-scrollbar {
   background: #f9f9f9;
-  width: 1px;
-  height: 4px;
+  width: 4px;
+  height: 0px;
 }
 
 .small-scrollbar::-webkit-scrollbar-thumb {
-  background: #717171;
+  background: #000000;
   border-radius: 0px;
   width: 5px;
 }
@@ -234,6 +267,15 @@ body {
 .animate-fade-out {
   position: fixed;
   animation: fade-out 3s forwards;
+}
+
+.product-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover .product-image {
+  scale: 1.1;
+  transition: transform 0.3s ease-in-out;
 }
 
 @keyframes fade-out {
@@ -269,6 +311,34 @@ body {
   border-radius: 10px;
 }
 
+.prodcut-padding-2 {
+  padding: 0rem 10rem;
+}
+
+@media (min-width: 1350px) {
+  .prodcut-padding-2 {
+    padding: 0rem 4rem;
+  }
+}
+
+@media (max-width: 1350px) {
+  .prodcut-padding-2 {
+    padding: 0rem 3rem;
+  }
+}
+
+@media (max-width: 1225px) {
+  .prodcut-padding-2 {
+    padding: 0rem 2rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .prodcut-padding-2 {
+    padding: 0rem 1rem;
+  }
+}
+
 .prodcut-padding {
   padding: 0rem 10rem;
 }
@@ -297,28 +367,48 @@ body {
   }
 }
 
-
+.swiper-combo {
+  padding-right: 10px !important ;
+  padding-left: 10px !important;
+}
 
 @media (min-width: 1350px) {
   .combo-padding {
-    padding: 0rem 20rem;
+    padding: 0rem 15rem;
   }
 }
 
 @media (max-width: 1350px) {
   .combo-padding {
-    padding: 0rem 5rem;
+    padding: 0rem 10rem;
   }
 }
 
 @media (max-width: 1225px) {
   .combo-padding {
-    padding: 0rem 2rem;
+    padding: 0rem 8rem;
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
   .combo-padding {
-    padding: 5rem 5rem;
+    padding: 0rem 5rem;
   }
+}
+
+@media (max-width: 500px) {
+  .combo-padding {
+    padding: 0rem 1rem;
+  }
+}
+
+.aspect-4-5 {
+  position: relative;
+  width: 100%;
+  padding-top: 125%; /* 4:5 aspect ratio */
+  overflow: hidden;
+}
+
+body {
+  font-family: "Helvetica-nue", sans-serif !important;
 }

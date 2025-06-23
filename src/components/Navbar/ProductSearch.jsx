@@ -4,8 +4,7 @@ import { FiSearch } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { IoMdClose } from "react-icons/io";
-import { Skeleton } from "../ui/skeleton";
-import { useNavigate } from "react-router";
+import { useRouter } from "next/navigation";
 
 const TYPING_PLACEHOLDERS = [
   "Search for products...",
@@ -21,7 +20,7 @@ const ProductSearch = ({ size }) => {
   const [loading, setLoading] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const router = useRouter();
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       if (query.trim()) fetchProducts();
@@ -128,7 +127,7 @@ const ProductSearch = ({ size }) => {
               {products.map((product) => (
                 <div
                   onClick={() => {
-                    navigate(`/${product.name}/${product._id}`);
+                    router.push(`/${product.name}/${product._id}`);
                     setShowSearchBar(false);
                     document.body.style.overflow = "auto";
                     setQuery("");

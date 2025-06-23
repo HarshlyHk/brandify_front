@@ -1,5 +1,6 @@
+"use client";
 import React, { useEffect } from "react";
-import { Link } from "react-router";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import AddToCartButton from "../CardComponents/AddToCartButton";
 import AddToWishlistButton from "../CardComponents/AddToWishlistButton";
@@ -18,7 +19,7 @@ const RelatedProducts = ({ item, linkPrefix }) => {
 
   return (
     <Link
-      to={`/${linkPrefix}/${item?._id}`}
+      href={`/${linkPrefix}/${item?._id}`}
       key={item?._id}
       className="relative group"
     >

@@ -9,7 +9,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Link, useLocation } from "react-router";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Plus, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../Logo/Logo";
@@ -33,14 +34,14 @@ const navItems = [
 ];
 
 const DesktopNavbar = ({ user, handleLogout }) => {
-  const location = useLocation();
+  const router = useRouter();
   const [activePage, setActivePage] = useState("");
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    setActivePage(location.pathname);
-  }, [location]);
+    setActivePage(router.pathname);
+  }, [router.pathname]);
 
   const handleToggle = (name) => {
     setExpandedCategory((prev) => (prev === name ? null : name));
@@ -65,7 +66,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
         >
           <SheetHeader className="px-6 pb-3">
             <Link
-              to="/"
+              href="/"
               className="  "
               onClick={() => {
                 window.scrollTo(0, 0);
@@ -87,6 +88,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                   onClick={() => item.expandable && handleToggle(item.name)}
                 >
                   <Link
+                    href={item.link}
                     onClick={() => {
                       if (!item.expandable) {
                         setIsOpen(false);
@@ -94,7 +96,6 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                         setExpandedCategory(null);
                       }
                     }}
-                    to={item.link}
                     className={`relative w-fit block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#FFF] after:transition-all after:duration-500 group-hover:after:w-full ${
                       activePage === item.link
                         ? " after:w-full text-white font-bold"
@@ -123,12 +124,12 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                       <div className="px-6 pb-6 text- text-neutral-100 space-y-2  ">
                         {item.children.map((child, idx) => (
                           <Link
+                            href={child.link}
                             onClick={() => {
                               setIsOpen(false);
                               setActivePage(child.link);
                             }}
                             key={idx}
-                            to={child.link}
                             className={`relative w-fit py-1 transition-all hover:text-[#FFF] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#FFF] after:transition-all after:duration-500 hover:after:w-full flex gap-4 ${
                               activePage === child.link
                                 ? "text-white font-medium after:w-full"
@@ -148,7 +149,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
 
             <div className="flex flex-col gap-4 mt-10 px-6 text-sm">
               <Link
-                to="/contact-us"
+                href="/contact-us"
                 onClick={() => {
                   setActivePage("/contact-us");
                   window.scrollTo(0, 0);
@@ -164,7 +165,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
               </Link>
 
               <Link
-                to="/track-order"
+                href="/track-order"
                 onClick={() => {
                   setActivePage("/track-order");
                   window.scrollTo(0, 0);
@@ -179,7 +180,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                 <p>Track Your Order</p>
               </Link>
               <Link
-                to="/return-and-refund"
+                href="/return-and-refund"
                 onClick={() => {
                   setActivePage("/return-and-refund");
                   window.scrollTo(0, 0);
@@ -206,7 +207,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                 <p>INSTAGRAM</p>
               </a>
               <Link
-                to="/story-behind-drip"
+                href="/story-behind-drip"
                 onClick={() => {
                   window.scrollTo(0, 0);
                   setIsOpen(false);
@@ -220,7 +221,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                 <p>Story Behind Drip</p>
               </Link>
               <Link
-                to="/what-makes-us-different"
+                href="/what-makes-us-different"
                 onClick={() => {
                   window.scrollTo(0, 0);
                   setIsOpen(false);
@@ -242,7 +243,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                     </p>
                   </div>
                   <Link
-                    to="/orders"
+                    href="/orders"
                     onClick={() => setIsOpen(false)}
                     className={`relative w-fit py-1 transition-all hover:text-[#FFF] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#FFF] after:transition-all text-white after:duration-500 hover:after:w-full flex gap-4 ${
                       activePage === "/orders"
@@ -266,7 +267,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                 </>
               ) : (
                 <Link
-                  to="/login"
+                  href="/login"
                   onClick={() => setIsOpen(false)}
                   className={`relative w-fit py-1 transition-all text-[#FFF] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#FFF] after:transition-all after:duration-500 hover:after:w-full flex gap-4 ${
                     activePage === "/login"

@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import {
   Select,
@@ -7,7 +8,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/features/cartSlice";
 
@@ -20,7 +22,7 @@ const FrequentlyBought = ({ frequentlyBought }) => {
   );
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const toggleSelect = (index) => {
     const updatedSelection = [...selectedItems];
@@ -40,7 +42,7 @@ const FrequentlyBought = ({ frequentlyBought }) => {
         const selectedSize = selectedSizes[index]; // Use the selected size
         if (user) {
           dispatch(addToCart({ productId: item._id, size: selectedSize }));
-          navigate("/cart"); // Redirect to cart page
+          router.push("/cart"); // Redirect to cart page
         } else {
           // Add to local storage
           const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -66,7 +68,7 @@ const FrequentlyBought = ({ frequentlyBought }) => {
             cart.push(newItem);
           }
 
-          navigate("/cart"); // Redirect to cart page
+          router.push("/cart"); // Redirect to cart page
           // Save updated cart to localStorage
           localStorage.setItem("cart", JSON.stringify(cart));
         }
@@ -93,7 +95,9 @@ const FrequentlyBought = ({ frequentlyBought }) => {
                 className="mr-3 accent-red-500"
               />
               {/* Product Image */}
-              <Link to={`/${item?.name?.replace(/[\s–]+/g, "-")}/${item._id}`}>
+              <Link
+                href={`/${item._id}?name=${item.name.replace(/[\s–]+/g, "-")}`}
+              >
                 <img
                   src={item?.images[0]}
                   alt={item?.name}
@@ -135,7 +139,7 @@ const FrequentlyBought = ({ frequentlyBought }) => {
                       key={idx}
                       value={size.size}
                       name="size-item"
-                      className={`${
+                      className={`$${
                         size.stock === 0 ? "text-gray-400 line-through" : ""
                       }`}
                     >

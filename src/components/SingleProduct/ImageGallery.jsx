@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import ImageCarousel from "./ImageCarousel";
 import FrequentlyBought from "./FrequentlyBought";
@@ -6,9 +7,7 @@ import FrequentlyBoughtSkeleton from "../Skeleton/FrequentlyBoughtSkeleton";
 import ImageGallerySkeleton from "../Skeleton/ImageGallerySkeleton";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/features/cartSlice";
-import QuickLogin from "../Login/QuickLogin";
-import { setCheckoutItem } from "@/features/checkoutSlice";
-import { useNavigate } from "react-router";
+import { useRouter } from "next/navigation";
 import parse from "html-react-parser";
 import {
   Dialog,
@@ -28,7 +27,7 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const [openSizeChart, setOpenSizeChart] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
   const { addresses } = useSelector((state) => state.address);
 
   const [open, setOpen] = useState(false);
@@ -79,7 +78,7 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
         currency: "INR",
       });
 
-    navigate("/cart");
+    router.push("/cart");
   };
 
   const handleProceedToCheckout = () => {
@@ -242,7 +241,7 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
             </button>
 
             <div
-              onclick={() => {
+              onClick={() => {
                 handleProceedToCheckout();
               }}
               className="w-full"
@@ -273,7 +272,6 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
         {/* Product Short Description */}
         <div className="mt-4 ">{renderContent(item?.shortDescription)}</div>
 
-        <QuickLogin open={open} setOpen={setOpen} />
       </div>
 
       {/* Size Chart Modal */}

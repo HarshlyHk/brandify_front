@@ -1,0 +1,38 @@
+@keyframes tap {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(30px);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(-30px);
+    opacity: 0.5;
+  }
+  70% {
+    transform: translateX(0);
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+}
+
+.animate-tap {
+  animation: tap 5s ease-in-out infinite; /* total cycle = 3s */
+  animation-delay: 5s; /* delay before first run */
+  animation-fill-mode: both; /* keep final state before reset */
+}

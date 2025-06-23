@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./index.css";
 import "./App.css"; // Custom styles for DRIP STUDIOS
+import Navbar from "@/components/Navbar/Navbar"
+import { ReduxProvider } from "@/lib/providers";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -51,7 +53,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ReduxProvider>
+        <Navbar />
         {children}
+        </ReduxProvider>
       </body>
     </html>
   );

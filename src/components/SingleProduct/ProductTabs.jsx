@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import parse from "html-react-parser";
 import { Skeleton } from "../ui/skeleton";
