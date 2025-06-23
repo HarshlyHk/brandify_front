@@ -1,6 +1,6 @@
 // app/product/[productId]/page.tsx
 
-import React from "react";
+import React, { Suspense } from "react";
 import axiosInstance from "@/config/axiosInstance";
 import ImageGallery from "@/components/SingleProduct/ImageGallery";
 import ProductTabs from "@/components/SingleProduct/ProductTabs";
@@ -52,38 +52,40 @@ const SingleProductPage = async ({ params, searchParams }) => {
     <>
       <Categories page="single-product" />
 
-      <div className="md:px-4 md:py-10 py-5">
-        <ImageGallery
-          item={product}
-          loading={false}
-          frequentlyBought={frequentlyBought}
-        />
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="md:px-4 md:py-10 py-5">
+          <ImageGallery
+            item={product}
+            loading={false}
+            frequentlyBought={frequentlyBought}
+          />
 
-        <ProductTabs
-          description={product?.description}
-          coreFeatures={product?.coreFeatures}
-          careGuide={product?.careGuide}
-          reviews={product?.reviews}
-          loading={false}
-        />
+          <ProductTabs
+            description={product?.description}
+            coreFeatures={product?.coreFeatures}
+            careGuide={product?.careGuide}
+            reviews={product?.reviews}
+            loading={false}
+          />
 
-        <div className="prodcut-padding-2 mb-20">
-          <h2 className="text-center mt-8">YOU MAY ALSO LIKE</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-[5px] gap-y-[10px] md:gap-y-[30px]">
-            {relatedProducts.map((item) => (
-              <RelatedProducts
-                item={item}
-                linkPrefix={item?.name?.replace(/[\s–]+/g, "-")}
-                key={item?._id}
-              />
-            ))}
+          <div className="prodcut-padding-2 mb-20">
+            <h2 className="text-center mt-8">YOU MAY ALSO LIKE</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-[5px] gap-y-[10px] md:gap-y-[30px]">
+              {relatedProducts.map((item) => (
+                <RelatedProducts
+                  item={item}
+                  linkPrefix={item?.name?.replace(/[\s–]+/g, "-")}
+                  key={item?._id}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="md:px-40">
+            <Comparison />
           </div>
         </div>
-
-        <div className="md:px-40">
-          <Comparison />
-        </div>
-      </div>
+      </Suspense>
     </>
   );
 };
