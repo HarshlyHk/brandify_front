@@ -42,7 +42,7 @@ const FrequentlyBought = ({ frequentlyBought }) => {
         if (user) {
           dispatch(addToCart({ productId: item._id, size: selectedSize }));
           router.push("/cart"); // Redirect to cart page
-        } else {
+        } else if (typeof window !== "undefined") {
           // Add to local storage
           const cart = JSON.parse(localStorage.getItem("cart")) || [];
           const existingItemIndex = cart.findIndex(

@@ -271,7 +271,6 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
 
         {/* Product Short Description */}
         <div className="mt-4 ">{renderContent(item?.shortDescription)}</div>
-
       </div>
 
       {/* Size Chart Modal */}
