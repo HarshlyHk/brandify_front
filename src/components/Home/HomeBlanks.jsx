@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import axiosInstance from "@/config/axiosInstance";
 import { Skeleton } from "../ui/skeleton";
@@ -9,11 +9,10 @@ import { useRouter } from "next/navigation";
 const HomeBlanks = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
-  const [limit, setLimit] = useState(() => {
-    // Retrieve the limit from localStorage or default to 8
-    return parseInt(localStorage.getItem("productLimit")) || 8;
-  });
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [limit, setLimit] = useState(8);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1024
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -26,8 +25,17 @@ const HomeBlanks = () => {
   useEffect(() => {
     const newLimit = windowWidth <= 1024 ? 6 : 8;
     setLimit(newLimit);
-    localStorage.setItem("productLimit", newLimit); // Save the limit to localStorage
+    if (typeof window !== "undefined") {
+      localStorage.setItem("productLimit", newLimit);
+    }
   }, [windowWidth]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedLimit = parseInt(localStorage.getItem("productLimit"));
+      setLimit(storedLimit || 8);
+    }
+  }, []);
 
   const getProduct = async () => {
     setLoading(true);

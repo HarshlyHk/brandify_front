@@ -86,12 +86,12 @@ const BottomsCarousel = () => {
               key={product._id}
               className="keen-slider__slide flex flex-col items-center group relative  pb-10"
             >
-              <div className="relative w-full h-[300px] overflow-hidden rounded-xl">
+              <div className="relative w-full h-[340px] overflow-hidden">
                 {/* First Image (Default) */}
                 <img
                   src={product?.thumbnails[0]}
                   alt={product?.name}
-                  className="h-full w-full object-cover absolute transition-opacity duration-500"
+                  className="h-full w-full object-contain absolute transition-opacity duration-500"
                   width={300}
                   height={300}
                 />
