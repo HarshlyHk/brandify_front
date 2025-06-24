@@ -8,8 +8,7 @@ import RelatedProducts from "@/components/SingleProduct/RelatedProducts";
 import { Comparison } from "@/components/Home/Comparison";
 import Categories from "@/components/Categories/Categories";
 
-export async function generateMetadata ({ params: asyncParams }) {
-  const params = await asyncParams;
+export async function generateMetadata({ params }) {
   const res = await axiosInstance.get(
     `product/get-product-all-details/${params.productId}`
   );
@@ -20,7 +19,14 @@ export async function generateMetadata ({ params: asyncParams }) {
     description: product.shortDescription,
     openGraph: {
       title: product.name,
-      images: [product.thumbnails[0]],
+      images: [
+        {
+          url: product.thumbnails[0],
+          width: 1200,
+          height: 630,
+          alt: product.name,
+        },
+      ],
     },
   };
 }

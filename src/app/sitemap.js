@@ -29,7 +29,7 @@ export default async function sitemap() {
     const products = response?.data?.data || [];
 
     dynamicUrls = products.map((product) => ({
-      url: `https://dripdrip.in/product/${product.name.replace(/\s+/g, "-")}`,
+      url: `https://dripdrip.in/product-details/${product._id}?name=${product.name.replace(/\s+/g, "-")}`,
       lastModified: new Date(),
     }));
   } catch (error) {
