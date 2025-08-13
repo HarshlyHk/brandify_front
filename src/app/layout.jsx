@@ -5,6 +5,7 @@ import "./App.css"; // Custom styles for DRIP STUDIOS
 import Navbar from "@/components/Navbar/Navbar";
 import { ReduxProvider } from "@/lib/providers";
 import Footer from "@/components/Footer/Footer";
+import { Suspense } from "react";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -69,7 +70,9 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} ${figtree.variable} ${inter.variable} antialiased`}
       >
         <ReduxProvider>
-          <Navbar />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Navbar />
+          </Suspense>
           {children}
           <Footer />
         </ReduxProvider>
