@@ -5,7 +5,7 @@ import BigCarousel from "@/components/Home/BigCarousel";
 import { Comparison } from "@/components/Home/Comparison";
 import DripCult from "@/components/Home/DripCult";
 import HomeBlanks from "@/components/Home/HomeBlanks";
-import HomeDripCult from "@/components/Home/HomeDripCult";
+import FixYourDripHere from "@/components/Home/FixYourDripHere";
 import Marquee from "@/components/Home/MarqueTop";
 import PageLoader from "@/components/Home/PageLoader";
 import Carousel from "@/components/Home/Carousel";
@@ -15,7 +15,9 @@ import BottomsCarousel from "@/components/Home/BottomsCarousel";
 import NewArrivals from "@/components/Home/NewArrivals";
 import Lookbooks from "@/components/Home/Lookbooks";
 import ThreeDOverlay from "@/components/Home/ThreeDOverlay";
-
+import BlindDrop from "@/components/Home/BlindDrop";
+import SpecialFrames from "@/components/Home/SpecialFrames";
+import DripUnder1199 from "@/components/Home/DripUnder1199";
 const HomePage = () => {
   return (
     <div className="flex flex-col">
@@ -36,25 +38,43 @@ const HomePage = () => {
         <Categories />
       </div>
 
+      <div className="prodcut-padding-2 mb-10 ">
+        <BlindDrop />
+      </div>
+      <div className="mb-0 block md:hidden">
+        <SpecialFrames />
+      </div>
+
       <div className="block md:hidden">
         <NewArrivals />
+      </div>
+      <div className="mb-10 hidden md:block">
+        <DripUnder1199 />
       </div>
 
       <div className="mb-10 block md:hidden">
         <Lookbooks />
       </div>
 
-      <div className="prodcut-padding-2 mb-10">
-        <HomeDripCult productLimit={6} />
+      <div className="prodcut-padding-2 mb-10 md:hidden">
+        <FixYourDripHere productLimit={6} />
+      </div>
+
+      <div className="prodcut-padding-2 mb-10 hidden md:block">
+        <FixYourDripHere productLimit={8} />
+      </div>
+
+      <div className="md:px-8 mb-10 md:mt-10 md:mb-20">
+        <BigCarousel />
       </div>
 
       <div className="prodcut-padding mb-10 md:hidden ">
         <Comparison />
       </div>
-
+      {/* 
       <div className="mb-10 md:block hidden">
         <BottomsCarousel />
-      </div>
+      </div> */}
       <div className=" lg:px-20 px-4 mb-10">
         <HomeBlanks />
       </div>
@@ -69,9 +89,6 @@ const HomePage = () => {
         <DripCult />
       </div>
 
-      <div className="md:px-8 mb-10">
-        <BigCarousel />
-      </div>
       <CopilotPopup
         labels={{
           title: "DRIP STUDIOS",

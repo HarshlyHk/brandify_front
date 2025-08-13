@@ -1,8 +1,12 @@
+"use client";
+
 import React from "react";
-import { Link } from "react-router";
+import Link from "next/link";
 
 const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (typeof window !== "undefined") {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 };
 
 const Footer = () => {
@@ -13,7 +17,7 @@ const Footer = () => {
       </p>
       <div className="flex md:justify-center justify-between px-2 gap-4 flex-wrap text-gray-600 md:text-xs text-[11px]">
         <Link
-          to="/terms-and-conditions"
+          href="/terms-and-conditions"
           onClick={scrollToTop}
           className="hover:text-black transition"
         >
@@ -21,35 +25,35 @@ const Footer = () => {
         </Link>
 
         <Link
-          to="/privacy-policy"
+          href="/privacy-policy"
           onClick={scrollToTop}
           className="hover:text-black transition"
         >
           Privacy Policy
         </Link>
         <Link
-          to="/shipping-policy"
+          href="/shipping-policy"
           onClick={scrollToTop}
           className="hover:text-black transition"
         >
           Shipping Policy
         </Link>
         <Link
-          to="/cancellation-policy"
+          href="/cancellation-policy"
           onClick={scrollToTop}
           className="hover:text-black transition"
         >
           Refund Policy
         </Link>
         <Link
-          to="/cancellation-policy"
+          href="/cancellation-policy"
           onClick={scrollToTop}
           className="hover:text-black transition"
         >
           Return Policy
         </Link>
         <Link
-          to="/contact-us"
+          href="/contact-us"
           onClick={scrollToTop}
           className="hover:text-black transition"
         >

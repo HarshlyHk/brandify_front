@@ -15,13 +15,15 @@ import {
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "@/utils/use-outside-click";
-import Image from "next/image";
+import Link from "next/link";
 
+// Carousel context
 export const CarouselContext = createContext({
   onCardClose: () => {},
   currentIndex: 0,
 });
 
+// Carousel component
 export const Carousel = ({ items, initialScroll = 0 }) => {
   const carouselRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -44,41 +46,59 @@ export const Carousel = ({ items, initialScroll = 0 }) => {
   };
 
   const scrollLeft = () => {
-    carouselRef.current?.scrollBy({ left: -300, behavior: "smooth" });
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: -300, behavior: "smooth" });
+    }
   };
 
   const scrollRight = () => {
-    carouselRef.current?.scrollBy({ left: 300, behavior: "smooth" });
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: 300, behavior: "smooth" });
+    }
   };
 
   const handleCardClose = (index) => {
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-    const cardWidth = isMobile ? 250 : 384;
-    const gap = isMobile ? 4 : 8;
-    carouselRef.current?.scrollTo({
-      left: (cardWidth + gap) * (index + 1),
-      behavior: "smooth",
-    });
-    setCurrentIndex(index);
+    if (carouselRef.current) {
+      const cardWidth = isMobile() ? 250 : 384;
+      const gap = isMobile() ? 4 : 8;
+      const scrollPosition = (cardWidth + gap) * (index + 1);
+      carouselRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth",
+      });
+      setCurrentIndex(index);
+    }
+  };
+
+  const isMobile = () => {
+    return typeof window !== "undefined" && window.innerWidth < 768;
   };
 
   return (
-    <CarouselContext.Provider value={{ onCardClose: handleCardClose, currentIndex }}>
-      <div className="relative w-full py-0">
-        <h2 className="text-center">DRIP FAM</h2>
+    <CarouselContext.Provider
+      value={{ onCardClose: handleCardClose, currentIndex }}
+    >
+      <div className="relative w-full py-0 md:py-0">
+        <h2 className=" text-center"></h2>
         <div
-          className="flex w-full overflow-x-scroll scroll-smooth no-scrollbar"
+          className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth [scrollbar-width:none] "
           ref={carouselRef}
           onScroll={checkScrollability}
         >
-          <div className="absolute right-0 z-50 h-auto w-[5%] bg-gradient-to-l" />
-          <div className="flex flex-row justify-start gap-4 pl-4 mx-auto max-w-7xl">
+          <div className="absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l"></div>
+          <div
+            className={cn("flex flex-row justify-start gap-4 pl-4", "mx-auto ")}
+          >
             {items.map((item, index) => (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 * index, ease: "easeOut" }}
-                key={`card-${index}`}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.2 * index,
+                  ease: "easeOut",
+                }}
+                key={"card" + index}
                 className="rounded-3xl last:pr-[5%] md:last:pr-[33%]"
               >
                 {item}
@@ -86,20 +106,18 @@ export const Carousel = ({ items, initialScroll = 0 }) => {
             ))}
           </div>
         </div>
-        <div className="mr-10 mt-10 md:mt-0 flex justify-end gap-2 md:absolute md:bottom-4 md:right-0">
+        <div className="mr-10 mt-10 md:mt-0 flex justify-end gap-2 md:absolute md:bottom-4 md:-right-4">
           <button
-            className="z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
+            className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
             onClick={scrollLeft}
             disabled={!canScrollLeft}
-            aria-label="Scroll Left"
           >
             <AiOutlineArrowLeft className="h-6 w-6 text-gray-700" />
           </button>
           <button
-            className="z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
+            className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
             onClick={scrollRight}
             disabled={!canScrollRight}
-            aria-label="Scroll Right"
           >
             <AiOutlineArrowRight className="h-6 w-6 text-gray-700" />
           </button>
@@ -109,35 +127,38 @@ export const Carousel = ({ items, initialScroll = 0 }) => {
   );
 };
 
-export const Card = ({ card, index }) => {
+// Card component
+export const Card = ({ card, index, layout = false }) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
   const { onCardClose } = useContext(CarouselContext);
-
+  const product = card?.product;
   useEffect(() => {
-    const onKeyDown = (event) => {
+    function onKeyDown(event) {
       if (event.key === "Escape") handleClose();
-    };
+    }
 
-    document.body.style.overflow = open ? "hidden" : "auto";
+    if (open) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "auto";
+
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
-    const handleOpen = () => {
+  useOutsideClick(containerRef, () => handleClose());
+
+  const handleOpen = () => {
+    // if mobile. then open otherwise don't open
     if (typeof window !== "undefined" && window.innerWidth < 768) {
       setOpen(true);
+    } else {
+      // onCardClose(index);
     }
   };
-
   const handleClose = () => {
     setOpen(false);
     onCardClose(index);
   };
-
-  useOutsideClick(containerRef, handleClose);
-
-
 
   return (
     <>
@@ -155,22 +176,66 @@ export const Card = ({ card, index }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               ref={containerRef}
-              className="relative z-60 mx-auto my-10 h-full max-w-[400px] rounded-3xl bg-transparent p-4 md:p-2 dark:bg-neutral-900"
+              className="relative z-[60] mx-auto my-10 h-full max-w-[93%] rounded-3xl bg-transparent p-1 font-sans md:p-2 dark:bg-neutral-900"
             >
               <button
-                className="sticky top-4 right-0 ml-auto flex h-8 w-8 items-center justify-center rounded-full bg-black dark:bg-white"
+                className=" absolute -top-5 right-0 ml-auto flex h-8 w-8 items-center justify-center rounded-full bg-black dark:bg-white"
                 onClick={handleClose}
-                aria-label="Close"
               >
-                <AiOutlineClose className="h-6 w-6 text-white dark:text-black" />
+                <AiOutlineClose className="h-6 w-6 text-neutral-100 dark:text-neutral-900" />
               </button>
-              <div className="relative h-[80vh] w-full overflow-hidden rounded-3xl">
+              {/* image */}
+              <div className="relative h-[80vh] w-full overflow-hidden rounded-[15px] top-6 md:w-full md:h-[80vh] ">
                 <BlurImage
                   src={card.imageUrl}
                   alt={card.title}
                   isVideo={card.isVideo}
                   className="absolute inset-0 z-10 object-cover"
                 />
+                {product && (
+                  <div className="absolute left-1/2 bottom-2 -translate-x-1/2 w-[95%] bg-[#f9f9f9] rounded-[10px] shadow-lg flex items-center p-1 gap-4 z-50 justify-between">
+                    <div className="w-32 h-32 flex-shrink-0">
+                      <img
+                        src={product.thumbnails?.[0] || card.imageUrl}
+                        alt={product.name}
+                        className="object-cover rounded-[5px] "
+                      />
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between h-full  px-2">
+                      <div className="flex-1 flex flex-col items-end ">
+                        <div>
+                          <h1 className="text-[13px] md:text-[1.6rem] font-semibold uppercase ">
+                            {product?.name}
+                          </h1>
+                        </div>
+
+                        <div className="flex gap-2 mt-2 items-center">
+                          <p className="text-[0.7rem] md:text-[1.4rem] tracking-[0.1em] ">
+                            ₹{product?.discountedPrice}
+                          </p>
+                          <p className="line-through text-[0.7rem] text-gray-500 md:text-[1.4rem] opacity-75 tracking-[0.1em]">
+                            ₹{product?.originalPrice}
+                          </p>
+                        </div>
+                        <p className="text-[0.65rem] md:text-[1.4rem] text-gray-700 tracking-[0.1em] mt-1">
+                          DRIP STUDIOS
+                        </p>
+                      </div>
+                      <Link
+                        href={`/product/${
+                          product._id
+                        }?name=${product.name.replace(/[\s–]+/g, "-")}`}
+                        onClick={() => {
+                          document.body.style.overflow = "auto";
+                          handleClose();
+                        }}
+                        className="inline-block mt-2 px-[30px] py-[12px] text-[11px] bg-black text-white hover:bg-gray-200 transition tracking-[0.2em] rounded-[1px] border-[1px] border-transparent text-center"
+                      >
+                        BUY NOW
+                      </Link>
+                    </div>
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>
@@ -179,32 +244,125 @@ export const Card = ({ card, index }) => {
 
       <button
         onClick={handleOpen}
-        className="relative z-10 flex h-96 w-64 flex-col items-start justify-start overflow-hidden rounded-3xl bg-gray-100 md:h-[40rem] md:w-96 dark:bg-neutral-900"
+        className="relative z-10 flex h-[36em] w-80 flex-col items-start justify-start overflow-hidden rounded-[15px] bg-gray-100 md:h-[40rem] md:w-96 dark:bg-neutral-900"
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-gradient-to-b from-black/50 via-transparent to-transparent" />
-        <div className="relative z-40 p-8 text-white">
-          <p className="text-sm font-medium md:text-base">{card.category}</p>
-          <p className="mt-2 max-w-xs text-xl font-semibold md:text-3xl">
+        <div className="relative z-40 p-8">
+          <p className="text-left font-sans text-sm font-medium text-white md:text-base">
+            {card.category}
+          </p>
+          <p className="mt-2 max-w-xs text-left font-sans text-xl font-semibold [text-wrap:balance] text-white md:text-3xl">
             {card.title}
           </p>
         </div>
-        <BlurImage
-          src={card.imageUrl}
-          alt={card.title}
-          isVideo={card.isVideo}
-          className="absolute inset-0 z-10 object-cover"
-        />
+        <div>
+          <BlurImage
+            src={card.imageUrl}
+            alt={card.title}
+            isVideo={card.isVideo}
+            className="absolute inset-0 z-10 object-cover"
+          />
+        </div>
+        {product && (
+          <div className="absolute left-1/2 bottom-2 -translate-x-1/2 w-[95%] bg-[#f9f9f9] rounded-[10px] shadow-lg flex items-center p-1 gap-4 z-50 justify-between">
+            <div className="w-32 h-32 flex-shrink-0">
+              <img
+                src={product.thumbnails?.[0] || card.imageUrl}
+                alt={product.name}
+                className="object-cover rounded-[5px] "
+              />
+            </div>
+            <div className="flex-1 flex flex-col justify-between h-full pr-2">
+              <div className="flex-1 flex flex-col items-end ">
+                <div>
+                  <h1 className="text-[12px] md:text-[14px] font-semibold uppercase text-end w-36 truncate">
+                    {product?.name}
+                  </h1>
+                </div>
+
+                <div className="flex gap-2 mt-2 items-center">
+                  <p className="text-[0.7rem]  tracking-[0.1em] ">
+                    ₹{product?.discountedPrice}
+                  </p>
+                  <p className="line-through text-[0.7rem] text-gray-500  opacity-75 tracking-[0.1em]">
+                    ₹{product?.originalPrice}
+                  </p>
+                </div>
+                <p className="text-[0.65rem]  text-gray-700 tracking-[0.1em] mt-1">
+                  DRIP STUDIOS
+                </p>
+              </div>
+              <Link
+                href={`/product/${product._id}?name=${product.name.replace(
+                  /[\s–]+/g,
+                  "-"
+                )}`}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevents triggering the button's onClick
+                  document.body.style.overflow = "auto";
+                  handleClose();
+                }}
+                className="inline-block mt-2 px-[30px] py-[12px] text-[11px] bg-black text-white transition tracking-[0.2em] rounded-[1px] border-[1px] border-transparent text-center"
+              >
+                BUY NOW
+              </Link>
+            </div>
+          </div>
+        )}
       </button>
     </>
   );
 };
 
-export const BlurImage = ({ height, width, src, className, alt, isVideo, ...rest }) => {
+// BlurImage component
+
+export const BlurImage = ({
+  height,
+  width,
+  src,
+  className,
+  alt,
+  isVideo,
+  ...rest
+}) => {
   const [isLoading, setLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  // Use IntersectionObserver to track visibility
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // stop observing once visible
+        }
+      },
+      { threshold: 0 } // Trigger when 10% of the element is visible
+    );
+
+    if (ref.current) observer.observe(ref.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  if (!isVisible) {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "h-full w-full bg-neutral-200 dark:bg-neutral-700",
+          className
+        )}
+        style={{ width, height }}
+      />
+    );
+  }
 
   if (isVideo) {
     return (
       <video
+        ref={ref}
         className={cn(
           "h-full w-full transition duration-300",
           isLoading ? "blur-sm" : "blur-0",
@@ -218,25 +376,27 @@ export const BlurImage = ({ height, width, src, className, alt, isVideo, ...rest
         muted
         loop
         playsInline
+        loading="lazy"
         {...rest}
       />
     );
   }
 
   return (
-    <Image
+    <img
+      ref={ref}
       className={cn(
-        "h-full w-full object-cover transition duration-300",
+        "h-full w-full transition duration-300",
         isLoading ? "blur-sm" : "blur-0",
         className
       )}
       onLoad={() => setLoading(false)}
       src={src}
-      width={width || 500}
-      height={height || 500}
+      width={width}
+      height={height}
       loading="lazy"
       decoding="async"
-      alt={alt || "Card Image"}
+      alt={alt || "Background of a beautiful view"}
       {...rest}
     />
   );

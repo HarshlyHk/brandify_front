@@ -40,7 +40,7 @@ const DripCultSlider = ({ products }) => {
         { products && products.map((product) => (
           <Link
             key={product._id}
-            href={`/${product._id}?name=${product.name.replace(/[\s–]+/g, "-")}`}
+            href={`/product-details/${product._id}?name=${product.name.replace(/[\s–]+/g, "-")}`}
             className="keen-slider__slide group flex flex-col items-center relative pb-10"
           >
             <div className="relative w-full h-[300px] overflow-hidden rounded-xl">

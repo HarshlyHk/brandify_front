@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import HeartIcon from "@/assets/images/HEART.png";
 
-const ProductCard = ({ item, linkPrefix }) => {
+const ProductCard = ({ item, linkPrefix, category }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const ProductCard = ({ item, linkPrefix }) => {
       {/* Product Image with Link */}
       <Link
         href={`/product-details/${item?._id}?name=${linkPrefix}`}
-        className="w-full aspect-square block relative overflow-hidden"
+        className={`w-full  block relative overflow-hidden aspect-square `}
       >
         <img
           src={item?.thumbnails[0]}
@@ -28,16 +28,21 @@ const ProductCard = ({ item, linkPrefix }) => {
           loading="lazy"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
         />
-        {item?.isSpecial && (
+        {item?.isSpecial && !item?.outOfStock && (
           <img
-            src={HeartIcon.src}
+            src={HeartIcon}
             alt="Special"
             title="BEST SELLER"
             className="absolute top-2 left-2 h-4"
           />
         )}
-        {item?.preeBook && (
-          <div className="absolute top-2 right-2 text-[10px] font-bold px-2 py-1 text-gray-700 bg-white/80 rounded">
+        {item?.outOfStock && (
+          <div className="absolute top-0 left-0 md:top-2 md:left-2 text-black font-bold text-[10px] px-4 py-2 z-[1]">
+            STOCK OUT
+          </div>
+        )}
+        {item?.preeBook && !item?.category?.includes("blind-drop") && (
+          <div className="absolute top-2 right-2 text-[10px] font-bold px-2 py-1 text-gray-700 rounded">
             <p>PRE-BOOK</p>
           </div>
         )}
@@ -45,21 +50,29 @@ const ProductCard = ({ item, linkPrefix }) => {
 
       {/* Hover Buttons */}
       <div className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-    
+        {/* <div className="pointer-events-auto">
+          <AddToCartButton />
+        </div>
+        <div className="pointer-events-auto">
+          <AddToWishlistButton />
+        </div> */}
       </div>
 
       {/* Product Info */}
       <div className="text-start mt-4 px-1">
         {/* Name Clickable */}
         <Link
-          href={`/${linkPrefix}/${item?._id}`}
+          href={`/product-details/${item?._id}?name=${linkPrefix}`}
           className="font-semibold text-[12px] md:text-[14px] lg:text-[16px] truncate block hover:underline"
         >
           {item?.name}
         </Link>
 
         <div className="flex items-center gap-2 mt-1">
-          <p className="text-[11px] md:text-[13px] font-medium text-black">
+          <p
+            className="text-[11px] md:text-[13px] font-medium text-black"
+            style={{ color: category === "blind-drop" ? "red" : "#000000" }}
+          >
             ₹{item?.discountedPrice}
           </p>
           <p className="line-through text-[10px] md:text-[12px] text-gray-500">

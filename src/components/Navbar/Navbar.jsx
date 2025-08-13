@@ -124,7 +124,7 @@ const Navbar = () => {
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
-        <nav className="backdrop-blur-[10px]  shadow-md w-full sticky top-0 z-20">
+        <nav className="backdrop-blur-[10px]  shadow-md w-full sticky top-0 z-20 border-b border-white">
           <div className=" px-6 md:px-20 h-[80px] flex justify-between items-center">
             {/* Logo */}
 
@@ -154,7 +154,10 @@ const Navbar = () => {
               {user ? (
                 ""
               ) : (
-                <Link href="/login" className="flex items-center space-x-2 text-sm">
+                <Link
+                  href="/login"
+                  className="flex items-center space-x-2 text-sm"
+                >
                   <UserRound
                     size={18}
                     className="transition-all cursor-pointer"

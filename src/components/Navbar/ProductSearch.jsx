@@ -49,7 +49,7 @@ const ProductSearch = ({ size }) => {
     <>
       <div>
         <FiSearch
-          className=" text-gray-700 cursor-pointer hover:text-black"
+          className=" text-black cursor-pointer hover:text-black"
           onClick={() => {
             setShowSearchBar(true);
             // make the body unscrollable
@@ -76,7 +76,7 @@ const ProductSearch = ({ size }) => {
               } justify-center w-full px-4 py-20 bg-[#f9f9f9] `}
             >
               <div className="flex items-center w-full max-w-3xl border-b border-gray-300 px-6 py-4 bg-[#f9f9f9] relative">
-                <FiSearch className="text-xl text-gray-500 mr-4" />
+                <FiSearch className="text-xl text-black mr-4" />
                 <input
                   autoFocus
                   type="text"

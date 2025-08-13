@@ -2,15 +2,13 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "@/config/axiosInstance";
 import { Skeleton } from "../ui/skeleton";
-import { useRouter } from "next/navigation";
 import ProductCard from "../CardComponents/ProductCard";
 import Link from "next/link";
 
-const HomeDripCult = ({ productLimit = 16 }) => {
+const FixYourDripHere = ({ productLimit = 16 }) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
-  const router = useRouter();
   const [limit, setlimit] = useState(productLimit);
 
   useEffect(() => {
@@ -18,13 +16,13 @@ const HomeDripCult = ({ productLimit = 16 }) => {
       setIsMobile(window.innerWidth <= 768);
       if (window.innerWidth <= 1024) {
       } else {
-        setlimit(16);
+        setlimit(8);
       }
     };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [router]);
+  }, []);
 
   const getProduct = async () => {
     setLoading(true);
@@ -85,4 +83,4 @@ const HomeDripCult = ({ productLimit = 16 }) => {
   );
 };
 
-export default HomeDripCult;
+export default FixYourDripHere;

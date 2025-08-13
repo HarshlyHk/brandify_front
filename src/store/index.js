@@ -5,6 +5,7 @@ import addressReducer from "../features/addressSlice";
 import checkoutReducer from "@/features/checkoutSlice";
 import orderReducer from "@/features/OrderSlice";
 import abandonedCartReducer from "@/features/abandonedCartSlice";
+import specialFramesReducer from "@/features/specialFramesSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     checkout: checkoutReducer,
     orders: orderReducer,
     abandonedCart: abandonedCartReducer,
+    specialFrames: specialFramesReducer,
   },
 });
 

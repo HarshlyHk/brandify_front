@@ -7,6 +7,7 @@ const nextConfig = {
         hostname: "pub-047aa9653e2346718393f69be234faf1.r2.dev",
         pathname: "/**",
       },
+      
     ],
   },
   

@@ -3,17 +3,23 @@ import "./Marquee.css"; // Import the CSS file
 
 const Marquee = () => {
   const features = [
+    "5% Off for orders below ₹1199",
     "Free Shipping on Prepaid Orders",
+    "10% Off for orders above ₹1199",
     "COD Available",
-    "3000+ Trusted Customers",
+    "5000+ Trusted Customers",
     "Exchanges Available",
+    "5% Off for orders below ₹1199",
     "Free Shipping on Prepaid Orders",
+    "10% Off for orders above ₹1199",
     "COD Available",
-    "3000+ Trusted Customers",
+    "5000+ Trusted Customers",
     "Exchanges Available",
+    "5% Off for orders below ₹1199",
     "Free Shipping on Prepaid Orders",
+    "10% Off for orders above ₹1199",
     "COD Available",
-    "3000+ Trusted Customers",
+    "5000+ Trusted Customers",
     "Exchanges Available",
   ];
 
@@ -21,13 +27,18 @@ const Marquee = () => {
     <div className="marquee-container">
       <div className="marquee-content">
         {features.map((feature, index) => (
-          <span key={index} className="marquee-item">
+          <span
+            key={index}
+            className={`marquee-item ${feature.includes('%') ? 'text-red-500' : ''}`}
+          >
             {feature}
           </span>
         ))}
-        {/* Duplicate the content for seamless looping */}
         {features.map((feature, index) => (
-          <span key={`dup-${index}`} className="marquee-item">
+          <span
+            key={`dup-${index}`}
+            className={`marquee-item ${feature.includes('%') ? 'text-red-500' : ''}`}
+          >
             {feature}
           </span>
         ))}

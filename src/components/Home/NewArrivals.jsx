@@ -3,19 +3,21 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "@/config/axiosInstance";
 import { Skeleton } from "../ui/skeleton";
-import { useRouter } from "next//navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 
 const NewArrivals = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useRouter();
+  const [timer, setTimer] = useState("");
+  const router = useRouter();
 
   const getProduct = async () => {
     setLoading(true);
     try {
       const { data } = await axiosInstance.get(
-        `product/get-product-category/dripcult?limit=20&filter=priority`
+        `product/get-product-category/steal-the-drip?limit=60&filter=priority`
       );
       if (data?.data?.products) {
         setData(data.data.products);
@@ -31,26 +33,80 @@ const NewArrivals = () => {
     getProduct();
   }, []);
 
+  // useEffect(() => {
+  //   const getThursdayMidnightIST = () => {
+  //     const now = new Date();
+  //     const istOffset = 5.5 * 60 * 60 * 1000;
+  //     const utcNow = now.getTime() + now.getTimezoneOffset() * 60000;
+  //     const istNow = new Date(utcNow + istOffset);
+
+  //     // Get current day (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+  //     const currentDay = istNow.getDay();
+
+  //     // Calculate days to add to reach Saturday (i.e., Thursday 12 PM = Friday 00:00 AM)
+  //     const daysToSunday = (7 - currentDay + 7) % 7;
+
+  //     const nextFridayMidnight = new Date(istNow);
+  //     nextFridayMidnight.setDate(istNow.getDate() + daysToSunday);
+  //     nextFridayMidnight.setHours(0, 0, 0, 0); // Set to 00:00 IST
+
+  //     return nextFridayMidnight.getTime();
+  //   };
+
+  //   const target = getThursdayMidnightIST();
+
+  //   const updateTimer = () => {
+  //     const now = new Date().getTime();
+  //     const diff = target - now;
+
+  //     if (diff <= 0) {
+  //       setTimer("00 hr 00 min 00 sec");
+  //       return;
+  //     }
+
+  //     const hours = Math.floor(diff / (1000 * 60 * 60));
+  //     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  //     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  //     setTimer(
+  //       `${hours.toString().padStart(2, "0")} hr ${minutes
+  //         .toString()
+  //         .padStart(2, "0")} min ${seconds.toString().padStart(2, "0")} sec`
+  //     );
+  //   };
+
+  //   updateTimer();
+  //   const interval = setInterval(updateTimer, 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
+
   if (loading) {
     return <Skeleton className="w-full h-[500px] rounded-xl" />;
   }
 
   return (
     <div className="py-10 px-0 md:px-5 relative">
-      <h2 className="text-center text-xl md:text-3xl font-bold ">
-        DRIPCULT - CERTIFIED HEAT
-      </h2>
+      <div className="flex flex-col items-center justify-center">
+        <h2 className="text-center text-xl md:text-3xl font-bold text-red-500">
+          FESTIVE SALE - UPTO 50% OFF
+        </h2>
+      </div>
 
       <div className="flex overflow-x-scroll gap pl-4 pr-4 pt-4 pb-4 no-scrollbar">
         {data.map((product) => (
           <div
             key={product._id}
-            onClick={() => navigate.push(`/product-details/${product._id}?name=${product.name.replace(/[\s–]+/g, "-")}`)}
+            onClick={() => router.push(`/product-details/product/${product._id}`)}
             className="flex-shrink-0 w-[300px] h-[360px] flex flex-col items-center group relative"
           >
             {product?.specialSale && (
               <div className="absolute top-2 right-2 text-red-500 font-bold text-[10px] px-4 py-2 z-[1]">
                 SALE
+              </div>
+            )}
+            {product?.outOfStock && (
+              <div className="absolute top-2 left-2 text-black font-bold text-[10px] px-4 py-2 z-[1]">
+                OUT OF STOCK
               </div>
             )}
             <div className="relative w-full h-[300px] rounded-xl">
@@ -84,9 +140,10 @@ const NewArrivals = () => {
 
       <div className="flex justify-center items-center mt-14">
         <Link
-          href="/all-products/dripcult"
-          onClick={() => window.scrollTo(0, 0)}
+          href="/all-products/steal-the-drip"
+          scroll={false}
           className="flex justify-center items-center w-fit py-[12px] px-[30px] text-[12px] tracking-[0.2em]  bg-black text-white border-transparent border-[1px] "
+          onClick={() => window.scrollTo(0, 0)}
         >
           VIEW ALL PRODUCTS
         </Link>

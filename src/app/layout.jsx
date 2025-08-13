@@ -1,9 +1,10 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Figtree, Inter } from "next/font/google";
 import "./globals.css";
 import "./index.css";
 import "./App.css"; // Custom styles for DRIP STUDIOS
-import Navbar from "@/components/Navbar/Navbar"
+import Navbar from "@/components/Navbar/Navbar";
 import { ReduxProvider } from "@/lib/providers";
+import Footer from "@/components/Footer/Footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -13,14 +14,28 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const figtree = Figtree({
+  variable: "--font-figtree",
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
 export const metadata = {
   title: "DRIP STUDIOS",
-  description: "Discover DRIP STUDIOS – your destination for premium streetwear that blends bold designs with unmatched comfort. Explore our latest collections and elevate your style today.",
-  keywords: "streetwear, fashion, graphic t-shirts, oversized hoodies, cargo pants, sneaker-inspired apparel, limited edition streetwear, sustainable streetwear, gender-neutral fashion, men's streetwear, women's streetwear, unisex streetwear, youth fashion, Gen Z clothing, streetwear India, online streetwear India, DRIP STUDIOS", 
+  description:
+    "Discover DRIP STUDIOS – your destination for premium streetwear that blends bold designs with unmatched comfort. Explore our latest collections and elevate your style today.",
+  keywords:
+    "streetwear, fashion, graphic t-shirts, oversized hoodies, cargo pants, sneaker-inspired apparel, limited edition streetwear, sustainable streetwear, gender-neutral fashion, men's streetwear, women's streetwear, unisex streetwear, youth fashion, Gen Z clothing, streetwear India, online streetwear India, DRIP STUDIOS",
   openGraph: {
     title: "DRIP STUDIOS",
-    description: "Discover DRIP STUDIOS – your destination for premium streetwear that blends bold designs with unmatched comfort. Explore our latest collections and elevate your style today.",
-    url: "https://dripdrip.in",
+    description:
+      "Discover DRIP STUDIOS – your destination for premium streetwear that blends bold designs with unmatched comfort. Explore our latest collections and elevate your style today.",
+    url: "https://www.dripdrip.in",
     siteName: "DRIP STUDIOS",
     images: [
       {
@@ -31,11 +46,12 @@ export const metadata = {
     locale: "en_IN",
     type: "website",
   },
-  twitter : {
+  twitter: {
     title: "DRIP STUDIOS",
-    description: "Discover DRIP STUDIOS – your destination for premium streetwear that blends bold designs with unmatched comfort. Explore our latest collections and elevate your style today.",
+    description:
+      "Discover DRIP STUDIOS – your destination for premium streetwear that blends bold designs with unmatched comfort. Explore our latest collections and elevate your style today.",
     card: "summary_large_image",
-    site: "https://dripdrip.in",
+    site: "https://www.dripdrip.in",
     creator: "DRIP STUDIOS",
     images: [
       {
@@ -46,16 +62,16 @@ export const metadata = {
   },
 };
 
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${figtree.variable} ${inter.variable} antialiased`}
       >
         <ReduxProvider>
-        {/* <Navbar /> */}
-        {children}
+          <Navbar />
+          {children}
+          <Footer />
         </ReduxProvider>
       </body>
     </html>
