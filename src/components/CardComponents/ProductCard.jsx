@@ -3,6 +3,12 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import HeartIcon from "@/assets/images/HEART.png";
 
+// Utility function to format price with Indian commas
+const formatIndianPrice = (price) => {
+  if (typeof price !== "number") price = Number(price);
+  return price.toLocaleString("en-IN");
+};
+
 const ProductCard = ({ item, linkPrefix, category }) => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -30,7 +36,7 @@ const ProductCard = ({ item, linkPrefix, category }) => {
         />
         {item?.isSpecial && !item?.outOfStock && (
           <img
-            src={HeartIcon}
+            src={HeartIcon.src}
             alt="Special"
             title="BEST SELLER"
             className="absolute top-2 left-2 h-4"
@@ -49,14 +55,7 @@ const ProductCard = ({ item, linkPrefix, category }) => {
       </Link>
 
       {/* Hover Buttons */}
-      <div className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        {/* <div className="pointer-events-auto">
-          <AddToCartButton />
-        </div>
-        <div className="pointer-events-auto">
-          <AddToWishlistButton />
-        </div> */}
-      </div>
+      <div className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
 
       {/* Product Info */}
       <div className="text-start mt-4 px-1">
@@ -73,10 +72,10 @@ const ProductCard = ({ item, linkPrefix, category }) => {
             className="text-[11px] md:text-[13px] font-medium text-black"
             style={{ color: category === "blind-drop" ? "red" : "#000000" }}
           >
-            ₹{item?.discountedPrice}
+            ₹{formatIndianPrice(item?.discountedPrice)}
           </p>
           <p className="line-through text-[10px] md:text-[12px] text-gray-500">
-            ₹{item?.originalPrice}
+            ₹{formatIndianPrice(item?.originalPrice)}
           </p>
         </div>
 

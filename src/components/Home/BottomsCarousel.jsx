@@ -52,7 +52,7 @@ const BottomsCarousel = () => {
     setLoading(true);
     try {
       const { data } = await axiosInstance.get(
-        `product/get-product-category/bottoms?limit=20&filter=priority`
+        `product/get-product-category/bottoms?limit=100&sort=relevance`
       );
       if (data?.data?.products) {
         setData(data.data.products);

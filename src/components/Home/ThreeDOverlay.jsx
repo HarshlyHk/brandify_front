@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import Link from "next/link";
 import ThreeDLogo from "./ThreeDLogo";
@@ -7,19 +7,17 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 const ThreeDOverlay = () => (
   <div className="relative w-full h-[80vh] overflow-hidden">
     <video
-      playsInline="playsinline"
-      autoPlay="autoplay"
-      loop="loop"
-      muted="muted"
+      playsInline
+      autoPlay
+      loop
+      muted
       preload="metadata"
       className="absolute top-0 left-0 w-full h-full object-cover"
-      poster="funkvibes.com/cdn/shop/files/preview_images/d087d6ec9948403da9768e66b301f5f0.thumbnail.0000000000_600x.jpg?v=1751473161"
     >
       <source
         src="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/0714.mp4"
         type="video/mp4"
       />
-      <img src="funkvibes.com/cdn/shop/files/preview_images/d087d6ec9948403da9768e66b301f5f0.thumbnail.0000000000_600x.jpg?v=1751473161" />
     </video>
 
     {/* 3‑D logo */}

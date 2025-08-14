@@ -4,7 +4,7 @@ import DripCultSlider from "./DripCultSlider";
 const DripCult = async () => {
   try {
     const res = await axiosInstance.get(
-      `product/get-product-category/dripcult?limit=20&filter=priority`
+      `product/get-product-category/dripcult?limit=40&sort=relevance`
     );
     const products = res?.data?.data?.products || [];
 

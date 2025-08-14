@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 import axiosInstance from "@/config/axiosInstance";
@@ -7,19 +7,26 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
+const formatIndianPrice = (price) => {
+  if (typeof price !== "number") price = Number(price);
+  return price.toLocaleString("en-IN");
+};
+
 const BlindDrop = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [timer, setTimer] = useState("");
   const [limit, setLimit] = useState(8);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 0);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
   const router = useRouter();
 
   const getProduct = async () => {
     setLoading(true);
     try {
       const { data } = await axiosInstance.get(
-        `product/get-product-category/blind-drop?limit=${limit}&filter=priority`
+        `product/get-product-category/blind-drop?limit=${limit}&sort=relevance`
       );
       setData(data.data.products);
     } catch (error) {
@@ -32,52 +39,6 @@ const BlindDrop = () => {
   useEffect(() => {
     getProduct();
   }, [limit]);
-  // useEffect(() => {
-  //   const getThursdayMidnightIST = () => {
-  //     const now = new Date();
-  //     const istOffset = 5.5 * 60 * 60 * 1000;
-  //     const utcNow = now.getTime() + now.getTimezoneOffset() * 60000;
-  //     const istNow = new Date(utcNow + istOffset);
-
-  //     // Get current day (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-  //     const currentDay = istNow.getDay();
-
-  //     // Calculate days to add to reach Friday (i.e., Thursday 12 PM = Friday 00:00 AM)
-  //     const daysToSunday = (3 - currentDay + 7) % 7;
-
-  //     const nextFridayMidnight = new Date(istNow);
-  //     nextFridayMidnight.setDate(istNow.getDate() + daysToSunday);
-  //     nextFridayMidnight.setHours(0, 0, 0, 0); // Set to 00:00 IST
-
-  //     return nextFridayMidnight.getTime();
-  //   };
-
-  //   const target = getThursdayMidnightIST();
-
-  //   const updateTimer = () => {
-  //     const now = new Date().getTime();
-  //     const diff = target - now;
-
-  //     if (diff <= 0) {
-  //       setTimer("00 hr 00 min 00 sec");
-  //       return;
-  //     }
-
-  //     const hours = Math.floor(diff / (1000 * 60 * 60));
-  //     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  //     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-  //     setTimer(
-  //       `${hours.toString().padStart(2, "0")} hr ${minutes
-  //         .toString()
-  //         .padStart(2, "0")} min ${seconds.toString().padStart(2, "0")} sec`
-  //     );
-  //   };
-
-  //   updateTimer();
-  //   const interval = setInterval(updateTimer, 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
 
   return (
     <div>
@@ -85,12 +46,6 @@ const BlindDrop = () => {
         <h2 className="text-center text-xl md:text-3xl font-bold">
           ‘ PROJECT UNSEEN ’
         </h2>
-        {/* <div className="text-[12px] mt-1 mb-12 text-gray-700 flex items-center gap-2">
-          <span className="font-mono rounded uppercase">
-            {" "}
-            [ Countdown {timer} ]{" "}
-          </span>
-        </div> */}
       </div>
 
       {loading ? (
@@ -145,7 +100,10 @@ const ProductCard = ({ item, linkPrefix }) => {
   return (
     <div className="relative group transition-all duration-500 product-card cursor-default">
       {/* Product Image with Link */}
-      <Link href={productUrl} className="w-full aspect-square block relative overflow-hidden">
+      <Link
+        href={productUrl}
+        className="w-full aspect-square block relative overflow-hidden"
+      >
         <img
           src={item.thumbnails[0]}
           alt={item?.name}
@@ -160,16 +118,19 @@ const ProductCard = ({ item, linkPrefix }) => {
       {/* Product Info */}
       <div className="text-start mt-4 px-1">
         {/* Name Clickable */}
-        <Link href={productUrl} className="font-semibold text-[12px] md:text-[14px] lg:text-[16px] truncate block hover:underline">
+        <Link
+          href={productUrl}
+          className="font-semibold text-[12px] md:text-[14px] lg:text-[16px] truncate block hover:underline"
+        >
           {item?.name}
         </Link>
 
         <div className="flex items-center gap-2 mt-1">
           <p className="text-[11px] md:text-[13px] font-medium text-red-500 ">
-            ₹{item?.discountedPrice}
+            ₹{formatIndianPrice(item?.discountedPrice)}
           </p>
           <p className="line-through text-[10px] md:text-[12px] text-gray-500">
-            ₹{item?.originalPrice}
+            ₹{formatIndianPrice(item?.originalPrice)}
           </p>
         </div>
       </div>

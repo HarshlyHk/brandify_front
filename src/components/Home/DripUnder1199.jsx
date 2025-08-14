@@ -53,7 +53,7 @@ const DripUnder1199 = () => {
     setLoading(true);
     try {
       const { data } = await axiosInstance.get(
-        `product/get-product-category/steal-the-drip?limit=60&filter=priority`
+        `product/get-product-category/steal-the-drip?limit=60&sort=relevance`
       );
       if (data?.data?.products) {
         setData(data.data.products);

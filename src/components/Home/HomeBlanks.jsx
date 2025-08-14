@@ -41,7 +41,7 @@ const HomeBlanks = () => {
     setLoading(true);
     try {
       const { data } = await axiosInstance.get(
-        `product/get-product-category/blanks?limit=${limit}&filter=priority`
+        `product/get-product-category/blanks?limit=${limit}&sort=relevance`
       );
       setData(data.data.products);
     } catch (error) {

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   Sheet,
@@ -10,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Plus, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../Logo/Logo";
@@ -31,17 +32,25 @@ const navItems = [
     ],
   },
   { name: "DRIPCULT - OG", link: "/all-products/dripcult" },
+  {
+    name: "FESTIVE SALE",
+    link: "/all-products/steal-the-drip",
+    color: "text-red-500",
+  },
+  { name: "BLIND DROP", link: "/all-products/blind-drop" },
+
+  // { name: "COMBO | UPTO 50% OFF", link: "/combo-page" },
 ];
 
 const DesktopNavbar = ({ user, handleLogout }) => {
-  const router = useRouter();
+  const pathname = usePathname();
   const [activePage, setActivePage] = useState("");
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    setActivePage(router.pathname);
-  }, [router.pathname]);
+    setActivePage(pathname);
+  }, [pathname]);
 
   const handleToggle = (name) => {
     setExpandedCategory((prev) => (prev === name ? null : name));
@@ -49,7 +58,8 @@ const DesktopNavbar = ({ user, handleLogout }) => {
 
   return (
     <div className="">
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <Sheet open={isOpen} onOpenChange={setIsOpen} 
+      >
         <SheetTrigger asChild>
           <div className="navbar-ham-container cursor-pointer">
             <a id="hamburger-icon" title="Menu">
@@ -97,7 +107,9 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                       }
                     }}
                     className={`relative w-fit block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#FFF] after:transition-all after:duration-500 group-hover:after:w-full ${
-                      activePage === item.link
+                      item.name === "FESTIVE SALE"
+                        ? "text-red-500 font-bold"
+                        : activePage === item.link
                         ? " after:w-full text-white font-bold"
                         : "hover:text-[#FFF] transition-all duration-300 font-medium"
                     }`}
@@ -192,7 +204,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                     : ""
                 }`}
               >
-                <p>Request a Return / Refund</p>
+                <p>Request Exchange</p>
               </Link>
               <a
                 href="https://www.instagram.com/drip.co.in/"

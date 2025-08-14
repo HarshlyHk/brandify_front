@@ -28,7 +28,7 @@ const FixYourDripHere = ({ productLimit = 16 }) => {
     setLoading(true);
     try {
       const { data } = await axiosInstance.get(
-        `product/get-product-category/featured?limit=${limit}&filter=priority`
+        `product/get-product-category/featured?limit=${limit}&sort=relevance`
       );
       if (data?.data?.products) {
         setData(data.data.products);

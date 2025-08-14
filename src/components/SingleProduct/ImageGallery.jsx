@@ -33,6 +33,9 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    if (typeof window != undefined) {
+      window.scrollTo(0, 0);
+    }
     setSelectedSize(null);
   }, [item]);
 
