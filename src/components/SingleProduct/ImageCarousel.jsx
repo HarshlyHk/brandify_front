@@ -56,7 +56,7 @@ const ImageCarousel = ({ images, loading }) => {
         controller={{ control: progressSwiperRef.current }}
         loop={true}
         autoHeight={true}
-        className="md:max-w-[700px] max-w-[95vw]"
+        className="md:w-[700px] md:min-h-[700px] min-h-[95vw] w-[95vw]"
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
           swiper.on("slideChange", () => {

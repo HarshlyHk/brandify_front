@@ -161,7 +161,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
 
             <div className="flex flex-col gap-4 mt-10 px-6 text-sm">
               <Link
-                href="/contact-us"
+                href="/support/contact-us"
                 onClick={() => {
                   setActivePage("/contact-us");
                   window.scrollTo(0, 0);
@@ -177,7 +177,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
               </Link>
 
               <Link
-                href="/track-order"
+                href="/support/track-order"
                 onClick={() => {
                   setActivePage("/track-order");
                   window.scrollTo(0, 0);
@@ -192,7 +192,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                 <p>Track Your Order</p>
               </Link>
               <Link
-                href="/return-and-refund"
+                href="/support/return-and-refund"
                 onClick={() => {
                   setActivePage("/return-and-refund");
                   window.scrollTo(0, 0);

@@ -1,15 +1,14 @@
+"use client";
 import React, { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
-import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleOrder } from "@/features/OrderSlice";
-import Lottie from "lottie-react"; // Import Lottie
-import successAnimation from "@/assets/lottie/Success.json"; // Import your animation JSON file
-
+import { useRouter, useParams } from "next/navigation";
+import Image from "next/image";
 const ViewOrder = () => {
   const { orderId } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
   const order = useSelector((state) => state.orders?.singleOrder);
 
   useEffect(() => {
@@ -29,7 +28,7 @@ const ViewOrder = () => {
           <h3 className="text-lg font-semibold mb-4 border-b pb-1 uppercase">
             Order Summary
           </h3>
-          <div className="grid gap-2 text-sm text-gray-700">
+          <div className="grid gap-2 text-sm  text-gray-700">
             <p>
               <strong>Order ID:</strong> {order.transactionId}
             </p>
@@ -49,6 +48,13 @@ const ViewOrder = () => {
             <p>
               <strong>Total:</strong> ₹{order.totalAmount}
             </p>
+            {
+              order?.paymentMethod === "PREPAID" && (
+                <p>
+                  <strong>Amount Paid:</strong> ₹{order.amountPaid}
+                </p>
+              )
+            }
           </div>
         </div>
 
@@ -64,6 +70,9 @@ const ViewOrder = () => {
             <p>
               <strong>Phone:</strong> {order.shippingAddress.phoneNumber}
             </p>
+            <p>
+              <strong>Email : </strong> {order.email}
+            </p>
             {order.shippingAddress.alternatePhoneNumber && (
               <p>
                 <strong>Alternate:</strong>{" "}
@@ -71,7 +80,8 @@ const ViewOrder = () => {
               </p>
             )}
             <p>
-              {order.shippingAddress.street}, {order.shippingAddress.locality},
+              <strong>Address:</strong> {order.shippingAddress.street},{" "}
+              {order.shippingAddress.locality},
               {order.shippingAddress.landmark &&
                 ` ${order.shippingAddress.landmark}, `}
               {order.shippingAddress.city}, {order.shippingAddress.state} -{" "}
@@ -91,21 +101,24 @@ const ViewOrder = () => {
                 key={index}
                 className="flex items-center gap-4 rounded-lg p-4 bg-[white] border-2"
               >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="md:w-20 md:h-20 h-16 w-16 object-cover rounded-md"
+                <Image
+                  width={100}
+                  height={100}
+                  sizes="(max-width: 768px) 100px, (min-width: 769px) 80px"
+                  src={product?.image}
+                  alt={product?.name}
+                  className="md:w-20 md:h-20 h-14 w-14 object-cover rounded-lg"
                 />
                 <div className="flex-1 text-sm">
                   <div className="flex justify-between font-medium">
-                    <p>{product.name}</p>
+                    <p>{product?.name}</p>
                     <p className="text-gray-500 uppercase text-xs">
-                      Size: {product.size}
+                      Size: {product?.size}
                     </p>
                   </div>
                   <div className="flex justify-between mt-2 text-xs text-gray-600">
-                    <p>Qty: {product.quantity}</p>
-                    <p>Price: ₹{product.price}</p>
+                    <p>Qty: {product?.quantity}</p>
+                    <p>Price: ₹{product?.price}</p>
                   </div>
                 </div>
               </div>
@@ -115,7 +128,7 @@ const ViewOrder = () => {
 
         {/* Continue Shopping */}
         <button
-          onClick={() => navigate("/shop-all")}
+          onClick={() => router.push("/")}
           className="w-full flex items-center justify-center gap-2 text-xs text-white bg-black hover:bg-gray-800 py-5 rounded-[5px] transition-all uppercase"
         >
           Continue Shopping <ArrowRight size={16} />
