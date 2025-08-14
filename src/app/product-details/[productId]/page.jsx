@@ -7,7 +7,7 @@ import ProductTabs from "@/components/SingleProduct/ProductTabs";
 import RelatedProducts from "@/components/SingleProduct/RelatedProducts";
 import { Comparison } from "@/components/Home/Comparison";
 import Categories from "@/components/Categories/Categories";
-
+import CollaboVideo from "@/components/SingleProduct/CollaboVideo";
 export async function generateMetadata({ params }) {
   const res = await axiosInstance.get(
     `product/get-product-all-details/${params.productId}`
@@ -90,6 +90,9 @@ const SingleProductPage = async ({ params: asyncParams }) => {
 
           <div className="md:px-40">
             <Comparison />
+          </div>
+          <div>
+            <CollaboVideo productId={productId} />
           </div>
         </div>
       </Suspense>

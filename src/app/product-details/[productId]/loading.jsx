@@ -4,7 +4,7 @@ import ImageGallerySkeleton from "@/components/Skeleton/ImageGallerySkeleton";
 
 export default function Loading() {
   return (
-    <div className="p-10 text-center">
+    <div className="">
       <ImageGallerySkeleton />
       <FrequentlyBoughtSkeleton />
       <ImageCarouselSkeleton />

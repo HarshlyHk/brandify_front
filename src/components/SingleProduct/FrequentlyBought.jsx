@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/features/cartSlice";
+import { formatIndianPrice } from "@/utils/formatPrice";
 
 const FrequentlyBought = ({ frequentlyBought }) => {
   const [selectedItems, setSelectedItems] = useState(
@@ -94,7 +95,12 @@ const FrequentlyBought = ({ frequentlyBought }) => {
                 className="mr-3 accent-red-500"
               />
               {/* Product Image */}
-              <Link href={`/product-details/${item._id}?name=${item.name?.replace(/[\s–]+/g, "-")}`}>
+              <Link
+                href={`/product-details/${item._id}?name=${item.name?.replace(
+                  /[\s–]+/g,
+                  "-"
+                )}`}
+              >
                 <img
                   src={item?.thumbnails[0]}
                   alt={item?.name}
@@ -108,9 +114,11 @@ const FrequentlyBought = ({ frequentlyBought }) => {
                   {item.name}
                 </p>
                 <div className="flex items-center space-x-2">
-                  <p className="text-[12px]">₹{item.discountedPrice}</p>
+                  <p className="text-[12px]">
+                    ₹{formatIndianPrice(item.discountedPrice)}
+                  </p>
                   <p className="text-[12px] line-through">
-                    ₹{item.originalPrice}
+                    ₹{formatIndianPrice(item.originalPrice)}
                   </p>
                 </div>
               </div>

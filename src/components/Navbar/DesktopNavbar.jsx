@@ -72,7 +72,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
 
         <SheetContent
           side="left"
-          className="md:min-w-[500px] min-w-full  bg-[#aeaeae69] backdrop-blur-[20px] p-0 shadow-md  overflow-y-auto z-[500000] "
+          className="md:min-w-[500px] min-w-full  bg-[#aeaeae69] backdrop-blur-[20px] p-0 shadow-md  overflow-y-auto z-[500000] text-white"
         >
           <SheetHeader className="px-6 pb-3">
             <Link

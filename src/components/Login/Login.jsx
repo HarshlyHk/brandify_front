@@ -1,7 +1,10 @@
+"use client"
 import React, { useEffect, useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router";
+// import { Link, useNavigate } from "react-router";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   loginWithGoogle,
   loginWithCredentials,
@@ -24,7 +27,7 @@ const categories = [
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [hovered, setHovered] = useState("Fear No One");
   const [otpSent, setOtpSent] = useState(false);
@@ -54,14 +57,14 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/shop-all");
+      router.push("/");
     }
-  }, [user, navigate]);
+  }, [user, router]);
 
   const handleGoogleSuccess = async (credentialResponse) => {
     const res = await dispatch(loginWithGoogle(credentialResponse.credential));
     if (res.meta.requestStatus === "fulfilled") {
-      navigate("/shop-all");
+      router.back();
     } else {
       console.error("Google login failed");
     }
@@ -71,11 +74,6 @@ const Login = () => {
     console.error("Google Login Failed:", error);
   };
 
-  const handleNavigate = (item) => {
-    const formattedItem = item.replace(/\s+/g, "-").toLowerCase();
-    console.log("Navigating to:", formattedItem);
-    navigate(`/all-products/${formattedItem}`);
-  };
 
   // Formik and Yup setup
   const formik = useFormik({
@@ -112,7 +110,7 @@ const Login = () => {
       borderRadius: "6px",
       fontSize: "16px",
       height: isMobile ? "50px" : "50px",
-      paddingLeft: isMobile ? "18px" : "18px",
+      paddingLeft: isMobile ? "18px" : "20px",
       backgroundColor: "#FFF", // Darker background for a modern look
       color: "#000", // Bright cyan for text
       border: "2px solid #d2a360", // Matching border color
@@ -141,7 +139,7 @@ const Login = () => {
       verifyOtp({ email: formik.values.email, otp, name: formik.values.name })
     );
     if (res.meta.requestStatus === "fulfilled") {
-      navigate("/shop-all");
+      router.back();
     }
     if (res.meta.requestStatus === "rejected") {
       console.error("OTP verification failed:", res.payload.message);
@@ -163,7 +161,7 @@ const Login = () => {
           <div className="h-full flex justify-center items-center w-[500px] ">
             <div className="w-full py-4 h-screen">
               <div className="flex flex-col pt-10 gap-10 items-start md:px-12 px-8 h-full w-full overflow-auto">
-                <div onClick={() => navigate("/shop-all")}>
+                <div onClick={() => router.push("/shop-all")}>
                   <CrossIcon
                     className="absolute top-2 right-2 cursor-pointer hover:scale-90 transition-all duration-300"
                     strokeColor="black"
@@ -289,7 +287,9 @@ const Login = () => {
                           <CodeInput
                             fields={6} // number of OTP digits
                             value={otp}
-                            type="number"
+                            type="tel"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                             onChange={(value) => setOtp(value)}
                             {...props}
                           />

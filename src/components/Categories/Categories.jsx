@@ -69,7 +69,7 @@ const Categories = ({ page = "shop-all" }) => {
                 {categoriesRow1.map((category, index) => (
                   <button
                     key={index}
-                    onClick={() => navigate(handleNavigation(category))}
+                    onClick={() => navigate.push(handleNavigation(category))}
                     className="text-sm whitespace-nowrap hover:underline"
                   >
                     {category}
@@ -83,7 +83,7 @@ const Categories = ({ page = "shop-all" }) => {
         <div className="flex md:justify-center justify-between md:px-20 px-10 md:gap-24 py-4">
           {categoriesRow1.map((category, index) => (
             <button
-              onClick={() => navigate(handleNavigation(category))}
+              onClick={() => navigate.push(handleNavigation(category))}
               key={index}
               className="text-[12px] tracking-wide transition-all duration-300 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-black hover:after:w-full after:transition-all after:duration-300 text-nowrap"
             >

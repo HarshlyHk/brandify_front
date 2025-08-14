@@ -19,8 +19,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import SizeChartImg from "@/assets/images/size-chart.jpg";
-import { createAbandonedCart } from "@/features/abandonedCartSlice";
 import MagicCheckoutButton from "@/components/MagicCheckout/MagicCheckout";
+import { BiSolidOffer } from "react-icons/bi";
+import {formatIndianPrice} from "@/utils/formatPrice"
+
 
 const ImageGallery = ({ item, loading, frequentlyBought }) => {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -98,6 +100,18 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
     }
   };
 
+  useEffect(() => {
+    if (item && window.fbq) {
+      window.fbq("track", "ViewContent", {
+        content_ids: [item?._id],
+        content_name: item?.name,
+        content_type: "product",
+        value: item?.discountedPrice,
+        currency: "INR",
+      });
+    }
+  }, [item]);
+
   if (loading) {
     return <ImageGallerySkeleton />;
   }
@@ -135,10 +149,10 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
           <div className="flex gap-2 mt-4 items-center ">
             <div className="flex gap-2 items-center">
               <p className="text-[1rem] md:text-[1.4rem] font-bold">
-                ₹{item?.discountedPrice}
+                ₹{formatIndianPrice(item?.discountedPrice)}
               </p>
               <p className="line-through text-[1rem] md:text-[1.4rem] opacity-75">
-                ₹{item?.originalPrice}
+                ₹{formatIndianPrice(item?.originalPrice)}
               </p>
             </div>
             {item?.isSpecial && (
@@ -154,12 +168,22 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
             Shipping Calculated at Checkout
           </p>
         </div>
+        <div className=" hidden md:block">
+          {item?.preBook && !item?.category?.includes("blind-drop") && (
+            <div className="top-2 text-xs text-start font-semibold py-2 text-gray-700">
+              <p>* THIS ITEM IS LIMITED TO 50 PIECES ONLY. *</p>
+            </div>
+          )}
+        </div>
 
-        {/* {item?.preeBook && (
-          <div className="text-gray-700 text-sm w-fit font-semibold px-2 py-1 mt-4 mb-2 bg-gray-200 rounded-[2px]">
-            PREBOOK NOW
-          </div>
-        )} */}
+        <div className="">
+          {item?.preeBook && !item?.category?.includes("blind-drop") && (
+            <div className="top-2 text-[10px] text-start font-semibold py-2 text-gray-700 uppercase">
+              <p>PREBOOKING ITEMS ARE AVAILABLE FOR PREPAID PURCHASES ONLY.</p>
+              <p>prebooked items will be delivered within 7 working days.</p>
+            </div>
+          )}
+        </div>
 
         <div className=" hidden md:block">
           {item?.preeBook && (
@@ -228,48 +252,72 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
             </p>
           </div>
         ) : (
-          <div className="flex flex-col md:flex-row gap-2 mt-4">
-            <button
-              onClick={handleAddToCart}
-              type="button"
-              name="add-to-cart-button"
-              className="rounded-md border-1 border-black px-4 py-5 text-xs md:py-5 w-full"
-              disabled={!selectedSize}
-              style={{
-                opacity: selectedSize ? 1 : 0.5,
-                cursor: selectedSize ? "pointer" : "not-allowed",
-              }}
-            >
-              ADD TO CART
-            </button>
-
-            <div
-              onClick={() => {
-                handleProceedToCheckout();
-              }}
-              className="w-full"
-            >
-              <MagicCheckoutButton
-                checkoutItem={{
-                  _id: item?._id,
-                  size: selectedSize,
-                }}
-                user={user}
-                disabled={!selectedSize}
-                buttonName={
-                  !selectedSize
-                    ? "SELECT SIZE TO BUY"
-                    : item?.preeBook
-                    ? "PREBOOK NOW"
-                    : "BUY NOW"
-                }
-                type="Instant"
-                className={`text-white rounded-md px-4 py-5 md:py-5 text-xs w-full border-1 border-black bg-black ${
-                  !selectedSize ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              />
+          <>
+            {item?.specialSale == true && (
+              <div className="text-purple-700 md:hidden text-[8px] sm:text-[10px] w-fit font-semibold px-2 py-2 mt-4 bg-[#f1e2f6] rounded-[5px] flex items-center gap-2">
+                <BiSolidOffer className=" text-sm" />{" "}
+                {item?.specialSaleDiscount}% SEPCIAL OFF ON THIS ITEM
+              </div>
+            )}
+            <div className="flex items-center gap-2 md:mt-4">
+              {item?.specialSale == true && (
+                <div className="text-purple-700 hidden md:flex text-[9px] sm:text-[10px] w-fit font-semibold px-2 py-2 mt-4 mb-2 bg-[#f1e2f6] rounded-[5px] items-center gap-2">
+                  <BiSolidOffer className=" text-sm" />{" "}
+                  {item?.specialSaleDiscount}% SEPCIAL OFF ON THIS ITEM
+                </div>
+              )}
+              <div className="text-green-700 text-[8px] sm:text-[10px] w-fit font-semibold px-2 py-2 mt-4 mb-2 bg-[#e2f6e2] rounded-[5px] flex items-center gap-2">
+                <BiSolidOffer className=" text-sm" /> 10% OFF ON ORDERS ABOVE
+                ₹1199
+              </div>
+              <div className="text-green-700 text-[8px] sm:text-[10px] w-fit font-semibold px-2 py-2 mt-4 mb-2 bg-[#e2f6e2] rounded-[5px] flex items-center gap-2">
+                <BiSolidOffer className=" text-sm" /> 5% OFF ON ORDERS BELOW
+                ₹1199
+              </div>
             </div>
-          </div>
+            <div className="flex flex-col md:flex-row gap-2 mt-4">
+              <button
+                onClick={handleAddToCart}
+                type="button"
+                name="add-to-cart-button"
+                className="rounded-md border-1 border-black px-4 py-5 text-xs md:py-5 w-full"
+                disabled={!selectedSize}
+                style={{
+                  opacity: selectedSize ? 1 : 0.5,
+                  cursor: selectedSize ? "pointer" : "not-allowed",
+                }}
+              >
+                ADD TO CART
+              </button>
+
+              <div
+                onClick={() => {
+                  handleProceedToCheckout();
+                }}
+                className="w-full"
+              >
+                <MagicCheckoutButton
+                  checkoutItem={{
+                    _id: item?._id,
+                    size: selectedSize,
+                  }}
+                  user={user}
+                  disabled={!selectedSize}
+                  buttonName={
+                    !selectedSize
+                      ? "SELECT SIZE TO BUY"
+                      : item?.preBook && !item?.category?.includes("blind-drop")
+                      ? "PREBOOK NOW"
+                      : "BUY NOW"
+                  }
+                  type="Instant"
+                  className={`text-white rounded-md px-4 py-5 md:py-5 text-xs w-full border-1 border-black bg-black ${
+                    !selectedSize ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                />
+              </div>
+            </div>
+          </>
         )}
 
         {/* Product Short Description */}
@@ -279,12 +327,12 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
       {/* Size Chart Modal */}
       <Dialog open={openSizeChart} onOpenChange={setOpenSizeChart}>
         <DialogTrigger asChild></DialogTrigger>
-        <DialogContent className="sm:max-w-[40vw]  w-full bg-[#000000] text-white">
+        <DialogContent className="sm:max-w-[40vw]  w-full bg-[white] text-black">
           <DialogHeader>
             <DialogTitle className="text-center"></DialogTitle>
           </DialogHeader>
           <img
-            src={SizeChartImg}
+            src="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/newsie.JPG"
             alt="Size Chart"
             className="w-full h-auto object-cover"
           />

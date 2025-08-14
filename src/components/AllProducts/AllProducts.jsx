@@ -17,10 +17,11 @@ import {
 } from "@/components/ui/sheet";
 import ProductFilters from "./ProductFilters";
 import SortSelector from "./SortSelector";
-import { FaFilter } from "react-icons/fa";
+import { VscSettings } from "react-icons/vsc";
 
 const AllProducts = () => {
   const [loading, setLoading] = useState(true);
+  const [totalProducts, setTotalProducts] = useState(0);
   const [data, setData] = useState(null);
   const { category } = useParams();
   const searchParams = useSearchParams();
@@ -28,29 +29,37 @@ const AllProducts = () => {
 
   // Local filter state
   const [filters, setFilters] = useState({
-    price: searchParams.get("price") || "",
+    minPrice: searchParams.get("price")?.split("-")[0] || "",
+    maxPrice: searchParams.get("price")?.split("-")[1] || "",
     inStock: searchParams.get("inStock") === "true",
     size: searchParams.get("size") || "",
     color: searchParams.get("color") || "",
     sort: searchParams.get("sort") || "relevance",
   });
 
+  // Pagination states
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isPaginating, setIsPaginating] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
+
   // Update local filter state when URL changes (for back/forward navigation)
   useEffect(() => {
     setFilters({
-      price: searchParams.get("price") || "",
+      minPrice: searchParams.get("price")?.split("-")[0] || "",
+      maxPrice: searchParams.get("price")?.split("-")[1] || "",
       inStock: searchParams.get("inStock") === "true",
       size: searchParams.get("size") || "",
       color: searchParams.get("color") || "",
       sort: searchParams.get("sort") || "relevance",
     });
   }, [category, searchParams.toString()]);
-  const getProduct = async () => {
-    setLoading(true);
+
+  const getProduct = async (reset = true, pageNum = 1) => {
+    if (reset) setLoading(true);
     try {
       const paramsObj = Object.fromEntries(searchParams.entries());
-
-      let query = `product/get-product-category/${category}?limit=100&sort=${
+      let query = `product/get-product-category/${category}?limit=12&page=${pageNum}&sort=${
         paramsObj.sort || "relevance"
       }`;
       if (paramsObj.price)
@@ -64,12 +73,24 @@ const AllProducts = () => {
 
       const { data } = await axiosInstance.get(query);
       if (data?.data?.products) {
-        setData(data.data.products);
+        if (reset) {
+          setData(data.data.products);
+        } else {
+          setData((prev) => [...(prev || []), ...data.data.products]);
+        }
+        setTotalProducts(data?.data?.pagination?.totalProducts);
+        setTotalPages(data?.data?.pagination?.totalPages || 1);
+        setHasMore(
+          (data?.data?.pagination?.currentPage || pageNum) <
+            (data?.data?.pagination?.totalPages || 1)
+        );
+        setPage(data?.data?.pagination?.currentPage || pageNum);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      setLoading(false);
+      if (reset) setLoading(false);
+      setIsPaginating(false);
     }
   };
 
@@ -78,13 +99,37 @@ const AllProducts = () => {
     if (typeof window !== "undefined") {
       window.scrollTo(0, 0);
     }
-    getProduct();
+    setPage(1);
+    setHasMore(true);
+    setTotalPages(1);
+    getProduct(true, 1);
   }, [category, searchParams.toString()]);
+
+  // Infinite scroll handler
+  useEffect(() => {
+    const handleScroll = () => {
+      if (loading || isPaginating || !hasMore) return;
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 300
+      ) {
+        setIsPaginating(true);
+        const nextPage = page + 1;
+        getProduct(false, nextPage);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loading, isPaginating, hasMore, page, category, searchParams.toString()]);
 
   // Handler for Apply Filters button
   const handleApplyFilters = () => {
     const params = new URLSearchParams();
-    if (filters.price) params.set("price", filters.price);
+    if (filters.minPrice || filters.maxPrice) {
+      const min = filters.minPrice || 0;
+      const max = filters.maxPrice || 2500;
+      params.set("price", `${min}-${max}`);
+    }
     if (filters.inStock) params.set("inStock", "true");
     if (filters.size) params.set("size", filters.size);
     if (filters.color) params.set("color", filters.color);
@@ -94,46 +139,23 @@ const AllProducts = () => {
     // getProduct will be triggered by useEffect above
   };
 
+  // Handler for Reset Filters button
+  const handleResetFilters = () => {
+    setFilters({
+      minPrice: "",
+      maxPrice: "",
+      inStock: false,
+      size: "",
+      color: "",
+      sort: "relevance",
+    });
+    router.replace(`/all-products/${category}?sort=relevance`);
+    // getProduct will be triggered by useEffect above
+  };
+
   return (
     <div className="prodcut-padding-2 relative">
       {/* Filter Button and Sheet */}
-      <div className="flex justify-end mb-4">
-        <Sheet>
-          <SheetTrigger asChild>
-            <button
-              className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
-              aria-label="Filter"
-            >
-              <FaFilter />
-              Filter
-            </button>
-          </SheetTrigger>
-          <SheetContent side="left" className="max-w-xs w-full">
-            <SheetHeader>
-              <SheetTitle>Filters</SheetTitle>
-              <SheetDescription>
-                Refine your search by selecting filters below.
-              </SheetDescription>
-            </SheetHeader>
-            <ProductFilters
-              category={category}
-              filters={filters}
-              resultCount={data?.length}
-              setFilters={setFilters}
-            />
-            <SheetFooter>
-              <SheetClose asChild>
-                <button
-                  className="mt-4 w-full px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
-                  onClick={handleApplyFilters}
-                >
-                  Apply Filters
-                </button>
-              </SheetClose>
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
-      </div>
 
       <h2 className="text-center mb-4 mt-10 ">
         {category === "oversized-tees" && "OVERSIZED TEES"}
@@ -156,17 +178,83 @@ const AllProducts = () => {
       </p>
 
       {loading ? (
-        <div className="flex flex-wrap justify-center gap-[5px]">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-[5px] gap-y-[10px] md:gap-y-[30px]">
           {Array.from({ length: 12 }).map((_, index) => (
-            <div key={index} className="w-[350px] h-[350px]">
+            <div key={index} className="w-full aspect-square">
               <Skeleton className="w-full h-full" />
+              <div className="mt-4 px-1">
+                <Skeleton className="h-4 w-3/4 mb-2" />
+                <Skeleton className="h-3 w-1/2 mb-1" />
+                <Skeleton className="h-3 w-1/3" />
+              </div>
             </div>
           ))}
         </div>
       ) : (
         <>
           {/* Sort by  */}
-          <SortSelector category={category} />
+          <div className="flex items-center gap-4 justify-between mb-4">
+            <div className=" hidden md:block w-full">
+              <p className=" text-gray-700 w-full">
+                {data ? `${totalProducts} Products` : "No products found"}
+              </p>
+            </div>
+            <div className="flex items-center justify-between w-full md:justify-end gap-4">
+              <div className="flex justify-end ">
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <button
+                      className="text-sm md:text-base tracking-wider text-black flex items-center gap-2 "
+                      aria-label="Filter"
+                    >
+                      <VscSettings />
+                      Filter
+                    </button>
+                  </SheetTrigger>
+                  <SheetContent
+                    side="left"
+                    className="w-screen overflow-scroll md:w-full text-black"
+                  >
+                    <SheetHeader>
+                      <SheetTitle>
+                        {category.replace(/-/g, " ").toUpperCase()}
+                      </SheetTitle>
+                      <SheetDescription>
+                        Refine your search by selecting filters below.
+                      </SheetDescription>
+                    </SheetHeader>
+                    <ProductFilters
+                      category={category}
+                      filters={filters}
+                      resultCount={data?.length}
+                      setFilters={setFilters}
+                    />
+                    <SheetFooter>
+                      <SheetClose asChild>
+                        <button
+                          className="flex justify-center items-center w-full py-[12px] px-[30px] text-[12px] tracking-[0.2em] uppercase bg-black text-white border-transparent border-[1px] "
+                          onClick={handleApplyFilters}
+                        >
+                          Apply Filters
+                        </button>
+                      </SheetClose>
+                      {/* Reset Filters Button */}
+                      <SheetClose asChild>
+                        <button
+                          className="flex justify-center items-center w-full py-[12px] px-[30px] text-[12px] tracking-[0.2em] uppercase bg-white text-black border border-gray-300"
+                          onClick={handleResetFilters}
+                        >
+                          Reset Filters
+                        </button>
+                      </SheetClose>
+                    </SheetFooter>
+                  </SheetContent>
+                </Sheet>
+              </div>
+              <div className="text-gray-400 hidden md:block border-l border-gray-300 h-6"></div>
+              <SortSelector category={category} />
+            </div>
+          </div>
 
           {data.length === 0 ? (
             <div className="text-center py-20">
@@ -192,6 +280,20 @@ const AllProducts = () => {
                   item={item}
                 />
               ))}
+              {isPaginating && (
+                <div className="col-span-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-[5px] gap-y-[10px] md:gap-y-[30px] py-8">
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <div key={index} className="w-full aspect-square">
+                      <Skeleton className="w-full h-full" />
+                      <div className="mt-4 px-1">
+                        <Skeleton className="h-4 w-3/4 mb-2" />
+                        <Skeleton className="h-3 w-1/2 mb-1" />
+                        <Skeleton className="h-3 w-1/3" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </>

@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -5,11 +6,8 @@ import {
   updateCartItemQuantity,
   removeFromCart,
 } from "@/features/cartSlice";
-import { Link, useNavigate } from "react-router";
-import QuickLogin from "../Login/QuickLogin";
-import { Skeleton } from "../ui/skeleton";
-import { MdDelete } from "react-icons/md";
-import { createAbandonedCart } from "@/features/abandonedCartSlice";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import CartItem from "./CartItem";
 import CartSummary from "./CartSummary";
 import EmptyCart from "./EmptyCart";
@@ -20,13 +18,8 @@ const Cart = () => {
   const { userLoading } = useSelector((state) => state.user);
   const { cartItems, error, quantityLoading, actionLoading, loading } =
     useSelector((state) => state.cart);
-  const { addresses } = useSelector((state) => state.address);
-
   const [localCart, setLocalCart] = useState([]);
-  const [coupon, setCoupon] = useState("");
-  const [orderNotes, setOrderNotes] = useState("");
-  const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,14 +59,11 @@ const Cart = () => {
       );
       setLocalCart(updatedCart);
       if (typeof window !== "undefined") {
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
     }
   };
 
-  const handleProceedToCheckout = () => {
-    navigate("/cart-checkout");
-  };
 
   if (loading)
     return (
@@ -98,14 +88,14 @@ const Cart = () => {
           <div className="w-16 h-16 border-4 border-gray-300 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
-      <div className="mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div className="mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10 min-h-screen">
         <div className="lg:col-span-2 md:pt-6">
           <h3 className="text-xl uppercase font-bold text-center md:mb-0 mb-4">
             YOUR CART
           </h3>
 
           <div className="space-y-6">
-            {itemsToRender.map((item, index) => (
+            { itemsToRender && itemsToRender.map((item, index) => (
               <>
                 <CartItem
                   key={index}
@@ -123,11 +113,6 @@ const Cart = () => {
           user={user}
           cartItems={cartItems}
           localCart={localCart}
-          coupon={coupon}
-          setCoupon={setCoupon}
-          orderNotes={orderNotes}
-          setOrderNotes={setOrderNotes}
-          handleProceedToCheckout={handleProceedToCheckout}
         />
       </div>
     </div>

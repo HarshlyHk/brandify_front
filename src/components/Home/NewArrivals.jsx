@@ -33,52 +33,6 @@ const NewArrivals = () => {
     getProduct();
   }, []);
 
-  // useEffect(() => {
-  //   const getThursdayMidnightIST = () => {
-  //     const now = new Date();
-  //     const istOffset = 5.5 * 60 * 60 * 1000;
-  //     const utcNow = now.getTime() + now.getTimezoneOffset() * 60000;
-  //     const istNow = new Date(utcNow + istOffset);
-
-  //     // Get current day (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-  //     const currentDay = istNow.getDay();
-
-  //     // Calculate days to add to reach Saturday (i.e., Thursday 12 PM = Friday 00:00 AM)
-  //     const daysToSunday = (7 - currentDay + 7) % 7;
-
-  //     const nextFridayMidnight = new Date(istNow);
-  //     nextFridayMidnight.setDate(istNow.getDate() + daysToSunday);
-  //     nextFridayMidnight.setHours(0, 0, 0, 0); // Set to 00:00 IST
-
-  //     return nextFridayMidnight.getTime();
-  //   };
-
-  //   const target = getThursdayMidnightIST();
-
-  //   const updateTimer = () => {
-  //     const now = new Date().getTime();
-  //     const diff = target - now;
-
-  //     if (diff <= 0) {
-  //       setTimer("00 hr 00 min 00 sec");
-  //       return;
-  //     }
-
-  //     const hours = Math.floor(diff / (1000 * 60 * 60));
-  //     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  //     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-  //     setTimer(
-  //       `${hours.toString().padStart(2, "0")} hr ${minutes
-  //         .toString()
-  //         .padStart(2, "0")} min ${seconds.toString().padStart(2, "0")} sec`
-  //     );
-  //   };
-
-  //   updateTimer();
-  //   const interval = setInterval(updateTimer, 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
 
   if (loading) {
     return <Skeleton className="w-full h-[500px] rounded-xl" />;
@@ -96,7 +50,7 @@ const NewArrivals = () => {
         {data.map((product) => (
           <div
             key={product._id}
-            onClick={() => router.push(`/product-details/product/${product._id}`)}
+            onClick={() => router.push(`/product-details/${product._id}?name=${product?.name}`)}
             className="flex-shrink-0 w-[300px] h-[360px] flex flex-col items-center group relative"
           >
             {product?.specialSale && (

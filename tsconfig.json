@@ -32,7 +32,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/app/product-details/[productId]/page.jsx", "src/lib/providers.jsx", "src/components/AllProducts/SortSelector.jsx", "src/app/all-products/[category]/page.jsx", "src/components/AllProducts/ProductFilters.jsx", "src/app/wishlist/wishlist-client.jsx", "src/app/wishlist/page.jsx", "src/utils/addToWishlist.jsx"  ],
+, "src/app/product-details/[productId]/page.jsx", "src/lib/providers.jsx", "src/components/AllProducts/SortSelector.jsx", "src/app/all-products/[category]/page.jsx", "src/components/AllProducts/ProductFilters.jsx", "src/app/wishlist/wishlist-client.jsx", "src/app/wishlist/page.jsx", "src/utils/addToWishlist.jsx", "src/app/cart/page.jsx", "src/app/login/page.jsx", "src/app/order-success/[orderId]/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]

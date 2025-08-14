@@ -6,7 +6,7 @@ import checkoutReducer from "@/features/checkoutSlice";
 import orderReducer from "@/features/OrderSlice";
 import abandonedCartReducer from "@/features/abandonedCartSlice";
 import specialFramesReducer from "@/features/specialFramesSlice";
-
+import collabosReducer from "@/features/collaboSlice"
 const store = configureStore({
   reducer: {
     user: userReducer,
@@ -16,6 +16,7 @@ const store = configureStore({
     orders: orderReducer,
     abandonedCart: abandonedCartReducer,
     specialFrames: specialFramesReducer,
+    collabo: collabosReducer
   },
 });
 

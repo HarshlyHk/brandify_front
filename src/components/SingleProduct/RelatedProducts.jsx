@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link"
-
+import { formatIndianPrice } from "@/utils/formatPrice";
 const RelatedProducts = ({ item, linkPrefix }) => {
 
 
@@ -34,10 +34,10 @@ const RelatedProducts = ({ item, linkPrefix }) => {
 
         <div className="flex items-center gap-2 mt-1">
           <p className="text-[11px] md:text-[13px] font-medium text-black">
-            ₹{item?.discountedPrice}
+            ₹{formatIndianPrice(item?.discountedPrice)}
           </p>
           <p className="line-through text-[10px] md:text-[12px] text-gray-500">
-            ₹{item?.originalPrice}
+            ₹{formatIndianPrice(item?.originalPrice)}
           </p>
         </div>
       </div>

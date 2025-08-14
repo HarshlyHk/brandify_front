@@ -7,8 +7,8 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 const ProductFilters = ({ category, resultCount, filters, setFilters }) => {
   const [openSections, setOpenSections] = useState({
     price: true,
-    availability: true,
-    size: true,
+    availability: false,
+    size: false,
   });
 
   const toggleSection = (section) => {
@@ -25,27 +25,57 @@ const ProductFilters = ({ category, resultCount, filters, setFilters }) => {
     }));
   };
 
+  const handlePriceInput = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value.replace(/\D/, ""), // only numbers
+    }));
+  };
+
   const filterSections = [
     {
       id: "price",
       title: "Price",
       content: (
         <div className="mt-4 space-y-4">
-          <div className="flex justify-between text-sm text-gray-600">
-            <span>₹0</span>
-            <span>₹2500</span>
+          <div className="flex justify-between items-center gap-4 text-sm text-gray-600">
+            <div className="flex flex-col items-start gap-1">
+              <label htmlFor="minPrice" className="text-xs text-gray-500">
+                Min
+              </label>
+              <input
+                id="minPrice"
+                name="minPrice"
+                type="number"
+                min={0}
+                max={filters.maxPrice || 2500}
+                value={filters.minPrice || ""}
+                onChange={handlePriceInput}
+                placeholder="₹0"
+                className="w-20 px-2 py-2 border border-gray-300 rounded focus:outline-none "
+              />
+            </div>
+            <span className="mx-2 text-gray-400">—</span>
+            <div className="flex flex-col items-start gap-1">
+              <label htmlFor="maxPrice" className="text-xs text-gray-500">
+                Max
+              </label>
+              <input
+                id="maxPrice"
+                name="maxPrice"
+                type="number"
+                min={filters.minPrice || 0}
+                max={2500}
+                value={filters.maxPrice || ""}
+                onChange={handlePriceInput}
+                placeholder="₹2500"
+                className="w-20 px-2 py-2 border border-gray-300 rounded focus:outline-none "
+              />
+            </div>
           </div>
-          <input
-            type="range"
-            min={0}
-            max={2500}
-            step={50}
-            value={filters.price || 0}
-            onChange={(e) => handleFilterChange("price", e.target.value)}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-black"
-          />
-          <div className="text-sm text-center text-gray-700">
-            Selected: ₹{filters.price || 0}
+          <div className="text-xs text-center text-gray-700">
+            Selected: ₹{filters.minPrice || 0} — ₹{filters.maxPrice || 2500}
           </div>
         </div>
       ),
@@ -60,7 +90,7 @@ const ProductFilters = ({ category, resultCount, filters, setFilters }) => {
               type="checkbox"
               checked={filters.inStock}
               onChange={(e) => handleFilterChange("inStock", e.target.checked)}
-              className="w-4 h-4 text-black border-gray-300 rounded focus:ring-black"
+              className="w-4 h-4 text-black border-gray-300 rounded focus:ring-black accent-black"
             />
             <span className="text-sm text-gray-700">In Stock</span>
           </label>
@@ -78,14 +108,12 @@ const ProductFilters = ({ category, resultCount, filters, setFilters }) => {
               <button
                 key={idx}
                 type="button"
-                className={`py-2 text-sm transition-colors rounded-md ${
+                className={`py-2 text-sm transition-colors border ${
                   selected
-                    ? "bg-black text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-black border-gray-300 hover:bg-gray-100"
                 }`}
-                onClick={() =>
-                  handleFilterChange("size", size.toLowerCase())
-                }
+                onClick={() => handleFilterChange("size", size.toLowerCase())}
                 aria-pressed={selected}
               >
                 {size}
@@ -98,7 +126,7 @@ const ProductFilters = ({ category, resultCount, filters, setFilters }) => {
   ];
 
   return (
-    <div className="w-full px-4 py-6 bg-white md:w-80 md:sticky md:top-20 md:h-fit md:px-0 md:py-0 md:ml-4 md:mt-10">
+    <div className="w-full px-4 bg-white ">
       <p className="pb-4 mb-6 text-sm text-gray-600 border-b">
         {resultCount} Results
       </p>

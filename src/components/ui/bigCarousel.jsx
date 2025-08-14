@@ -176,7 +176,7 @@ export const Card = ({ card, index, layout = false }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               ref={containerRef}
-              className="relative z-[60] mx-auto my-10 h-full max-w-[93%] rounded-3xl bg-transparent p-1 font-sans md:p-2 dark:bg-neutral-900"
+              className="relative z-[60] mx-auto my-10 h-full max-w-[93%] rounded-3xl bg-transparent p-1 font-sans md:p-2 "
             >
               <button
                 className=" absolute -top-5 right-0 ml-auto flex h-8 w-8 items-center justify-center rounded-full bg-black dark:bg-white"
@@ -244,7 +244,7 @@ export const Card = ({ card, index, layout = false }) => {
 
       <button
         onClick={handleOpen}
-        className="relative z-10 flex h-[36em] w-80 flex-col items-start justify-start overflow-hidden rounded-[15px] bg-gray-100 md:h-[40rem] md:w-96 dark:bg-neutral-900"
+        className="relative z-10 flex h-[36em] w-80 flex-col items-start justify-start overflow-hidden rounded-[15px] bg-gray-100 md:h-[40rem] md:w-96 "
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-gradient-to-b from-black/50 via-transparent to-transparent" />
         <div className="relative z-40 p-8">
@@ -350,10 +350,7 @@ export const BlurImage = ({
     return (
       <div
         ref={ref}
-        className={cn(
-          "h-full w-full bg-neutral-200 dark:bg-neutral-700",
-          className
-        )}
+        className={cn("h-full w-full bg-neutral-200 ", className)}
         style={{ width, height }}
       />
     );
