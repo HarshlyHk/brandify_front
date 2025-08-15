@@ -22,7 +22,7 @@ const QuickLogin = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isNameAvailable, setIsNameAvailable] = useState(false);
   const dispatch = useDispatch();
   const [isMobile, setIsMobile] = useState(false);
@@ -58,11 +58,11 @@ const QuickLogin = ({ open, setOpen }) => {
     inputStyle: {
       margin: isMobile ? "2px" : "6px",
       MozAppearance: "textfield",
-      width: isMobile ? "50px" : "50px",
+      width: isMobile ? "40px" : "50px",
       borderRadius: "6px",
       fontSize: "16px",
-      height: isMobile ? "50px" : "50px",
-      paddingLeft: isMobile ? "18px" : "20px",
+      height: isMobile ? "45px" : "50px",
+      paddingLeft: isMobile ? "14px" : "20px",
       backgroundColor: "#FFF", // Darker background for a modern look
       color: "#000", // Bright cyan for text
       border: "2px solid #d2a360", // Matching border color
@@ -130,15 +130,13 @@ const QuickLogin = ({ open, setOpen }) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="p-6 rounded-md h-[80vh]">
         <DialogHeader>
-          <DialogTitle className="text-center"></DialogTitle>
+          <DialogTitle className="text-center">
+              <h1 className=" text-[1.6rem] font-helvetica font-bold">Login</h1>
+          </DialogTitle>
         </DialogHeader>
         <div className="h-full flex justify-center items-center w-full  md:w-[500px]">
           <div className="w-full py-4 h-screen">
-            <div className="flex flex-col pt-10 gap-10 items-start md:px-12 px-0 h-full w-full overflow-auto">
-              <h1 className=" text-[1.6rem] font-poppins font-bold">
-                Login To Proceeed
-              </h1>
-
+            <div className="flex flex-col pt-4 gap-10 items-start md:px-12 px-0 h-full w-full overflow-auto">
               <form
                 onSubmit={formik.handleSubmit}
                 className="flex flex-col gap-8 w-full"
@@ -166,13 +164,13 @@ const QuickLogin = ({ open, setOpen }) => {
                                 value={formik.values.email}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                className="w-full p-3 border-2 rounded-lg focus:outline-none focus:ring-[#FFF] peer bg-transparent bor text-[14px]"
+                                className="w-full p-3 border-2 rounded-lg focus:outline-none focus:ring-[#FFF] peer bg-transparent bor text-[14px] font-helvetica"
                               />
                               <label
                                 htmlFor="email"
-                                className={`absolute text-[12px] left-3 top-4 transition-all duration-200 transform ${
+                                className={`absolute  font-helvetica text-[12px] left-3 top-4 transition-all duration-200 transform ${
                                   formik.values.email
-                                    ? "-translate-y-8 -translate-x-2 text-sm text-[#000000]"
+                                    ? "-translate-y-8 -translate-x-2 text-[12px] text-[#000000]"
                                     : "peer-focus:-translate-y-8 peer-focus:text-[12px] peer-focus: peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-[12px] text-[#6d6d6d]"
                                 }`}
                               >
@@ -182,7 +180,7 @@ const QuickLogin = ({ open, setOpen }) => {
                           </div>
 
                           {formik.touched.email && formik.errors.email && (
-                            <div className="text-red-500 text-sm mt-2">
+                            <div className="text-red-500 text-sm mt-2 font-helvetica">
                               {formik.errors.email}
                             </div>
                           )}
@@ -191,7 +189,7 @@ const QuickLogin = ({ open, setOpen }) => {
                       <button
                         type="button"
                         disabled={loading}
-                        className={`button-complete mt-4 ${
+                        className={` bg-black text-white py-3 text-[12px] mt-4 ${
                           loading ? "opacity-50 cursor-not-allowed" : ""
                         }`}
                         onClick={handleSentOtp}
@@ -199,8 +197,8 @@ const QuickLogin = ({ open, setOpen }) => {
                         <span className="circle" aria-hidden="true">
                           <span className="icon arrow"></span>
                         </span>
-                        <span className="button-text">
-                          {loading ? "Sending..." : "Send OTP"}
+                        <span className="button-text font-helvetica">
+                          {loading ? "Sending..." : "SEND OTP"}
                         </span>
                       </button>
                     </motion.form>
@@ -225,14 +223,14 @@ const QuickLogin = ({ open, setOpen }) => {
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                className="w-full p-3 border-2 rounded-lg focus:outline-none focus:ring-[#FFF] peer bg-transparent bor text-[14px]"
+                                className="w-full p-3 border-2 rounded-lg focus:outline-none focus:ring-[#FFF] peer bg-transparent bor text-[14px] font-helvetica"
                               />
                               <label
                                 htmlFor="email"
                                 className={`absolute text-[12px] left-3 top-4 transition-all duration-200 transform ${
                                   formik.values.name
-                                    ? "-translate-y-8 -translate-x-2 text-sm text-[#000000]"
-                                    : "peer-focus:-translate-y-8 peer-focus:text-[12px] peer-focus: peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-[12px] text-[#6d6d6d]"
+                                    ? "-translate-y-8 -translate-x-2 text-[12px] text-[#000000]"
+                                    : "peer-focus:-translate-y-8 peer-focus:text-[12px] peer-focus: peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-[12px] text-[#6d6d6d] font-helvetica"
                                 }`}
                               >
                                 Enter your Name
@@ -241,7 +239,7 @@ const QuickLogin = ({ open, setOpen }) => {
                           </div>
 
                           {formik.touched.name && formik.errors.name && (
-                            <div className="text-red-500 text-sm mt-2">
+                            <div className="text-red-500 text-sm mt-2 font-helvetica">
                               {formik.errors.name}
                             </div>
                           )}
@@ -254,6 +252,7 @@ const QuickLogin = ({ open, setOpen }) => {
                           fields={6} // number of OTP digits
                           value={otp}
                           type="tel"
+                          className="font-helvetica"
                           inputMode="numeric"
                           pattern="[0-9]*"
                           onChange={(value) => setOtp(value)}
@@ -265,7 +264,7 @@ const QuickLogin = ({ open, setOpen }) => {
                         type="button"
                         onClick={() => handleSubmitOtp()}
                         disabled={loading}
-                        className={`button-complete mt-4 ${
+                        className={` bg-black text-white py-3 text-[14px] mt-4 ${
                           loading ? "opacity-50 cursor-not-allowed" : ""
                         }`}
                       >

@@ -32,13 +32,17 @@ const Reviews = () => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [quickLoginOpen, setQuickLoginOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getProductReviews({ productId, page, limit, sort }));
   }, [dispatch, productId, page, limit, sort]);
 
   const handleStarClick = (value) => {
-    if (!user) return;
+    if (!user) {
+      setQuickLoginOpen(true);
+      return;
+    }
     setRating(value);
     setDialogOpen(true);
   };
@@ -343,6 +347,7 @@ const Reviews = () => {
           </div>
         </DialogContent>
       </Dialog>
+      <QuickLogin open={quickLoginOpen} setOpen={setQuickLoginOpen} />
     </div>
   );
 };
