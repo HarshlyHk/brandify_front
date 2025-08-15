@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import parse from "html-react-parser";
 import { Skeleton } from "../ui/skeleton";
-
+import { useSelector } from "react-redux";
+import Reviews from "./Reviews";
 const tabs = ["Description", "Core Features", "Care Guide", "Reviews"];
 
 const ProductTabs = ({
+  productId,
   description,
   coreFeatures,
   careGuide,
@@ -13,9 +15,8 @@ const ProductTabs = ({
   loading,
 }) => {
   const [tabIndex, setTabIndex] = useState(0);
-
+  const user = useSelector((state) => state.user.user);
   const handleTabChange = (index) => setTabIndex(index);
-
   const renderContent = (text) => {
     const formatted = (text || "").replace(/\r\n/g, "<br/>");
     return (
@@ -69,7 +70,7 @@ const ProductTabs = ({
                 : "text-[#6d6c6c] hover:text-black"
             }`}
           >
-            {label === "Reviews" ? `${label} (${reviews.length})` : label}
+            {label === "Reviews" ? `${label}` : label}
           </button>
         ))}
       </div>
@@ -80,32 +81,12 @@ const ProductTabs = ({
         {tabIndex === 1 && renderContent(coreFeatures)}
         {tabIndex === 2 && renderContent(careGuide)}
         {tabIndex === 3 && (
-          <div className="flex flex-col sm:flex-row justify-between gap-6">
-            <div className="w-full sm:w-1/2">
-              <h2 className="text-lg font-semibold mb-4">REVIEWS</h2>
-              {reviews.length === 0 ? (
-                <p className="text-gray-700 text-sm">
-                  There are no reviews yet.
-                </p>
-              ) : (
-                <div className="space-y-4">
-                  {reviews.map((review, index) => (
-                    <div
-                      key={index}
-                      className="p-4 border border-gray-700 rounded-lg bg-[#2a2a2a]"
-                    >
-                      <p className="font-semibold text-white">
-                        {review.userName || "Anonymous"}
-                      </p>
-                      <p className="text-gray-100 mt-1 text-sm">
-                        {review.comment}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
+          <div className="">
+            <div className="w-full ">
+              <h2 className="font-semibold !mb-4 ">Reviews</h2>
+              <Reviews productId={productId} />
             </div>
-            <div className="w-full sm:w-1/2 border-l border-gray-100 pl-4">
+            <div className="w-full  border-l border-gray-100 pl-4">
               <p className="text-sm text-gray-100">
                 You must be logged in to post a review.
               </p>

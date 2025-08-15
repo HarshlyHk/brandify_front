@@ -15,13 +15,8 @@ import {
   loginWithCredentials,
   verifyOtp,
 } from "../../features/userSlice";
-import { MdPermIdentity } from "react-icons/md";
-import { CiLock } from "react-icons/ci";
-import { BiHide, BiShow } from "react-icons/bi";
 import CodeInput from "react-code-input";
-import { useNavigate } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import CrossIcon from "../Svgs/CrossIcon";
 
 const QuickLogin = ({ open, setOpen }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -61,13 +56,13 @@ const QuickLogin = ({ open, setOpen }) => {
   };
   const props = {
     inputStyle: {
-      margin: "6px",
+      margin: isMobile ? "2px" : "6px",
       MozAppearance: "textfield",
-      width: isMobile ? "40px" : "50px",
+      width: isMobile ? "50px" : "50px",
       borderRadius: "6px",
       fontSize: "16px",
-      height: isMobile ? "40px" : "50px",
-      paddingLeft: isMobile ? "14px" : "18px",
+      height: isMobile ? "50px" : "50px",
+      paddingLeft: isMobile ? "18px" : "20px",
       backgroundColor: "#FFF", // Darker background for a modern look
       color: "#000", // Bright cyan for text
       border: "2px solid #d2a360", // Matching border color
@@ -89,7 +84,6 @@ const QuickLogin = ({ open, setOpen }) => {
       transition: "all 0.3s ease-in-out", // Smooth hover effect
     },
   };
-
   const handleSubmitOtp = async () => {
     setLoading(true);
     const res = await dispatch(
@@ -259,6 +253,9 @@ const QuickLogin = ({ open, setOpen }) => {
                         <CodeInput
                           fields={6} // number of OTP digits
                           value={otp}
+                          type="tel"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
                           onChange={(value) => setOtp(value)}
                           {...props}
                         />

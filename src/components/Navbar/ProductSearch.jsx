@@ -127,7 +127,7 @@ const ProductSearch = ({ size }) => {
               {products.map((product) => (
                 <div
                   onClick={() => {
-                    router.push(`/${product.name}/${product._id}`);
+                    router.push(`/product-details/${product._id}?name=${product.name}`);
                     setShowSearchBar(false);
                     document.body.style.overflow = "auto";
                     setQuery("");

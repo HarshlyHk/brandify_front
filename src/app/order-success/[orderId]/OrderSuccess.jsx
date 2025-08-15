@@ -23,7 +23,7 @@ const OrderSuccess = () => {
   );
   useEffect(() => {
     window.scrollTo(0, 0);
-    const referralCode = localStorage.getItem("referralCode");
+    // const referralCode = localStorage.getItem("referralCode");
     const fetchOrder = async () => {
       try {
         if (orderId) {
