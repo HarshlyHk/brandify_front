@@ -168,7 +168,7 @@ const ReviewsClient = () => {
   return (
     <div className="p-6 w-full mx-auto">
       {/* Top Details */}
-      <div className="flex md:flex-row flex-col  justify-between gap-10 flex-wrap md:gap-10 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-8">
         {/* Product Details */}
         <Link
           href={`/product-details/${productId}`}
@@ -177,15 +177,16 @@ const ReviewsClient = () => {
           <img
             src={productDetail?.thumbnail}
             alt="Product Thumbnail"
-            className=" w-full md:w-40"
+            className="w-full md:w-40"
           />
-          <p className="text-lg  md:text-base mt-6 md:mt-2 font-helvetica font-semibold text-center">
+          <p className="text-lg md:text-base mt-6 md:mt-2 font-helvetica font-semibold text-center">
             {productDetail?.name}
           </p>
         </Link>
+
         {/* Rating Snapshot */}
         <div>
-          <h3 className="font-semibold text-base mb-1 font-helvetica md:min-w-[400px] lg:min-w-[250px]">
+          <h3 className="font-semibold text-base mb-1 font-helvetica">
             Rating Snapshot
           </h3>
           <p className="text-sm text-gray-700 mb-3 font-helvetica">
@@ -215,9 +216,10 @@ const ReviewsClient = () => {
               );
             })}
         </div>
+
         {/* Overall Rating */}
         <div className="text-start">
-          <h3 className="font-semibold  mb-1 font-helvetica tracking-wide">
+          <h3 className="font-semibold mb-1 font-helvetica tracking-wide">
             Overall Rating:
           </h3>
           <div className="flex gap-4 items-center">
@@ -226,7 +228,6 @@ const ReviewsClient = () => {
             </p>
             <div>
               <div className="flex justify-center gap-0.5 mb-2">
-                {/* Render stars based on averageRating */}
                 {(() => {
                   const stars = [];
                   const fullStars = Math.floor(averageRating);
@@ -260,13 +261,14 @@ const ReviewsClient = () => {
             %) reviewers recommend this product
           </p>
         </div>
+
         {/* Rate/Review Section */}
-        <div className="text-start  ">
+        <div className="text-start">
           {myreview ? (
-            <div className="md:w-[300px]">
+            <div>
               <h3 className="font-semibold mb-2 font-helvetica">Your Review</h3>
-              <div className="flex justify-between items-center mb-4 ">
-                <div className="flex gap-1 ">
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex gap-1">
                   {Array.from({ length: 5 }, (_, i) =>
                     i < myreview.rating ? (
                       <FaStar key={i} className="text-black" />
@@ -276,33 +278,31 @@ const ReviewsClient = () => {
                   )}
                 </div>
                 <div
-                  className=" bg-black w-8 h-6 flex justify-center items-center cursor-pointer"
+                  className="bg-black w-8 h-6 flex justify-center items-center cursor-pointer"
                   onClick={handleEditClick}
                 >
                   <MdModeEdit className="text-white" />
                 </div>
               </div>
               <div className="flex justify-between items-center text-xs text-black font-helvetica mb-4">
-                <span className=" font-helvetica">{myreview.name}</span>
-                <span className="font-helvetica">
+                <span>{myreview.name}</span>
+                <span>
                   {myreview.createdAt
                     ? new Date(myreview.createdAt).toLocaleDateString()
                     : ""}
                 </span>
               </div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="font-semibold font-helvetica ">
+                <span className="font-semibold">
                   {myreview.title || "Your Review"}
                 </span>
                 {myreview.certifiedBuyer && (
-                  <span className="ml-2 py-0.5 text-xs text-[#056491] rounded font-helvetica">
+                  <span className="ml-2 py-0.5 text-xs text-[#056491] rounded">
                     Certified Buyer
                   </span>
                 )}
               </div>
-              <p className="font-helvetica text-[14px] mb-1 ">
-                {myreview.comment}
-              </p>
+              <p className="text-[14px] mb-1">{myreview.comment}</p>
             </div>
           ) : (
             <>
@@ -325,7 +325,7 @@ const ReviewsClient = () => {
                   </button>
                 ))}
               </div>
-              <p className=" text-gray-500 text-sm font-helvetica md:w-56">
+              <p className="text-gray-500 text-sm font-helvetica md:w-56">
                 {user
                   ? `Hey ${user.name}, leave a review!`
                   : "Adding a review will require a valid email for verification"}
@@ -334,6 +334,7 @@ const ReviewsClient = () => {
           )}
         </div>
       </div>
+
       {/* All Reviews */}
       <div className="w-full border-t mt-5 py-5">
         <h3 className="font-semibold font-helvetica text-lg mb-4">
