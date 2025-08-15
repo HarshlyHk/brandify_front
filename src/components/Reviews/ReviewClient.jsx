@@ -24,6 +24,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MdModeEdit } from "react-icons/md";
+import Link from "next/link";
 
 const ReviewsClient = () => {
   const { productId } = useParams();
@@ -169,16 +170,16 @@ const ReviewsClient = () => {
       {/* Top Details */}
       <div className="flex md:flex-row flex-col min-w-full justify-between gap-10 flex-wrap md:gap-20 mb-8">
         {/* Product Details */}
-        <div className="flex flex-col items-center">
+        <Link href={`/product-details/${productDetail?._id}`} className="flex flex-col items-center">
           <img
             src={productDetail?.thumbnail}
             alt="Product Thumbnail"
-            className="w-40"
+            className=" w-full md:w-40"
           />
           <p className="text-sm mt-2 font-helvetica font-semibold text-center">
             {productDetail?.name}
           </p>
-        </div>
+        </Link>
         {/* Rating Snapshot */}
         <div>
           <h3 className="font-semibold text-base mb-1 font-helvetica md:min-w-[400px] lg:min-w-[250px]">
