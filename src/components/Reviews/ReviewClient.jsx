@@ -65,7 +65,7 @@ const ReviewsClient = () => {
   useEffect(() => {
     dispatch(getProductReviews({ productId, page: 1, limit: 10, sort }));
     // ...existing code...
-  }, [dispatch, productId, sort]);
+  }, [dispatch, productId, sort, user]);
 
   // Infinite scroll handler
   const handleObserver = useCallback(
@@ -168,9 +168,12 @@ const ReviewsClient = () => {
   return (
     <div className="p-6 w-full mx-auto">
       {/* Top Details */}
-      <div className="flex md:flex-row flex-col min-w-full justify-between gap-10 flex-wrap md:gap-20 mb-8">
+      <div className="flex md:flex-row flex-col  justify-between gap-10 flex-wrap md:gap-10 mb-8">
         {/* Product Details */}
-        <Link href={`/product-details/${productId}`} className="flex flex-col items-center">
+        <Link
+          href={`/product-details/${productId}`}
+          className="flex flex-col items-center"
+        >
           <img
             src={productDetail?.thumbnail}
             alt="Product Thumbnail"
@@ -258,11 +261,11 @@ const ReviewsClient = () => {
           </p>
         </div>
         {/* Rate/Review Section */}
-        <div className="text-start">
+        <div className="text-start  ">
           {myreview ? (
-            <div>
+            <div className="md:w-[300px]">
               <h3 className="font-semibold mb-2 font-helvetica">Your Review</h3>
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex justify-between items-center mb-4 ">
                 <div className="flex gap-1 ">
                   {Array.from({ length: 5 }, (_, i) =>
                     i < myreview.rating ? (
@@ -297,7 +300,7 @@ const ReviewsClient = () => {
                   </span>
                 )}
               </div>
-              <p className="font-helvetica text-[14px] mb-1">
+              <p className="font-helvetica text-[14px] mb-1 ">
                 {myreview.comment}
               </p>
             </div>
