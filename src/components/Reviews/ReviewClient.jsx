@@ -292,7 +292,7 @@ const ReviewsClient = () => {
                   {myreview.title || "Your Review"}
                 </span>
                 {myreview.certifiedBuyer && (
-                  <span className="ml-2 py-0.5 text-xs text-blue-700 rounded font-helvetica">
+                  <span className="ml-2 py-0.5 text-xs text-[#056491] rounded font-helvetica">
                     Certified Buyer
                   </span>
                 )}
