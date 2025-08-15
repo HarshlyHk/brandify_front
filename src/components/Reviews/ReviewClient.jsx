@@ -174,7 +174,7 @@ const ReviewsClient = () => {
           <img
             src={productDetail?.thumbnail}
             alt="Product Thumbnail"
-            className=" w-60 md:w-40"
+            className=" w-full md:w-40"
           />
           <p className="text-sm mt-2 font-helvetica font-semibold text-center">
             {productDetail?.name}
