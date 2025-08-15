@@ -176,7 +176,7 @@ const ReviewsClient = () => {
             alt="Product Thumbnail"
             className=" w-full md:w-40"
           />
-          <p className="text-base mt-2 font-helvetica font-semibold text-center">
+          <p className="text-base md:text-sm mt-2 font-helvetica font-semibold text-center">
             {productDetail?.name}
           </p>
         </Link>
