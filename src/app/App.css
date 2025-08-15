@@ -4,7 +4,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-
 @font-face {
   font-family: "Eurostile";
   src: url("../assets/fonts/Eurostile.TTF");
@@ -443,8 +442,6 @@ h2 {
   }
 }
 
-
-
 .def-bg-color {
   background-color: #000000;
 }
@@ -503,6 +500,16 @@ button {
   opacity: 1 !important;
 }
 
+.review-swiper .swiper-pagination-bullet {
+  background: rgb(103, 103, 103) !important;
+  opacity: 0.5 !important;
+}
+
+.review-swiper .swiper-pagination-bullet-active {
+  background: rgb(0, 0, 0) !important;
+  opacity: 1 !important;
+}
+
 .icv__control-line {
   width: 6px !important;
 }
@@ -533,8 +540,6 @@ button {
 }
 
 @media (min-width: 768px) {
-
-
   .swiper-pagination-fraction,
   .swiper-pagination-custom,
   .swiper-horizontal > .swiper-pagination-bullets,

@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { motion } from "framer-motion";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import {
@@ -10,45 +9,50 @@ import {
   editReview,
   deleteReview,
 } from "@/features/reviewSlice";
+import { formatDistanceToNow } from "date-fns";
+import { useParams } from "next/navigation";
+import QuickLogin from "../Login/QuickLogin";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import QuickLogin from "../Login/QuickLogin";
-import { useParams } from "next/navigation";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { formatDistanceToNow } from "date-fns";
-import Link from "next/link";
-import { GrFormNextLink } from "react-icons/gr";
 import { MdModeEdit } from "react-icons/md";
-import { DialogTrigger } from "@radix-ui/react-dialog";
 
-const Reviews = () => {
+const ReviewsClient = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
-  const { reviews, productDetail, page, limit, sort, myreview } = useSelector(
-    (state) => state.review
-  );
+  const {
+    reviews,
+    productDetail,
+    page,
+    limit,
+    sort,
+    hasMore,
+    loading,
+    myreview,
+  } = useSelector((state) => state.review);
 
+  const user = useSelector((state) => state.user.user);
+  // Infinite scroll ref
+  const loader = useRef(null);
+
+  // Dialog and review state
   const [dialogOpen, setDialogOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [name, setName] = useState("");
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [reviewLoading, setReviewLoading] = useState(false);
   const [quickLoginOpen, setQuickLoginOpen] = useState(false);
+
+  // Edit dialog state
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editTitle, setEditTitle] = useState("");
   const [editName, setEditName] = useState("");
@@ -58,9 +62,37 @@ const Reviews = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(getProductReviews({ productId, page, limit, sort }));
-  }, [dispatch, productId, page, limit, sort]);
+    dispatch(getProductReviews({ productId, page: 1, limit: 10, sort }));
+    // ...existing code...
+  }, [dispatch, productId, sort]);
 
+  // Infinite scroll handler
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && hasMore && !loading) {
+        dispatch(
+          getProductReviews({ productId, page: page + 1, limit: 10, sort })
+        );
+      }
+    },
+    [dispatch, productId, page, sort, hasMore, loading]
+  );
+
+  useEffect(() => {
+    const option = { root: null, rootMargin: "20px", threshold: 1.0 };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loader.current) observer.observe(loader.current);
+    return () => observer.disconnect();
+  }, [handleObserver]);
+
+  const totalRatings = productDetail?.totalRatings || 0;
+  const starCounts = productDetail?.starCounts || {};
+  const averageRating = productDetail?.averageRating || 0;
+  const recommendCount =
+    (starCounts[3] || 0) + (starCounts[4] || 0) + (starCounts[5] || 0);
+
+  // Add review logic
   const handleStarClick = (value) => {
     if (!user) {
       setQuickLoginOpen(true);
@@ -72,11 +104,11 @@ const Reviews = () => {
 
   const handleAddReview = async () => {
     if (!comment.trim()) return;
-    setLoading(true);
+    setReviewLoading(true);
     await dispatch(
       addProductReview({ productId, title, name, comment, rating })
     );
-    setLoading(false);
+    setReviewLoading(false);
     setDialogOpen(false);
     setTitle("");
     setName("");
@@ -84,7 +116,7 @@ const Reviews = () => {
     setRating(0);
   };
 
-  // Open edit dialog and prefill fields
+  // Edit review logic
   const handleEditClick = () => {
     if (!myreview) return;
     setEditTitle(myreview.title || "");
@@ -94,7 +126,6 @@ const Reviews = () => {
     setEditDialogOpen(true);
   };
 
-  // Update review handler
   const handleUpdateReview = async () => {
     if (!editComment.trim()) return;
     setEditLoading(true);
@@ -112,7 +143,6 @@ const Reviews = () => {
     setEditDialogOpen(false);
   };
 
-  // Delete review handler
   const handleDeleteReview = async () => {
     setEditLoading(true);
     await dispatch(
@@ -126,66 +156,32 @@ const Reviews = () => {
     setEditDialogOpen(false);
   };
 
-  const totalRatings = productDetail?.totalRatings || 0;
-  const starCounts = productDetail?.starCounts || {};
-  const averageRating = productDetail?.averageRating || 0;
-  // Calculate recommendCount as number of ratings >= 3
-  const recommendCount =
-    (starCounts[3] || 0) + (starCounts[4] || 0) + (starCounts[5] || 0);
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="font-helvetica">Loading...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className=" md:py-6 w-full">
-      <div className="flex md:flex-row flex-col min-w-full justify-between gap-10 md:gap-40">
-        {/* Left: Rating Snapshot */}
-
-        <div className="text-start md:hidden">
-          <h3 className="font-semibold  mb-1 font-helvetica tracking-wide">
-            Overall Rating:
-          </h3>
-          <div className="flex gap-4 items-center">
-            <p className="text-5xl font-bold leading-tight tracking-wider font-helvetica">
-              {averageRating.toFixed(1)}
-            </p>
-            <div>
-              <div className="flex justify-center gap-0.5 mb-2">
-                {/* Render stars based on averageRating */}
-                {(() => {
-                  const stars = [];
-                  const fullStars = Math.floor(averageRating);
-                  const hasHalf =
-                    averageRating - fullStars >= 0.25 &&
-                    averageRating - fullStars < 0.75;
-                  const totalStars = hasHalf ? fullStars + 1 : fullStars;
-                  for (let i = 0; i < 5; i++) {
-                    if (i < fullStars) {
-                      stars.push(<FaStar key={i} className="text-black" />);
-                    } else if (i === fullStars && hasHalf) {
-                      stars.push(
-                        <FaRegStarHalfStroke key={i} className="text-black" />
-                      );
-                    } else {
-                      stars.push(<FaRegStar key={i} className="text-black" />);
-                    }
-                  }
-                  return stars;
-                })()}
-              </div>
-              <p className="text-xs text-gray-600 font-helvetica">
-                {totalRatings} Reviews
-              </p>
-            </div>
-          </div>
-          <p className="text-sm text-gray-600 mt-1 font-helvetica">
-            {recommendCount} out of {totalRatings} (
-            {totalRatings > 0
-              ? Math.round((recommendCount / totalRatings) * 100)
-              : 0}
-            %) reviewers recommend this product
+    <div className="p-6 w-full mx-auto">
+      {/* Top Details */}
+      <div className="flex md:flex-row flex-col min-w-full justify-between gap-10 flex-wrap md:gap-20 mb-8">
+        {/* Product Details */}
+        <div className="flex flex-col items-center">
+          <img
+            src={productDetail?.thumbnail}
+            alt="Product Thumbnail"
+            className="w-40"
+          />
+          <p className="text-sm mt-2 font-helvetica font-semibold text-center">
+            {productDetail?.name}
           </p>
         </div>
-
+        {/* Rating Snapshot */}
         <div>
-          <h3 className="font-semibold text-base mb-1 font-helvetica md:min-w-[400px]">
+          <h3 className="font-semibold text-base mb-1 font-helvetica md:min-w-[400px] lg:min-w-[250px]">
             Rating Snapshot
           </h3>
           <p className="text-sm text-gray-700 mb-3 font-helvetica">
@@ -215,9 +211,8 @@ const Reviews = () => {
               );
             })}
         </div>
-
-        {/* Center: Overall Rating */}
-        <div className="text-start hidden md:block">
+        {/* Overall Rating */}
+        <div className="text-start">
           <h3 className="font-semibold  mb-1 font-helvetica tracking-wide">
             Overall Rating:
           </h3>
@@ -234,7 +229,6 @@ const Reviews = () => {
                   const hasHalf =
                     averageRating - fullStars >= 0.25 &&
                     averageRating - fullStars < 0.75;
-                  const totalStars = hasHalf ? fullStars + 1 : fullStars;
                   for (let i = 0; i < 5; i++) {
                     if (i < fullStars) {
                       stars.push(<FaStar key={i} className="text-black" />);
@@ -262,12 +256,10 @@ const Reviews = () => {
             %) reviewers recommend this product
           </p>
         </div>
-
-        {/* Right: Review this Product or Show My Review */}
+        {/* Rate/Review Section */}
         <div className="text-start">
           {myreview ? (
-            // Show user's review if present
-            <div className="">
+            <div>
               <h3 className="font-semibold mb-2 font-helvetica">Your Review</h3>
               <div className="flex justify-between items-center mb-4">
                 <div className="flex gap-1 ">
@@ -304,32 +296,29 @@ const Reviews = () => {
                   </span>
                 )}
               </div>
-
               <p className="font-helvetica text-[14px] mb-1">
                 {myreview.comment}
               </p>
             </div>
           ) : (
-            // Show review form if user hasn't reviewed
             <>
               <h3 className="font-semibold mb-2 font-helvetica">
                 Review this Product
               </h3>
               <div className="flex justify-start gap-2 mb-4">
                 {Array.from({ length: 5 }, (_, i) => (
-                  <motion.button
+                  <button
                     key={i}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => handleStarClick(i + 1)}
+                    type="button"
                     className="w-10 h-10 border border-gray-400 flex items-center justify-center"
+                    onClick={() => handleStarClick(i + 1)}
                   >
                     {i < rating ? (
                       <FaStar className="text-black" />
                     ) : (
                       <FaRegStar className="text-black" />
                     )}
-                  </motion.button>
+                  </button>
                 ))}
               </div>
               <p className=" text-gray-500 text-sm font-helvetica md:w-56">
@@ -341,82 +330,69 @@ const Reviews = () => {
           )}
         </div>
       </div>
-
-      {reviews && reviews.length > 0 && (
-        <div className="mt-5 border-t pt-5">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h3 className="font-semibold font-helvetica text-lg">
-                What others are saying
-              </h3>
-              <div className="text-xs text-gray-500 font-helvetica mt-2">
-                Showing {reviews.length} of {productDetail?.totalRatings || 0}{" "}
-                reviews
-              </div>
-            </div>
-            <Link
-              href={`/reviews/${productId}`}
-              className="text-[#056491] text-sm flex items-center  hover:underline font-helvetica"
-            >
-              See all reviews <GrFormNextLink className="inline-block ml-1" />
-            </Link>
-          </div>
-          <Swiper
-            modules={[Pagination]}
-            pagination={{ clickable: true }}
-            spaceBetween={24}
-            freeMode={true}
-            slidesPerView={1}
-            breakpoints={{
-              768: { slidesPerView: 3 },
-            }}
-            className="review-swiper"
-          >
-            {reviews.map((review) => (
-              <SwiperSlide key={review._id}>
-                <div className="border min-h-[250px] p-6 h-full flex flex-col justify-between">
-                  <div>
-                    <div className="flex gap-1 mb-3">
-                      {Array.from({ length: 5 }, (_, i) =>
-                        i < review.rating ? (
-                          <FaStar key={i} className="text-black" />
-                        ) : (
-                          <FaRegStar key={i} className="text-black" />
-                        )
-                      )}
-                    </div>
-                    <div className="flex justify-between items-center text-xs text-black font-helvetica mb-4">
-                      <span className="font-helvetica">
-                        {review.name}{" "}
-                        {review.certifiedBuyer && (
-                          <span className="ml-1 text-xs text-[#056491] rounded font-helvetica">
-                            Certified Buyer
-                          </span>
-                        )}
-                      </span>
-                      <span className="font-helvetica">
-                        {review.createdAt
-                          ? formatDistanceToNow(new Date(review.createdAt), {
-                              addSuffix: true,
-                            })
-                          : ""}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="font-semibold font-helvetica ">
-                        {review.title || "Review"}
-                      </span>
-                    </div>
-                    <p className="font-helvetica text-[14px] mb-1">
-                      {review.comment}
-                    </p>
+      {/* All Reviews */}
+      <div>
+        <h3 className="font-semibold font-helvetica text-lg mb-4">
+          All Reviews
+        </h3>
+        <div className="grid md:grid-cols-2 gap-6">
+          {reviews && reviews.length > 0 ? (
+            reviews.map((review) => (
+              <div
+                key={review._id}
+                className="border min-h-[250px] p-6 h-full flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex gap-1 mb-3">
+                    {Array.from({ length: 5 }, (_, i) =>
+                      i < review.rating ? (
+                        <FaStar key={i} className="text-black" />
+                      ) : (
+                        <FaRegStar key={i} className="text-black" />
+                      )
+                    )}
                   </div>
+                  <div className="flex justify-between items-center text-xs text-black font-helvetica mb-4">
+                    <span className="font-helvetica">
+                      {review.name}{" "}
+                      {review.certifiedBuyer && (
+                        <span className="ml-1 text-xs text-[#056491] rounded font-helvetica">
+                          Certified Buyer
+                        </span>
+                      )}
+                    </span>
+                    <span className="font-helvetica">
+                      {review.createdAt
+                        ? formatDistanceToNow(new Date(review.createdAt), {
+                            addSuffix: true,
+                          })
+                        : ""}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="font-semibold font-helvetica ">
+                      {review.title || "Review"}
+                    </span>
+                  </div>
+                  <p className="font-helvetica text-[14px] mb-1">
+                    {review.comment}
+                  </p>
                 </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-2 text-center text-gray-500 font-helvetica">
+              No reviews yet.
+            </div>
+          )}
         </div>
-      )}
+        {/* Loader for infinite scroll */}
+        <div ref={loader} className="w-full flex justify-center py-6">
+          {loading && (
+            <span className="text-gray-500 font-helvetica">Loading...</span>
+          )}
+        </div>
+      </div>
 
       {/* Dialog for Adding Review */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -491,9 +467,9 @@ const Reviews = () => {
               <Button
                 className="bg-black text-white hover:bg-gray-800"
                 onClick={handleAddReview}
-                disabled={loading}
+                disabled={reviewLoading}
               >
-                {loading ? "Adding..." : "Add Review"}
+                {reviewLoading ? "Adding..." : "Add Review"}
               </Button>
             </div>
           </div>
@@ -571,15 +547,10 @@ const Reviews = () => {
               </div>
             </div>
             <div className="flex justify-between">
-              <Dialog>
-                <DialogTrigger
-                  asChild
-                  open={deleteDialogOpen}
-                  onOpenChange={setDeleteDialogOpen}
-                >
-                  <Button variant="destructive">Delete</Button>
-                </DialogTrigger>
-
+              <Dialog
+                open={deleteDialogOpen}
+                onOpenChange={setDeleteDialogOpen}
+              >
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>
@@ -615,4 +586,4 @@ const Reviews = () => {
   );
 };
 
-export default Reviews;
+export default ReviewsClient;

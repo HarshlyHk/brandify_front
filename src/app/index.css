@@ -16,6 +16,11 @@
   font-family: 'Michroma';
 }
 
+::selection {
+  background: oklch(0.205 0 0);
+  color: oklch(0.985 0 0);
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);

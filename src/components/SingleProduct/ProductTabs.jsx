@@ -20,8 +20,8 @@ const ProductTabs = ({
   const renderContent = (text) => {
     const formatted = (text || "").replace(/\r\n/g, "<br/>");
     return (
-      <div className="mt-6 leading-relaxed text-sm">
-        <h2 className="text-lg font-semibold mb-4 uppercase">
+      <div className="mt-2 leading-relaxed text-sm">
+        <h1 className=" text-[16px]  tracking-wider  md:text-[24px] font-bold font-helvetica mb-4 uppercase">
           {text === description
             ? "Description"
             : text === coreFeatures
@@ -29,8 +29,8 @@ const ProductTabs = ({
             : text === careGuide
             ? "Care Guide"
             : ""}
-        </h2>
-        <ol className="">{parse(formatted)}</ol>
+        </h1>
+        <ol className="font-helvetica">{parse(formatted)}</ol>
       </div>
     );
   };
@@ -59,18 +59,18 @@ const ProductTabs = ({
   return (
     <div className="w-full mt-10 rounded-[5px]">
       {/* Tabs */}
-      <div className="flex md:flex-row flex-col md:gap-6  border-b px-4 pt-4 justify-center">
+      <div className="flex md:flex-row flex-col md:gap-6 md:border-b px-1 md:px-4 pt-4 justify-center">
         {tabs.map((label, index) => (
           <button
             key={index}
             onClick={() => handleTabChange(index)}
-            className={`relative p-5 text-[12px] rounded-[5px] md:rounded-none md:text-[14px] uppercase font-medium transition-all ${
+            className={`relative p-5 text-[12px]  md:w-[200px] md:rounded-none md:text-[14px] uppercase font-helvetica font-medium tracking-wider transition-all ${
               tabIndex === index
-                ? "text-white bg-[#323232]  "
+                ? "text-white bg-black  "
                 : "text-[#6d6c6c] hover:text-black"
             }`}
           >
-            {label === "Reviews" ? `${label}` : label}
+            {label}
           </button>
         ))}
       </div>
@@ -83,13 +83,10 @@ const ProductTabs = ({
         {tabIndex === 3 && (
           <div className="">
             <div className="w-full ">
-              <h2 className="font-semibold !mb-4 ">Reviews</h2>
+              <h1 className="text-[16px] tracking-wider md:text-[24px] font-bold font-helvetica mb-4 uppercase">
+                Reviews
+              </h1>
               <Reviews productId={productId} />
-            </div>
-            <div className="w-full  border-l border-gray-100 pl-4">
-              <p className="text-sm text-gray-100">
-                You must be logged in to post a review.
-              </p>
             </div>
           </div>
         )}

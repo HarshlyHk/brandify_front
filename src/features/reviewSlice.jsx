@@ -8,7 +8,7 @@ const initialState = {
   total: 0,
   totalPages: 0,
   page: 1,
-  limit: 10,
+  limit: 6,
   loading: false,
   error: null,
   sort: "highest",
