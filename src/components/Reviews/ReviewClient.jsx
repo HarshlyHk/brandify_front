@@ -170,7 +170,7 @@ const ReviewsClient = () => {
       {/* Top Details */}
       <div className="flex md:flex-row flex-col min-w-full justify-between gap-10 flex-wrap md:gap-20 mb-8">
         {/* Product Details */}
-        <Link href={`/product-details/${productDetail?._id}`} className="flex flex-col items-center">
+        <Link href={`/product-details/${productId}`} className="flex flex-col items-center">
           <img
             src={productDetail?.thumbnail}
             alt="Product Thumbnail"
