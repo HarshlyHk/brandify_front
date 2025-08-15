@@ -34,6 +34,30 @@ export const getSingleOrder = createAsyncThunk(
   }
 );
 
+export const updateOrderDetails = createAsyncThunk(
+  "orders/updateOrderDetails",
+  async (
+    { orderId, landmark, alternatePhone, insta_handle },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await axiosInstance.put(
+        `/orders/${orderId}/update-details`,
+        {
+          landmark,
+          alternatePhoneNumber: alternatePhone,
+          insta_handle: insta_handle,
+        }
+      );
+      toast.success("Details updated successfully!");
+
+      return data.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const orderSlice = createSlice({
   name: "orders",
   initialState,
@@ -62,6 +86,19 @@ const orderSlice = createSlice({
         state.singleOrder = action.payload;
       })
       .addCase(getSingleOrder.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(updateOrderDetails.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateOrderDetails.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        if (state.singleOrder && state.singleOrder._id === action.payload._id) {
+          state.singleOrder = action.payload;
+        }
+      })
+      .addCase(updateOrderDetails.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
