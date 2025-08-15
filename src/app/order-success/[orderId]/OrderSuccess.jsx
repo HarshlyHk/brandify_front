@@ -1,7 +1,7 @@
-"use client"
+"use client";
 import React, { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleOrder, updateOrderDetails } from "@/features/OrderSlice";
 import Lottie from "lottie-react"; // Import Lottie
@@ -69,27 +69,35 @@ const OrderSuccess = () => {
   if (!order) return null;
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-10 bg-gray-50 text-gray-900">
-      <div className="w-full max-w-4xl bg-white p-6 sm:p-10 rounded-[5px] border-1">
+    <div className="min-h-screen flex items-center justify-center px-4 py-10  text-gray-900">
+      <div className="w-full max-w-4xl  p-6 sm:p-10 rounded-[5px] ">
         {/* Success Message */}
-        <div className="text-center mb-8">
+        <div className=" mb-8">
           <div className="w-32 h-32 mx-auto mb-4 flex flex-col items-center justify-center rounded-full bg-green-100">
             <Lottie animationData={successAnimation} loop={true} />
           </div>
 
-          <div className="flex flex-col items-center gap-4">
-            <h1 className="text-xl uppercase font-bold ">Thank you!</h1>
-            <h3 className="text-lg font-semibold uppercase">
+          <div className="flex flex-col gap-4 font-helvetica">
+            <h1 className="text-xl uppercase text-center font-bold  font-helvetica">
+              Thank you!
+            </h1>
+            <h3 className="text-lg font-semibold uppercase text-center font-helvetica">
               Your order has been placed.
             </h3>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm  font-helvetica">
               We’ve received your order and will keep you updated on
               <span className=" text-black"> {order?.email}</span>
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm  font-helvetica">
               You can track your order status by logging into your account or by
               using your Order ID.
             </p>
+            {order?.preBook && (
+              <p className="text-sm  font-helvetica">
+                Your order is expected to be delivered within 7–10 business
+                days.
+              </p>
+            )}
           </div>
         </div>
 
@@ -97,7 +105,7 @@ const OrderSuccess = () => {
           (!order.shippingAddress.landmark ||
             !order.shippingAddress.alternatePhoneNumber) && (
             <div className="mb-8">
-              <h3 className="md:text-sm text-xs text-center text-red-500 font-semibold mb-4 border-b pb-1 uppercase">
+              <h3 className="md:text-sm text-xs text-center text-red-500 font-semibold mb-4 border-b pb-1 uppercase font-helvetica">
                 For a hassle-free delivery, do provide us your landmark and
                 alternative phone number
               </h3>
@@ -107,7 +115,7 @@ const OrderSuccess = () => {
                     <div className="w-full">
                       <label
                         htmlFor="landmark"
-                        className="block text-sm font-medium text-gray-700 mb-1"
+                        className="block text-sm font-medium text-gray-700 mb-1 font-helvetica"
                       >
                         Landmark (optional)
                       </label>
@@ -116,7 +124,7 @@ const OrderSuccess = () => {
                         id="landmark"
                         value={landmark}
                         onChange={(e) => setLandmark(e.target.value)}
-                        className="w-full border border-zinc-200 rounded-[5px] p-4 text-sm focus:outline-none focus:border-black transition"
+                        className="w-full border border-zinc-200 rounded-[5px] p-4 text-sm focus:outline-none focus:border-black transition font-helvetica"
                         placeholder="Landmark"
                         required
                       />
@@ -127,7 +135,7 @@ const OrderSuccess = () => {
                     <div className="w-full">
                       <label
                         htmlFor="alternatePhone"
-                        className="block text-sm font-medium text-gray-700 mb-1"
+                        className="block text-sm font-medium text-gray-700 mb-1 font-helvetica"
                       >
                         Alternative Phone Number (optional)
                       </label>
@@ -136,7 +144,7 @@ const OrderSuccess = () => {
                         id="alternatePhone"
                         value={alternatePhone}
                         onChange={(e) => setAlternatePhone(e.target.value)}
-                        className="w-full border border-zinc-200 rounded-[5px] p-4 text-sm focus:outline-none focus:border-black transition"
+                        className="w-full border border-zinc-200 rounded-[5px] p-4 text-sm focus:outline-none focus:border-black transition font-helvetica"
                         placeholder="Alternative phone number"
                         required
                       />
@@ -147,7 +155,7 @@ const OrderSuccess = () => {
                     <div className="w-full">
                       <label
                         htmlFor="Insta Handle"
-                        className="block text-sm font-medium text-gray-700 mb-1"
+                        className="block text-sm font-medium text-gray-700 mb-1 font-helvetica"
                       >
                         Insta Handle (optional)
                       </label>
@@ -156,7 +164,7 @@ const OrderSuccess = () => {
                         id="instaHandle"
                         value={instaHandle}
                         onChange={(e) => setInstaHandle(e.target.value)}
-                        className="w-full border border-zinc-200 rounded-[5px] p-4 text-sm focus:outline-none focus:border-black transition"
+                        className="w-full border border-zinc-200 rounded-[5px] p-4 text-sm focus:outline-none focus:border-black transition font-helvetica"
                         placeholder="Your Instagram handle"
                         required
                       />
@@ -165,7 +173,7 @@ const OrderSuccess = () => {
                 </div>
                 <button
                   onClick={handleSubmit}
-                  className="w-full flex items-center justify-center gap-2 text-xs text-white bg-black hover:bg-gray-800 py-5 rounded-[5px] transition-all uppercase"
+                  className="w-full flex items-center justify-center gap-2 text-xs text-white bg-black hover:bg-gray-800 py-5 rounded-[5px] transition-all uppercase font-helvetica"
                 >
                   Submit
                 </button>
@@ -175,51 +183,58 @@ const OrderSuccess = () => {
 
         {/* Order Summary */}
         <div className="mb-8">
-          <h3 className="text-lg font-semibold mb-4 border-b pb-1 uppercase">
+          <h3 className="text-lg font-semibold mb-4 border-b pb-1 uppercase font-helvetica">
             Order Summary
           </h3>
-          <div className="grid gap-2 text-sm text-gray-700">
-            <p>
-              <strong>Order ID:</strong> {order.transactionId}
+          <div className="grid gap-2 text-sm text-gray-700 font-helvetica">
+            <p className="font-helvetica">
+              <strong className="font-helvetica">Order ID:</strong>{" "}
+              {order.transactionId}
             </p>
-            <p>
-              <strong>Status:</strong> {order.status}
+            <p className="font-helvetica">
+              <strong className="font-helvetica">Status:</strong> {order.status}
             </p>
-            <p>
-              <strong>Payment Method:</strong> {order.paymentMethod}
+            <p className="font-helvetica">
+              <strong className="font-helvetica">Payment Method:</strong>{" "}
+              {order.paymentMethod}
             </p>
-            <p>
-              <strong>Payment Status:</strong> {order.paymentStatus}
+            <p className="font-helvetica">
+              <strong className="font-helvetica">Payment Status:</strong>{" "}
+              {order.paymentStatus}
             </p>
-            <p>
-              <strong>Date:</strong>{" "}
+            <p className="font-helvetica">
+              <strong className="font-helvetica">Date:</strong>{" "}
               {new Date(order.createdAt).toLocaleString()}
             </p>
-            <p>
-              <strong>Total:</strong> ₹{order.totalAmount}
+            <p className="font-helvetica">
+              <strong className="font-helvetica">Total:</strong> ₹
+              {order.totalAmount}
             </p>
           </div>
         </div>
 
         {/* Shipping Address */}
         <div className="mb-8">
-          <h3 className="text-lg font-semibold mb-4 border-b pb-1 uppercase">
+          <h3 className="text-lg font-semibold mb-4 border-b pb-1 uppercase font-helvetica">
             Shipping Address
           </h3>
           <div className="text-sm space-y-2 text-gray-700">
-            <p>
-              <strong>Name:</strong> {order.shippingAddress.fullName}
+            <p className="font-helvetica">
+              <strong className="font-helvetica">Name:</strong>{" "}
+              {order.shippingAddress.fullName}
             </p>
-            <p>
-              <strong>Phone:</strong> {order.shippingAddress.phoneNumber}
+            <p className="font-helvetica">
+              <strong className="font-helvetica">Phone:</strong>{" "}
+              {order.shippingAddress.phoneNumber}
             </p>
             {order.shippingAddress.alternatePhoneNumber && (
-              <p>
-                <strong>Alternate:</strong>{" "}
+              <p className="font-helvetica">
+                <strong className="font-helvetica">Alternate:</strong>{" "}
                 {order.shippingAddress.alternatePhoneNumber}
               </p>
             )}
-            <p>
+            <p className="font-helvetica">
+              <strong className="font-helvetica">Address:</strong>{" "}
               {order.shippingAddress.street}, {order.shippingAddress.locality},
               {order.shippingAddress.landmark &&
                 ` ${order.shippingAddress.landmark}, `}
@@ -231,14 +246,14 @@ const OrderSuccess = () => {
 
         {/* Ordered Products */}
         <div className="mb-8">
-          <h3 className="text-lg font-semibold mb-4 border-b pb-1 uppercase">
+          <h3 className="text-lg font-semibold mb-4 border-b pb-1 uppercase font-helvetica">
             Ordered Products
           </h3>
           <div className="grid sm:grid-cols-2 gap-4">
             {order.products.map((product, index) => (
               <div
                 key={index}
-                className="flex items-center gap-4 rounded-lg p-4 bg-[white] border-2"
+                className="flex items-center gap-4 rounded-lg p-4  border-2"
               >
                 <img
                   src={product.image}
@@ -246,15 +261,15 @@ const OrderSuccess = () => {
                   className="md:w-20 md:h-20 h-16 w-16 object-cover rounded-md"
                 />
                 <div className="flex-1 text-sm">
-                  <div className="flex justify-between font-medium">
+                  <div className="flex justify-between font-medium font-helvetica">
                     <p>{product.name}</p>
-                    <p className="text-gray-500 uppercase text-xs">
+                    <p className="text-gray-500 uppercase text-xs font-helvetica">
                       Size: {product.size}
                     </p>
                   </div>
-                  <div className="flex justify-between mt-2 text-xs text-gray-600">
-                    <p>Qty: {product.quantity}</p>
-                    <p>Price: ₹{product.price}</p>
+                  <div className="flex justify-between mt-2 text-xs text-gray-600 ">
+                    <p className="font-helvetica">Qty: {product.quantity}</p>
+                    <p className="font-helvetica">Price: ₹{product.price}</p>
                   </div>
                 </div>
               </div>
@@ -265,7 +280,7 @@ const OrderSuccess = () => {
         {/* Continue Shopping */}
         <button
           onClick={() => navigate.shop("/")}
-          className="w-full flex items-center justify-center gap-2 text-xs text-white bg-black hover:bg-gray-800 py-5 rounded-[5px] transition-all uppercase"
+          className="w-full flex items-center justify-center gap-2 text-xs text-white bg-black hover:bg-gray-800 py-5 rounded-[5px] transition-all uppercase font-helvetica"
         >
           Continue Shopping <ArrowRight size={16} />
         </button>

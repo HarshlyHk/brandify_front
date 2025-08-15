@@ -19,6 +19,8 @@ const MagicCheckoutButton = ({
 }) => {
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
   const [loadingOrder, setLoadingOrder] = useState(false);
+  const [fullPageLoading, setFullPageLoading] = useState(false);
+
   useEffect(() => {
     console.log(checkoutItem);
     loadRazorpayMagicScript().then((loaded) => setIsRazorpayLoaded(loaded));
@@ -39,6 +41,29 @@ const MagicCheckoutButton = ({
         Term: localStorage.getItem("Term"),
         Fbclid: localStorage.getItem("Fbclid"),
       };
+
+      if (window.fbq && referralCode) {
+        window.fbq("track", "InitiateCheckout", {
+          content_name: "Magic Checkout",
+          content_ids:
+            type === "Instant"
+              ? [checkoutItem._id]
+              : checkoutItem.map((item) =>
+                  user ? item.product._id : item.productId
+                ),
+          content_type: "product",
+          value:
+            type === "Instant"
+              ? checkoutItem.price
+                ? checkoutItem.price / 100
+                : 0
+              : checkoutItem.reduce((total, item) => {
+                  const price = user ? item.product.price : item.price;
+                  return total + (price ? price / 100 : 0);
+                }, 0),
+          currency: "INR",
+        });
+      }
 
       const orderPayload = {
         productIds:
@@ -76,6 +101,7 @@ const MagicCheckoutButton = ({
         order_id: orderId, // Replace with the order ID generated from your backend
         show_coupons: true,
         handler: function (response) {
+          setFullPageLoading(true);
           axiosInstance
             .post(
               "/razorpay/verify-payment",
@@ -95,12 +121,38 @@ const MagicCheckoutButton = ({
                 toast.success("Order Placed Successfully!");
                 //! Send purchase pixel to Meta
                 const order = res.data.data.updatedOrder;
-                router.push("/order-success/" + res?.data?.data?.navigateOrderId);
+                if (window.fbq && referralCode) {
+                  const productIds = order.products.map(
+                    (p) => p.product?._id || p.product
+                  );
+                  const totalValue = order.totalAmount;
+                  window.fbq("track", "Purchase", {
+                    content_name: order.products
+                      .map((p) => p.name || "Unnamed")
+                      .join(", "),
+                    content_ids: productIds,
+                    content_type: "product",
+                    value: totalValue,
+                    currency: "INR",
+                  });
+                }
+                router.push(
+                  "/order-success/" + res?.data?.data?.navigateOrderId
+                );
+                setTimeout(() => {
+                  router.push(
+                    "/order-success/" + res?.data?.data?.navigateOrderId
+                  );
+                  setFullPageLoading(false);
+                }, 2000);
               } else {
+                setFullPageLoading(false);
+
                 toast.error("Payment verification failed");
               }
             })
             .catch((error) => {
+              setFullPageLoading(false);
               console.error("Error:", error);
               toast.error("Error verifying payment");
             });
@@ -129,18 +181,32 @@ const MagicCheckoutButton = ({
   }
 
   return (
-    <button
-      className={` ${className} flex items-center justify-center gap-2 `}
-      onClick={handlePayment}
-      disabled={disabled || loadingOrder}
-    >
-      <p>{loadingOrder ? "PROCESSING..." : buttonName}</p>
-      {!disabled && (
-        <div className="w-10 absolute h-10 translate-x-16 translate-y-2">
-          <Lottie animationData={paymentAnimation} loop={true} />
+    <>
+      {fullPageLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-4 p-6 rounded-2xl bg-white/70 shadow-lg border border-gray-200">
+            <div className="w-12 h-12 border-4 border-black/10 border-t-black rounded-full animate-spin" />
+            <p className="text-black/80 text-base font-medium text-center font-helvetica">
+              Processing your payment...
+              <br className="hidden md:block font-helvetica" />
+              Please wait a moment.
+            </p>
+          </div>
         </div>
       )}
-    </button>
+      <button
+        className={` ${className} flex items-center justify-center gap-2 `}
+        onClick={handlePayment}
+        disabled={disabled || loadingOrder}
+      >
+        <p>{loadingOrder ? "PROCESSING..." : buttonName}</p>
+        {!disabled && (
+          <div className="w-10 absolute h-10 translate-x-16 translate-y-2">
+            <Lottie animationData={paymentAnimation} loop={true} />
+          </div>
+        )}
+      </button>
+    </>
   );
 };
 
