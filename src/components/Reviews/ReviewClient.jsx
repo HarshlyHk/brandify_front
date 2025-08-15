@@ -174,7 +174,7 @@ const ReviewsClient = () => {
           <img
             src={productDetail?.thumbnail}
             alt="Product Thumbnail"
-            className=" w-full md:w-40"
+            className=" w-60 md:w-40"
           />
           <p className="text-sm mt-2 font-helvetica font-semibold text-center">
             {productDetail?.name}
@@ -332,7 +332,7 @@ const ReviewsClient = () => {
         </div>
       </div>
       {/* All Reviews */}
-      <div>
+      <div className="w-full border-t mt-5 py-5">
         <h3 className="font-semibold font-helvetica text-lg mb-4">
           All Reviews
         </h3>
