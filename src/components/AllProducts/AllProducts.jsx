@@ -226,7 +226,7 @@ const AllProducts = () => {
                     <ProductFilters
                       category={category}
                       filters={filters}
-                      resultCount={data?.length}
+                      resultCount={totalProducts}
                       setFilters={setFilters}
                     />
                     <SheetFooter>
