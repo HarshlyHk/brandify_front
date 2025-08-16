@@ -25,9 +25,17 @@ const Wishlist = () => {
     }
   }, []);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (item) => {
+    if (!item) return;
+
+    // If no size available, redirect to product details page
+    if (!item.size) {
+      router.push(`/product-details/${item.productId}`);
+      return;
+    }
+
     if (user) {
-      dispatch(addToCart({ productId: item?._id, size: selectedSize }));
+      dispatch(addToCart({ productId: item?.productId, size: item.size }));
     } else {
       const cart =
         (typeof window !== "undefined" &&
@@ -35,19 +43,19 @@ const Wishlist = () => {
         [];
       const existingItemIndex = cart.findIndex(
         (cartItem) =>
-          cartItem.productId === item?._id && cartItem.size === selectedSize
+          cartItem.productId === item?.productId && cartItem.size === item.size
       );
 
       if (existingItemIndex !== -1) {
         cart[existingItemIndex].quantity += 1;
       } else {
         const newItem = {
-          productId: item?._id,
-          size: selectedSize,
+          productId: item?.productId,
+          size: item.size,
           name: item?.name,
-          discountedPrice: item?.discountedPrice,
-          originalPrice: item?.originalPrice,
-          images: item?.images,
+          discountedPrice: item?.price,
+          originalPrice: item?.price,
+          images: item?.image ? [item.image] : [],
           quantity: 1,
         };
         cart.push(newItem);
@@ -61,9 +69,9 @@ const Wishlist = () => {
     window.fbq &&
       window.fbq("track", "AddToCart", {
         content_name: item?.name,
-        content_ids: [item?._id],
+        content_ids: [item?.productId],
         content_type: "product",
-        value: item?.discountedPrice,
+        value: item?.price,
         currency: "INR",
       });
 
@@ -168,7 +176,7 @@ const Wishlist = () => {
               <div className="flex flex-1 flex-col items-center">
                 <Link
                   href={`/product-details/${item.productId}`}
-                  className="cursor-pointer flex-shrink-0 relative h-[140px] w-[140px]  md:w-[200px] md:h-[200px]"
+                  className="cursor-pointer flex-shrink-0 relative h-[240px] w-[240px] "
                 >
                   <div className="">
                     <Image
@@ -180,7 +188,7 @@ const Wishlist = () => {
                     />
                   </div>
                 </Link>
-                <h3 className="text-[12px] sm:text-[16px] font-semibold mb-2 font-helvetica">
+                <h3 className="text-[14px] font-semibold mt-4 mb-2 font-helvetica">
                   {item.name || "Unnamed Product"}
                 </h3>
               </div>
