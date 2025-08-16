@@ -44,12 +44,12 @@
 
 @font-face {
   font-family: "Engravers";
-  src: url("../assets/fonts/Engravers.otf");
+  src: url("/Engravers.otf");
 }
 
 @font-face {
   font-family: "Phonk";
-  src: url("../assets/fonts/Phonk.otf");
+  src: url("/Phonk.otf") format("opentype");
 }
 @font-face {
   font-family: "Emillio";

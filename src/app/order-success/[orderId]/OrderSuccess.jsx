@@ -93,7 +93,7 @@ const OrderSuccess = () => {
               using your Order ID.
             </p>
             {order?.preBook && (
-              <p className="text-sm  font-helvetica">
+              <p className="text-sm text-red-500 font-helvetica">
                 Your order is expected to be delivered within 7–10 business
                 days.
               </p>

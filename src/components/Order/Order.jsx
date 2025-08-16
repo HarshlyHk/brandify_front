@@ -1,9 +1,9 @@
+"use client";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrders } from "@/features/OrderSlice";
 import dayjs from "dayjs";
-import { Link } from "react-router";
-import "@/assets/fonts/Emilio.ttf";
+import Link from "next/link";
 
 const OrderList = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const OrderList = () => {
     return (
       <div className="flex flex-col items-center justify-center h-[80vh] text-center">
         <p className="text-gray-500 mb-4">No orders found.</p>
-        <Link to="/shop-all">
+        <Link href="/all-products/all-products">
           <button className="bg-black text-white px-4 py-2 rounded-lg hover:opacity-90 transition">
             Shop Now
           </button>
@@ -95,9 +95,12 @@ const OrderList = () => {
               ))}
             </div>
             <div className="flex items-center justify-center">
-              <button className="mt-6 w-full  bg-zinc-800 text-white py-4 text-xs px-4 rounded-[5px] hover:bg-zinc-700 transition md:w-[300px]">
-                <Link to={`/view-order/${order._id}`}>View Order</Link>
-              </button>
+              <Link
+                href={`/view-order/${order._id}`}
+                className="mt-6 w-full text-center bg-zinc-800 text-white py-4 text-xs px-4 rounded-[5px] hover:bg-zinc-700 transition md:w-[300px]"
+              >
+                View Order
+              </Link>
             </div>
 
             <hr className=" mt-10" />

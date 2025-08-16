@@ -91,7 +91,7 @@ const ImageCarousel = ({ item, images, loading ,selectedSize}) => {
 
   return (
     <div className="flex flex-col gap-10 relative">
-      <div className="absolute top-4 z-[100] right-4 ">
+      <div className="absolute top-4 z-[10] right-4 ">
         <button
           onClick={() => {
             if (!item?._id) return;
