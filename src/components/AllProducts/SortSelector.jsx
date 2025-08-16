@@ -151,7 +151,9 @@ const SortSelector = ({ category }) => {
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>
-              <DrawerTitle>Sort By</DrawerTitle>
+              <DrawerTitle>
+                <h3 className="text-lg font-helvetica font-semibold tracking-wider">Sort By</h3>
+              </DrawerTitle>
             </DrawerHeader>
             <ul className="py-2">
               {sortOptions.map((option) => (
@@ -159,17 +161,17 @@ const SortSelector = ({ category }) => {
                   key={option.value}
                   className={`px-4 py-3 text-sm cursor-pointer flex items-center justify-between hover:bg-gray-50 transition-colors duration-100 font-helvetica-nue ${
                     currentSort === option.value
-                      ? "bg-blue text-black font-medium"
-                      : "text-gray-700"
+                      ? "bg-blue text-white bg-black font-medium"
+                      : "text-black"
                   }`}
                   onClick={() => handleSortChange(option.value)}
                 >
                   <span
-                    className={
+                    className={` tracking-wider font-helvetica ${
                       currentSort === option.value
-                        ? " text-gray-900 tracking-wide "
-                        : "text-gray-500 tracking-wide"
-                    }
+                        ? " text-white tracking-wide "
+                        : "text-black tracking-wide"
+                    }`}
                   >
                     {option.label}
                   </span>
@@ -181,7 +183,7 @@ const SortSelector = ({ category }) => {
             </ul>
             <DrawerClose asChild>
               <button
-                className="w-full py-6 mt-2 text-center text-red-600 font-semibold"
+                className="w-full py-6 mt-2 text-center text-red-600 font-semibold tracking-wider"
                 onClick={() => setIsOpen(false)}
               >
                 Close
