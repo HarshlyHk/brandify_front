@@ -95,7 +95,7 @@ export default function RootLayout({ children }) {
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '1977991416358607'); 
+          fbq('init', '9289005087833438'); 
           fbq('track', 'PageView');
           `,
         }}

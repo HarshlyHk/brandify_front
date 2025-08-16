@@ -49,7 +49,7 @@ const CartSummary = ({ user, cartItems, localCart }) => {
         <hr />
         <div className="  flex flex-col gap-4 text-sm sm:text-sm text-[12px]">
           <div className="flex justify-between">
-            <span>PRICE</span>
+            <span>SUBTOTAL</span>
             <span className="sm:text-sm text-[12px]">
               ₹{formatIndianPrice(originalPrice)}
             </span>
@@ -63,7 +63,7 @@ const CartSummary = ({ user, cartItems, localCart }) => {
 
           <hr />
           <div className="flex sm:text-sm text-[12px] justify-between pt-4">
-            <span>TOTAL AMOUNT</span>
+            <span>TOTAL</span>
             <span>₹{formatIndianPrice(discountedTotal)}</span>
           </div>
         </div>
