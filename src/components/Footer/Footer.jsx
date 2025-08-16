@@ -39,7 +39,7 @@ const Footer = () => {
           Shipping Policy
         </Link>
         <Link
-          href="/legals/cancellation-policy"
+          href="/legals/exchange-policy"
           onClick={scrollToTop}
           className="hover:text-black transition"
         >

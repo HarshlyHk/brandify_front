@@ -133,7 +133,7 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
           </div>
         )}
       </div>
-      <ImageCarousel images={item?.images} loading={loading} />
+      <ImageCarousel item={item} selectedSize={selectedSize} images={item?.images} loading={loading} />
       {/* Right Panel */}
       <div className="flex-1 px-4 md:px-10">
         <div>

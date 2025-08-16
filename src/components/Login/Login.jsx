@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,7 +73,6 @@ const Login = () => {
   const handleGoogleFailure = (error) => {
     console.error("Google Login Failed:", error);
   };
-
 
   // Formik and Yup setup
   const formik = useFormik({
@@ -167,8 +166,10 @@ const Login = () => {
                     strokeColor="black"
                   />
                 </div>
-                <h1 className=" text-[1.6rem] font-poppins font-bold">Login</h1>
-                <p className="text-[14px] font-poppins font-[100] text-[#515151]">
+                <h1 className=" text-[1.6rem] font-helvetica tracking-wider font-bold">
+                  Login
+                </h1>
+                <p className="text-[14px] font-helvetica text-[#515151] tracking-wide">
                   Enter your email address to proceed. An OTP will be sent to
                   verify your email. Please use the same email address
                   associated with your order.
@@ -224,10 +225,10 @@ const Login = () => {
                         </div>
                         <button
                           type="button"
-                          disabled={loading}
+                          disabled={loading || !formik.values.email}
                           className={`button-complete mt-4 ${
                             loading ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                          } ${formik.values.email ? "" : "opacity-50 cursor-not-allowed"}`}
                           onClick={handleSentOtp}
                         >
                           <span className="circle" aria-hidden="true">
@@ -298,9 +299,9 @@ const Login = () => {
                         <button
                           type="button"
                           onClick={() => handleSubmitOtp()}
-                          disabled={loading}
+                          disabled={loading || !otp}
                           className={`button-complete mt-4 ${
-                            loading ? "opacity-50 cursor-not-allowed" : ""
+                            loading || !otp ? "opacity-50 cursor-not-allowed" : ""
                           }`}
                         >
                           <span className="circle" aria-hidden="true">

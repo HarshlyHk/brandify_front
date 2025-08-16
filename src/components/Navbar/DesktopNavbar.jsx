@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   Sheet,
@@ -58,8 +57,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
 
   return (
     <div className="">
-      <Sheet open={isOpen} onOpenChange={setIsOpen} 
-      >
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
           <div className="navbar-ham-container cursor-pointer">
             <a id="hamburger-icon" title="Menu">
@@ -161,6 +159,21 @@ const DesktopNavbar = ({ user, handleLogout }) => {
 
             <div className="flex flex-col gap-4 mt-10 px-6 text-sm">
               <Link
+                href="/wishlist"
+                onClick={() => {
+                  setActivePage("/wishlist");
+                  window.scrollTo(0, 0);
+                  setIsOpen(false);
+                }}
+                className={`relative w-fit py-1 transition-all text-[#FFF] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#FFF] after:transition-all uppercase after:duration-500 hover:after:w-full flex gap-4 ${
+                  activePage === "/wishlist"
+                    ? "text-white font-medium after:w-full"
+                    : ""
+                }`}
+              >
+                <p>Wishlist</p>
+              </Link>
+              <Link
                 href="/support/contact-us"
                 onClick={() => {
                   setActivePage("/contact-us");
@@ -194,12 +207,12 @@ const DesktopNavbar = ({ user, handleLogout }) => {
               <Link
                 href="/support/return-and-refund"
                 onClick={() => {
-                  setActivePage("/return-and-refund");
+                  setActivePage("/support/return-and-refund");
                   window.scrollTo(0, 0);
                   setIsOpen(false);
                 }}
                 className={`relative w-fit py-1 transition-all text-[#FFF] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#FFF] after:transition-all uppercase after:duration-500 hover:after:w-full flex gap-4 ${
-                  activePage === "/return-and-refund"
+                  activePage === "/support/return-and-refund"
                     ? "text-white font-medium after:w-full"
                     : ""
                 }`}
@@ -219,13 +232,14 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                 <p>INSTAGRAM</p>
               </a>
               <Link
-                href="/story-behind-drip"
+                href="/legals/story-behind-drip"
                 onClick={() => {
+                  setActivePage("/legals/story-behind-drip");
                   window.scrollTo(0, 0);
                   setIsOpen(false);
                 }}
                 className={`relative w-fit py-1 transition-all text-[#FFF] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#FFF] after:transition-all uppercase after:duration-500 hover:after:w-full flex gap-4 ${
-                  activePage === "/contact-us"
+                  activePage === "/legals/story-behind-drip"
                     ? "text-white font-medium after:w-full"
                     : ""
                 }`}
@@ -233,13 +247,14 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                 <p>Story Behind Drip</p>
               </Link>
               <Link
-                href="/what-makes-us-different"
+                href="/legals/what-makes-us-different"
                 onClick={() => {
+                  setActivePage("/legals/what-makes-us-different");
                   window.scrollTo(0, 0);
                   setIsOpen(false);
                 }}
                 className={`relative w-fit py-1 transition-all text-[#FFF] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#FFF] after:transition-all uppercase after:duration-500 hover:after:w-full flex gap-4 ${
-                  activePage === "/contact-us"
+                  activePage === "/legals/what-makes-us-different"
                     ? "text-white font-medium after:w-full"
                     : ""
                 }`}

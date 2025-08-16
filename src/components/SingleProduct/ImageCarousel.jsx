@@ -1,17 +1,55 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Controller } from "swiper/modules";
 import "swiper/css";
-
+import { toast } from "sonner";
 import ImageCarouselSkeleton from "../Skeleton/ImageCarouselSkeleton";
 import { useRef, useState, useEffect } from "react";
+import { addToWishlist } from "@/utils/addToWishlist";
+import Image from "next/image";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { IoMdHeart } from "react-icons/io";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
-const ImageCarousel = ({ images, loading }) => {
+const ImageCarousel = ({ item, images, loading ,selectedSize}) => {
   const swiperRef = useRef(null); // Main Swiper
   const progressSwiperRef = useRef(null); // Progress Bar Swiper
   const thumbnailsRef = useRef(null); // Thumbnails container
   const thumbnailRefs = useRef([]); // Array of thumbnail refs
   const [activeIndex, setActiveIndex] = useState(0);
   const [progressIndex, setProgressIndex] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (item?._id) {
+      const stored = typeof window !== "undefined" && localStorage.getItem("wishlist");
+      if (stored) {
+        try {
+          const wishlist = JSON.parse(stored);
+          setIsWishlisted(
+            wishlist.some((w) => w.productId === item._id && (selectedSize ? w.size === selectedSize : true))
+          );
+        } catch {
+          setIsWishlisted(false);
+        }
+      } else {
+        setIsWishlisted(false);
+      }
+    }
+  }, [item?._id, selectedSize]);
 
   useEffect(() => {
     if (thumbnailRefs.current[activeIndex] && thumbnailsRef.current) {
@@ -37,12 +75,49 @@ const ImageCarousel = ({ images, loading }) => {
     }
   }, [activeIndex]);
 
+  const handleOpenModal = (src) => {
+    setModalImage(src);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setModalImage(null);
+  };
+
   if (loading) {
     return <ImageCarouselSkeleton />;
   }
 
   return (
     <div className="flex flex-col gap-10 relative">
+      <div className="absolute top-4 z-[100] right-4 ">
+        <button
+          onClick={() => {
+            if (!item?._id) return;
+            if (isWishlisted) {
+              router.push("/wishlist");
+              return;
+            }
+            addToWishlist({
+              productId: item?._id,
+              name: item?.name,
+              image: item?.images[0],
+              price: item?.discountedPrice,
+              size: selectedSize ? selectedSize : "",
+            });
+            toast.success(`${item?.name} Added to Wishlist`);
+            setIsWishlisted(true);
+          }}
+          className="text-[0.9rem] text-black font-reigo-regular  "
+        >
+          {isWishlisted ? (
+            <IoMdHeart className="inline-block text-red-500" size={24} />
+          ) : (
+            <IoMdHeartEmpty className="inline-block text-red-500" size={24} />
+          )}
+        </button>
+      </div>
       {/* Swiper Main Carousel */}
       <Swiper
         modules={[Pagination, Navigation, Controller]}
@@ -77,6 +152,14 @@ const ImageCarousel = ({ images, loading }) => {
                 className="object-cover md:w-full w-[400px] h-auto"
               />
             </a>
+
+            {/* <img
+              src={src}
+              alt={`Slide ${idx}`}
+              loading="lazy"
+              className="object-cover md:w-full w-[400px] h-auto cursor-pointer"
+              onClick={() => handleOpenModal(src)}
+            /> */}
           </SwiperSlide>
         ))}
       </Swiper>
@@ -117,7 +200,7 @@ const ImageCarousel = ({ images, loading }) => {
           <img
             key={idx}
             src={src}
-            ref={(el) => (thumbnailRefs.current[idx] = el)} // Store ref for each thumbnail
+            ref={(el) => (thumbnailRefs.current[idx] = el)}
             alt={`Thumbnail ${idx}`}
             className={`w-32 max-h-32 object-cover transition-all cursor-pointer ${
               activeIndex === idx
@@ -128,6 +211,22 @@ const ImageCarousel = ({ images, loading }) => {
           />
         ))}
       </div>
+      {/* Modal for image preview */}
+      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+        <DialogOverlay className=" backdrop-blur-lg">
+          <DialogContent className="bg-transparent border-0 shadow-none h-full md:h-screen min-w-[50vw]  max-w-full text-white p-0">
+            <div className="">
+              <div className=" overflow-y-scroll normal-scrollbar flex items-center justify-center">
+                <img
+                  src={modalImage}
+                  alt="Product full view"
+                  className="object-contain md:w-[50vw] "
+                />
+              </div>
+            </div>
+          </DialogContent>
+        </DialogOverlay>
+      </Dialog>
     </div>
   );
 };

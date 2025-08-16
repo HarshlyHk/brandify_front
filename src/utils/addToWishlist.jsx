@@ -8,6 +8,12 @@ export function addToWishlist(item) {
       wishlist = [];
     }
   }
+  // Remove product without size if adding with size
+  if (item.size) {
+    wishlist = wishlist.filter(
+      (i) => !(i.productId === item.productId && (!i.size || i.size === ""))
+    );
+  }
   // Prevent duplicates by productId and size
   const exists = wishlist.some(
     (i) => i.productId === item.productId && i.size === item.size
