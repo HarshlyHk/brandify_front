@@ -8,6 +8,7 @@ import React from "react";
 import useAuthHook from "@/utils/useAuthHook";
 import { CopilotKit } from "@copilotkit/react-core";
 import "@copilotkit/react-ui/styles.css"; // Copilot UI styles
+import { Toaster } from "sonner";
 
 function AuthWrapper({ children }) {
   useAuthHook();
@@ -24,6 +25,7 @@ export function ReduxProvider({ children }) {
     >
       <CopilotKit publicApiKey="ck_pub_6a24292ecfe13bda8330cc2fc15053fe">
         <Provider store={store}>
+          <Toaster />
           <AuthWrapper>{children}</AuthWrapper>
         </Provider>
       </CopilotKit>
