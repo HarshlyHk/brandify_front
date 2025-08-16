@@ -106,6 +106,7 @@ const ImageCarousel = ({ item, images, loading ,selectedSize}) => {
               price: item?.discountedPrice,
               size: selectedSize ? selectedSize : "",
             });
+            router.push("/wishlist");
             toast.success(`${item?.name} Added to Wishlist`);
             setIsWishlisted(true);
           }}

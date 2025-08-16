@@ -21,8 +21,10 @@ import {
 import SizeChartImg from "@/assets/images/size-chart.jpg";
 import MagicCheckoutButton from "@/components/MagicCheckout/MagicCheckout";
 import { BiSolidOffer } from "react-icons/bi";
-import {formatIndianPrice} from "@/utils/formatPrice"
-
+import { formatIndianPrice } from "@/utils/formatPrice";
+import { FaTruck } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
+import { SiRazorpay } from "react-icons/si";
 
 const ImageGallery = ({ item, loading, frequentlyBought }) => {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -133,7 +135,12 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
           </div>
         )}
       </div>
-      <ImageCarousel item={item} selectedSize={selectedSize} images={item?.images} loading={loading} />
+      <ImageCarousel
+        item={item}
+        selectedSize={selectedSize}
+        images={item?.images}
+        loading={loading}
+      />
       {/* Right Panel */}
       <div className="flex-1 px-4 md:px-10">
         <div>
@@ -319,7 +326,40 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
             </div>
           </>
         )}
+        {/* Services */}
+        <div className="flex flex-wrap justify-center gap-4 mt-6">
+          {/* Razorpay */}
+          <div className="flex items-center justify-center gap-1 bg-gradient-to-t from-[#e3e3e3] to-[#f1f1f1] rounded-[5px] w-[70px] md:w-[85px] h-[55px]">
+            <SiRazorpay className="text-gray-600" />
+            <span className="font-semibold tracking-wider text-[8px] md:text-[10px] italic font-helvetica">
+              Razorpay
+            </span>
+          </div>
 
+          {/* Cash on Delivery */}
+          <div className="flex items-center justify-center gap-2 bg-gradient-to-t from-[#e3e3e3] to-[#f1f1f1] border rounded-[5px] w-[70px] md:w-[85px] h-[55px]">
+            <span className="font-semibold uppercase italic font-helvetica text-center text-[8px] md:text-[10px] tracking-wider">
+              Cash on Delivery
+            </span>
+          </div>
+
+          {/* Fast Shipping */}
+          <div className="flex flex-col items-center justify-center gap-1 bg-gradient-to-t from-[#e3e3e3] to-[#f1f1f1] border rounded-[5px] w-[70px] md:w-[85px] h-[55px]">
+            <FaTruck className="text-gray-700 text-lg" />
+            <span className="font-semibold uppercase italic font-helvetica text-center text-[8px] md:text-[10px] tracking-wider">
+              Fast <br /> Shipping
+            </span>
+          </div>
+
+          {/* 100% Quality Guarantee */}
+          <div className="flex flex-col items-center justify-center bg-gradient-to-t from-[#e3e3e3] to-[#f1f1f1] border rounded-[5px] w-[70px] md:w-[85px] h-[55px] overflow-hidden">
+            <img
+              src="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/100%25%20guarantee-imprv.jpg"
+              alt="100% Quality Guarantee"
+              className="h-[90px] "
+            />
+          </div>
+        </div>
         {/* Product Short Description */}
         <div className="mt-4 ">{renderContent(item?.shortDescription)}</div>
       </div>

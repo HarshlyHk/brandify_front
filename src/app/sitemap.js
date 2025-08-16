@@ -1,40 +1,56 @@
-import axiosInstance from "@/config/axiosInstance";
+import { MetadataRoute } from "next";
 
 export default async function sitemap() {
-  const staticUrls = [
+  const response = await fetch(
+    "https://api.dripdrip.in/api/product/get-product-category/all-products?limit=200&sort=relevance",
+    { next: { revalidate: 0 } }
+  );
+  const data = await response.json();
+  console.log("Sitemap data:", data?.data?.products);
+  const postEntries =
+    data?.data?.products?.map((item) => ({
+      url: `https://www.dripdrip.in/product-details/${item._id}?name=${item.name
+        .replace(/\s+/g, "-")
+        .toLowerCase()}`,
+      lastModified: item.createdAt
+        ? new Date(item.createdAt).toISOString()
+        : new Date().toISOString(),
+      changeFrequency: "daily",
+      priority: 0.7,
+      images: item.images?.[0]
+        ? [
+            {
+              loc: item.images[0], // <image:loc>
+              title: item.name, // <image:title>
+            },
+          ]
+        : [],
+    })) || [];
+  return [
     {
-      url: "https://dripdrip.in",
-      lastModified: new Date(),
+      url: "https://www.dripdrip.in/all-products/all-products",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "daily",
+      priority: 1.0,
     },
     {
-      url: "https://dripdrip.in/all-products/oversized-tees",
-      lastModified: new Date(),
+      url: "https://www.dripdrip.in/support/contact-us",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "yearly",
+      priority: 1.0,
     },
     {
-      url: "https://www.dripdrip.in/bottoms",
-      lastModified: new Date(),
+      url: "https://www.dripdrip.in/support/track-order",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "yearly",
+      priority: 1.0,
     },
     {
-      url: "https://www.dripdrip.in/vests",
-      lastModified: new Date(),
+      url: "https://www.dripdrip.in/legals/story-behind-drip",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "yearly",
+      priority: 1.0,
     },
+    ...postEntries,
   ];
-
-  let dynamicUrls = [];
-
-  try {
-    const response = await axiosInstance.get(
-      "product/get-product-category/all?limit=100"
-    );
-    const products = response?.data?.data || [];
-
-    dynamicUrls = products.map((product) => ({
-      url: `https://dripdrip.in/product-details/${product._id}?name=${product.name.replace(/\s+/g, "-")}`,
-      lastModified: new Date(),
-    }));
-  } catch (error) {
-    console.error("Error fetching products for sitemap:", error);
-  }
-
-  return [...staticUrls, ...dynamicUrls];
 }

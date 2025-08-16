@@ -95,6 +95,10 @@ const reviewSlice = createSlice({
     setSort(state, action) {
       state.sort = action.payload;
     },
+    resetReviews(state) {
+      state.reviews = [];
+      state.page = 1;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -104,11 +108,19 @@ const reviewSlice = createSlice({
       })
       .addCase(getProductReviews.fulfilled, (state, action) => {
         state.loading = false;
-        state.reviews = action.payload.reviews;
+        
+        // If it's the first page, replace reviews; otherwise append
+        if (action.meta.arg.page === 1) {
+          state.reviews = action.payload.reviews;
+        } else {
+          state.reviews = [...state.reviews, ...action.payload.reviews];
+        }
+        
         state.myreview = action.payload.myreview;
         state.productDetail = action.payload.product;
         state.total = action.payload.total;
         state.totalPages = action.payload.totalPages;
+        state.page = action.meta.arg.page;
       })
       .addCase(getProductReviews.rejected, (state, action) => {
         state.loading = false;
@@ -143,5 +155,5 @@ const reviewSlice = createSlice({
   },
 });
 
-export const { setPage, setLimit, setSort } = reviewSlice.actions;
+export const { setPage, setLimit, setSort, resetReviews } = reviewSlice.actions;
 export default reviewSlice.reducer;

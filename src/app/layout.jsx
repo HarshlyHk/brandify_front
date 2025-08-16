@@ -40,7 +40,7 @@ export const metadata = {
     siteName: "DRIP STUDIOS",
     images: [
       {
-        url: "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_3936.png",
+        url: "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_7330.JPG",
         alt: "DRIP STUDIOS - Premium Streetwear",
       },
     ],
@@ -56,7 +56,7 @@ export const metadata = {
     creator: "DRIP STUDIOS",
     images: [
       {
-        url: "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_3936.png",
+        url: "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_7330.JPG",
         alt: "DRIP STUDIOS - Premium Streetwear",
       },
     ],

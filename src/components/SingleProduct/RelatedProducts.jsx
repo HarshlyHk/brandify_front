@@ -1,9 +1,8 @@
 import React from "react";
-import Link from "next/link"
+import Link from "next/link";
 import { formatIndianPrice } from "@/utils/formatPrice";
+import Image from "next/image";
 const RelatedProducts = ({ item, linkPrefix }) => {
-
-
   return (
     <div className="relative group transition-all duration-500 product-card cursor-default">
       {/* Product Image with Link */}
@@ -11,8 +10,10 @@ const RelatedProducts = ({ item, linkPrefix }) => {
         href={`/product-details/${item?._id}?name=${linkPrefix}`}
         className="w-full aspect-square block relative overflow-hidden"
       >
-        <img
-          src={item?.thumbnails[0]}
+        <Image
+          src={item?.images[0]}
+          fill
+          quality={75}
           alt={item?.name}
           loading="lazy"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"

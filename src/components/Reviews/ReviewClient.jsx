@@ -8,6 +8,7 @@ import {
   addProductReview,
   editReview,
   deleteReview,
+  resetReviews,
 } from "@/features/reviewSlice";
 import { formatDistanceToNow } from "date-fns";
 import { useParams } from "next/navigation";
@@ -25,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MdModeEdit } from "react-icons/md";
 import Link from "next/link";
+import { Skeleton } from "../ui/skeleton";
 
 const ReviewsClient = () => {
   const { productId } = useParams();
@@ -35,7 +37,7 @@ const ReviewsClient = () => {
     page,
     limit,
     sort,
-    hasMore,
+    totalPages,
     loading,
     myreview,
   } = useSelector((state) => state.review);
@@ -63,21 +65,22 @@ const ReviewsClient = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(getProductReviews({ productId, page: 1, limit: 10, sort }));
-    // ...existing code...
+    // Reset reviews and fetch first page when productId or sort changes
+    dispatch(resetReviews());
+    dispatch(getProductReviews({ productId, page: 1, limit: 6, sort }));
   }, [dispatch, productId, sort, user]);
 
   // Infinite scroll handler
   const handleObserver = useCallback(
     (entries) => {
       const target = entries[0];
-      if (target.isIntersecting && hasMore && !loading) {
+      if (target.isIntersecting && page < totalPages && !loading) {
         dispatch(
-          getProductReviews({ productId, page: page + 1, limit: 10, sort })
+          getProductReviews({ productId, page: page + 1, limit: 6, sort })
         );
       }
     },
-    [dispatch, productId, page, sort, hasMore, loading]
+    [dispatch, productId, page, sort, totalPages, loading]
   );
 
   useEffect(() => {
@@ -115,6 +118,9 @@ const ReviewsClient = () => {
     setName("");
     setComment("");
     setRating(0);
+    // Reset and refetch reviews to update statistics
+    dispatch(resetReviews());
+    dispatch(getProductReviews({ productId, page: 1, limit: 6, sort }));
   };
 
   // Edit review logic
@@ -142,6 +148,9 @@ const ReviewsClient = () => {
     );
     setEditLoading(false);
     setEditDialogOpen(false);
+    // Reset and refetch reviews to update statistics
+    dispatch(resetReviews());
+    dispatch(getProductReviews({ productId, page: 1, limit: 6, sort }));
   };
 
   const handleDeleteReview = async () => {
@@ -155,15 +164,12 @@ const ReviewsClient = () => {
     setDeleteDialogOpen(false);
     setEditLoading(false);
     setEditDialogOpen(false);
+    // Reset and refetch reviews to update statistics
+    dispatch(resetReviews());
+    dispatch(getProductReviews({ productId, page: 1, limit: 6, sort }));
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="font-helvetica">Loading...</p>
-      </div>
-    );
-  }
+
 
   return (
     <div className="p-6 w-full mx-auto">
@@ -189,9 +195,7 @@ const ReviewsClient = () => {
           <h3 className="font-semibold text-base mb-1 font-helvetica">
             Rating Snapshot
           </h3>
-          <p className="text-sm text-gray-700 mb-3 font-helvetica">
-            Select a row below to filter reviews.
-          </p>
+
           {Object.keys(starCounts)
             .sort((a, b) => b - a)
             .map((star) => {
@@ -390,13 +394,37 @@ const ReviewsClient = () => {
               No reviews yet.
             </div>
           )}
-        </div>
-        {/* Loader for infinite scroll */}
-        <div ref={loader} className="w-full flex justify-center py-6">
-          {loading && (
-            <span className="text-gray-500 font-helvetica">Loading...</span>
+
+          {/* Loading skeleton cards */}
+          {loading && page > 1 && (
+            Array.from({ length: 6 }, (_, i) => (
+              <div
+                key={`skeleton-${i}`}
+                className="border min-h-[250px] p-6 h-full flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex gap-1 mb-3">
+                    {Array.from({ length: 5 }, (_, starIndex) => (
+                      <Skeleton key={starIndex} className="w-4 h-4" />
+                    ))}
+                  </div>
+                  <div className="flex justify-between items-center mb-4">
+                    <Skeleton className="h-4 w-24" />
+                    <Skeleton className="h-4 w-16" />
+                  </div>
+                  <Skeleton className="h-5 w-32 mb-2" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </div>
+                </div>
+              </div>
+            ))
           )}
         </div>
+        {/* Loader for infinite scroll */}
+        <div ref={loader} className="w-full flex justify-center py-6"></div>
       </div>
 
       {/* Dialog for Adding Review */}

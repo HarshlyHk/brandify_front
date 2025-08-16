@@ -4,7 +4,7 @@ import parse from "html-react-parser";
 import { Skeleton } from "../ui/skeleton";
 import { useSelector } from "react-redux";
 import Reviews from "./Reviews";
-const tabs = ["Description", "Core Features", "Care Guide", "Reviews"];
+const tabs = ["Reviews", "Description", "Core Features", "Care Guide"];
 
 const ProductTabs = ({
   productId,
@@ -77,10 +77,7 @@ const ProductTabs = ({
 
       {/* Content */}
       <div className="px-4 py-6 sm:px-6">
-        {tabIndex === 0 && renderContent(description)}
-        {tabIndex === 1 && renderContent(coreFeatures)}
-        {tabIndex === 2 && renderContent(careGuide)}
-        {tabIndex === 3 && (
+        {tabIndex === 0 && (
           <div className="">
             <div className="w-full ">
               <h1 className="text-[16px] tracking-wider md:text-[24px] font-bold font-helvetica mb-4 uppercase">
@@ -90,6 +87,9 @@ const ProductTabs = ({
             </div>
           </div>
         )}
+        {tabIndex === 1 && renderContent(description)}
+        {tabIndex === 2 && renderContent(coreFeatures)}
+        {tabIndex === 3 && renderContent(careGuide)}
       </div>
     </div>
   );

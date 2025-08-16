@@ -188,9 +188,7 @@ const Reviews = () => {
           <h3 className="font-semibold text-base mb-1 font-helvetica md:min-w-[400px]">
             Rating Snapshot
           </h3>
-          <p className="text-sm text-gray-700 mb-3 font-helvetica">
-            Select a row below to filter reviews.
-          </p>
+
           {Object.keys(starCounts)
             .sort((a, b) => b - a)
             .map((star) => {
