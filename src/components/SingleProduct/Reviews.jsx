@@ -9,6 +9,7 @@ import {
   addProductReview,
   editReview,
   deleteReview,
+  resetReviews,
 } from "@/features/reviewSlice";
 import {
   Dialog,
@@ -58,6 +59,7 @@ const Reviews = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
+    dispatch(resetReviews());
     dispatch(getProductReviews({ productId, page, limit, sort }));
   }, [dispatch, productId, page, limit, user]);
 

@@ -200,14 +200,6 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
           )}
         </div>
 
-        <div className="">
-          {item?.preeBook && (
-            <div className="top-2 text-[10px] text-start font-semibold py-2 text-gray-700">
-              <p>PREBOOKING ITEMS ARE AVAILABLE FOR PREPAID PURCHASES ONLY.</p>
-            </div>
-          )}
-        </div>
-
         {/* Frequently Bought */}
         <div>
           <FrequentlyBought frequentlyBought={frequentlyBought} />
