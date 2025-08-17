@@ -59,7 +59,7 @@ const Reviews = () => {
 
   useEffect(() => {
     dispatch(getProductReviews({ productId, page, limit, sort }));
-  }, [dispatch, productId, page, limit, sort]);
+  }, [dispatch, productId, page, limit, user]);
 
   const handleStarClick = (value) => {
     if (!user) {
@@ -393,11 +393,11 @@ const Reviews = () => {
                         )}
                       </span>
                       <span className="font-helvetica">
-                        {review.createdAt
+                        {/* {review.createdAt
                           ? formatDistanceToNow(new Date(review.createdAt), {
                               addSuffix: true,
                             })
-                          : ""}
+                          : ""} */}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 mb-2">

@@ -371,11 +371,11 @@ const ReviewsClient = () => {
                       )}
                     </span>
                     <span className="font-helvetica">
-                      {review.createdAt
+                      {/* {review.createdAt
                         ? formatDistanceToNow(new Date(review.createdAt), {
                             addSuffix: true,
                           })
-                        : ""}
+                        : ""} */}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 mb-2">
