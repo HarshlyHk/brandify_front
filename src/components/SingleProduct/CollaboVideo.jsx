@@ -26,7 +26,7 @@ const CollaboVideo = ({ productId }) => {
               position: "fixed",
               bottom: 24,
               right: 24,
-              zIndex: 1000,
+              zIndex: 20,
               width: 120,
               height: 180,
               borderRadius: 8,
@@ -96,7 +96,7 @@ const CollaboVideo = ({ productId }) => {
           {/* Modal for expanded view */}
           {modalOpen && (
             <div
-              className="fixed inset-0 w-[100vw] backdrop-blur-[10px] h-[100vh] bg-black/70 z-[2000] flex items-center justify-center"
+              className="fixed inset-0 w-[100vw] backdrop-blur-[10px] h-[100vh] bg-black/70 z-50 flex items-center justify-center"
               onClick={() => setModalOpen(false)}
             >
               <div

@@ -124,7 +124,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="backdrop-blur-[10px]  shadow-md w-full sticky top-0 z-20 border-b border-white">
+      <nav className="backdrop-blur-[10px]  shadow-md w-full sticky top-0 z-10 border-b border-white">
         <div className=" px-6 md:px-20 h-[80px] flex justify-between items-center">
           {/* Logo */}
 
