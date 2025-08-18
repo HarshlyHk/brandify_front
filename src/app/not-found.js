@@ -6,10 +6,10 @@ export default function NotFound() {
       <h2 className="text-2xl font-bold">PAGE Not Found</h2>
       <p className="pb-6">Could not find any product</p>
       <Link
-        href="/all-products/all-products"
+        href="/"
         className="flex justify-center items-center w-fit py-[12px] px-[30px] text-[12px] tracking-[0.2em]  bg-black text-white border-transparent border-[1px] "
       >
-        SHOP PRODUCTS
+        GO TO HOME
       </Link>
     </div>
   );

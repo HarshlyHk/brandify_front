@@ -17,24 +17,46 @@ export default async function sitemap() {
         : new Date().toISOString(),
       changeFrequency: "daily",
       priority: 0.7,
-      images: item.images?.[0]
-        ? [
-            {
-              loc: item.images[0], // <image:loc>
-              title: item.name, // <image:title>
-            },
-          ]
-        : [],
     })) || [];
   return [
     {
-      url: "https://www.dripdrip.in/all-products/all-products",
+      url: "https://www.dripdrip.in/all-products/featured",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "daily",
+      priority: 1.0,
+    },
+    {
+      url: "https://www.dripdrip.in/all-products/fear-no-one",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "daily",
+      priority: 1.0,
+    },
+    {
+      url: "https://www.dripdrip.in/all-products/dripcult",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "daily",
+      priority: 1.0,
+    },
+    {
+      url: "https://www.dripdrip.in/all-products/oversized-tees",
       lastModified: new Date().toISOString(),
       changeFrequency: "daily",
       priority: 1.0,
     },
     {
       url: "https://www.dripdrip.in/support/contact-us",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "yearly",
+      priority: 1.0,
+    },
+    {
+      url: "https://www.dripdrip.in/support/payment-query",
+      lastModified: new Date().toISOString(),
+      changeFrequency: "yearly",
+      priority: 1.0,
+    },
+    {
+      url: "https://www.dripdrip.in/support/return-refund",
       lastModified: new Date().toISOString(),
       changeFrequency: "yearly",
       priority: 1.0,
