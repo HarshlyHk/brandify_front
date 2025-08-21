@@ -39,6 +39,9 @@ const ShippingPolicy = () => {
         Delivery of our services will be confirmed on your mail ID as specified
         during registration.
       </p>
+      <p>
+        
+      </p>
 
       <p>
         For any issues in utilizing our services you may contact our helpdesk on{" "}

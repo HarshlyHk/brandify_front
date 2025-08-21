@@ -24,6 +24,12 @@ const CancellationPolicy = () => {
         cancellation policy provides a fair resolution process.
       </p>
 
+      <div className=" border-l-4 p-4 mb-6">
+        <p className="">
+          <strong>Important Notice:</strong> All prepaid orders cannot be cancelled once the payment has been processed. This policy ensures efficient order processing and inventory management.
+        </p>
+      </div>
+
       <p className="font-semibold">
         We offer exchanges under the following conditions:
       </p>
