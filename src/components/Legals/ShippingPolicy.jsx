@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect } from "react";
 
 const ShippingPolicy = () => {
@@ -39,10 +39,6 @@ const ShippingPolicy = () => {
         Delivery of our services will be confirmed on your mail ID as specified
         during registration.
       </p>
-      <p>
-        
-      </p>
-
       <p>
         For any issues in utilizing our services you may contact our helpdesk on{" "}
         <span className="text-blue-500 font-medium">8527877846</span> or email
