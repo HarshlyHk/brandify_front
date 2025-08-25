@@ -111,7 +111,7 @@ const CartSummary = ({ user, cartItems, localCart }) => {
       </button>
       <Link
         className="text-xs mt-4 flex items-center justify-start gap-2"
-        href="/shop-all"
+        href="/"
       >
         <p>Continue Shopping</p>
         <FaGreaterThan className="text-xs" />
