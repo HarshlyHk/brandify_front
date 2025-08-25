@@ -32,7 +32,7 @@ const navItems = [
   },
   { name: "DRIPCULT - OG", link: "/all-products/dripcult" },
   {
-    name: "FESTIVE SALE",
+    name: "END OF SEASON STEALS",
     link: "/all-products/steal-the-drip",
     color: "text-red-500",
   },
