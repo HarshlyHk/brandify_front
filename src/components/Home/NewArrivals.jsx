@@ -41,8 +41,8 @@ const NewArrivals = () => {
   return (
     <div className="py-10 px-0 md:px-5 relative">
       <div className="flex flex-col items-center justify-center">
-        <h2 className="text-center text-xl md:text-3xl font-bold text-red-500">
-          FESTIVE SALE - UPTO 50% OFF
+        <h2 className="text-center uppercase text-xl md:text-3xl font-bold text-red-500">
+          End of Season Steals
         </h2>
       </div>
 

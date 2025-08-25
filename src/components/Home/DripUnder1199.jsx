@@ -123,9 +123,9 @@ const DripUnder1199 = () => {
   return (
     <div className="py-10 px-0 md:px-5 relative">
       <div className="flex flex-col items-center justify-center">
-        <h2 className="text-center text-xl md:text-3xl font-bold text-red-500 !mb-0">
+        <h2 className="text-center uppercase text-xl md:text-3xl font-bold text-red-500 !mb-0">
           {/* DRIPCULT - CERTIFIED HEAT */}
-          FESTIVE SALE - UPTO 50% OFF
+          End of Season Steals
         </h2>
       </div>
 
