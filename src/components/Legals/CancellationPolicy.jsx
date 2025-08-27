@@ -41,14 +41,6 @@ const CancellationPolicy = () => {
           exchanges will be accepted only in case of a defective item.
         </li>
         <li>
-          For first-time buyers, exchanges on discounted articles are available
-          only in case of a product defect. Customers are required to dispatch
-          the product at their own expense and pay an exchange fee of ₹150. Upon
-          inspection, they may select their preferred size of the same product;
-          if the item is out of stock, they can choose an alternative article in
-          their desired size.
-        </li>
-        <li>
           An unboxing video is mandatory as proof; without it, claims will not
           be considered due to potential scams.
         </li>
@@ -56,6 +48,34 @@ const CancellationPolicy = () => {
           Eligibility Timeframe: Exchange requests must be made within 2 days of
           the delivery date.
         </li>
+
+        <p className="font-semibold">
+          For Discounted Articles (first-time shoppers):
+        </p>
+        <ul className="list-disc list-inside space-y-3">
+          <li>
+            No return/exchange on discounted articles (as they are already
+            offered at nearly half price).
+          </li>
+          <li>
+            Return/exchange is only applicable if the product is received
+            damaged or torn.
+          </li>
+        </ul>
+
+        <p className="font-semibold">
+          For first-time shoppers who face a size issue with discounted
+          articles:
+        </p>
+        <ul className="list-disc list-inside space-y-3">
+          <li>
+           The customer must dispatch the piece back from their end (DM us on WhatsApp at  <span className="font-semibold">8527877846</span> for the return address).
+          </li>
+          <li>
+            Once we receive and verify the product in the same condition it was sent, we will dispatch the desired size to the customer’s address.
+          </li>
+        </ul>
+
         <li className=" font-semibold">How to Request:</li>
         <p className="px-5">
           Customers can initiate an exchange through any of the following
