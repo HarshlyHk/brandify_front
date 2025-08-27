@@ -1,10 +1,9 @@
-"use client"
+"use client";
 
 import React, { useEffect } from "react";
 import Link from "next/link";
 
 const CancellationPolicy = () => {
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -26,7 +25,9 @@ const CancellationPolicy = () => {
 
       <div className=" border-l-4 p-4 mb-6">
         <p className="">
-          <strong>Important Notice:</strong> All prepaid orders cannot be cancelled once the payment has been processed. This policy ensures efficient order processing and inventory management.
+          <strong>Important Notice:</strong> All prepaid orders cannot be
+          cancelled once the payment has been processed. This policy ensures
+          efficient order processing and inventory management.
         </p>
       </div>
 
@@ -35,9 +36,21 @@ const CancellationPolicy = () => {
       </p>
       <ul className="list-disc list-inside space-y-3">
         <li>
-          Articles purchased under the "Blind Drop", "Festive Sale", or "Drip Under
-          ₹1199" categories are not eligible for return. However, exchanges will
-          be accepted only in case of a defective item.
+          Articles purchased under the "Blind Drop", "Festive Sale", or "Drip
+          Under ₹1199" categories are not eligible for return. However,
+          exchanges will be accepted only in case of a defective item.
+        </li>
+        <li>
+          For first-time buyers, exchanges on discounted articles are available
+          only in case of a product defect. Customers are required to dispatch
+          the product at their own expense and pay an exchange fee of ₹150. Upon
+          inspection, they may select their preferred size of the same product;
+          if the item is out of stock, they can choose an alternative article in
+          their desired size.
+        </li>
+        <li>
+          An unboxing video is mandatory as proof; without it, claims will not
+          be considered due to potential scams.
         </li>
         <li>
           Eligibility Timeframe: Exchange requests must be made within 2 days of
