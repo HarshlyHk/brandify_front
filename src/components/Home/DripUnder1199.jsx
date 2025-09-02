@@ -125,7 +125,7 @@ const DripUnder1199 = () => {
       <div className="flex flex-col items-center justify-center">
         <h2 className="text-center uppercase text-xl md:text-3xl font-bold text-red-500 !mb-0">
           {/* DRIPCULT - CERTIFIED HEAT */}
-          End of Season Steals
+          SEASON CLOSURE - 50% OFF
         </h2>
       </div>
 

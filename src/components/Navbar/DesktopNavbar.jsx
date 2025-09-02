@@ -32,7 +32,7 @@ const navItems = [
   },
   { name: "DRIPCULT - OG", link: "/all-products/dripcult" },
   {
-    name: "END OF SEASON STEALS",
+    name: "SEASON CLOSURE - 50% OFF",
     link: "/all-products/steal-the-drip",
     color: "text-red-500",
   },
@@ -105,7 +105,7 @@ const DesktopNavbar = ({ user, handleLogout }) => {
                       }
                     }}
                     className={`relative w-fit block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#FFF] after:transition-all after:duration-500 group-hover:after:w-full ${
-                      item.name === "FESTIVE SALE"
+                      item.name === "SEASON CLOSURE - 50% OFF"
                         ? "text-red-500 font-bold"
                         : activePage === item.link
                         ? " after:w-full text-white font-bold"

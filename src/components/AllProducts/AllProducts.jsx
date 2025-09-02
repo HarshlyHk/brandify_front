@@ -169,7 +169,7 @@ const AllProducts = () => {
         {category === "fear-no-one" && "FEAR NO ONE"}
         {category === "catalog_1" && "THE HEAT LIST"}
         {category === "all" && "THE HEAT LIST"}
-        {category === "steal-the-drip" && "END OF SEASON STEALS"}
+        {category === "steal-the-drip" && "SEASON CLOSURE - 50% OFF"}
         {category === "blind-drop" && "‘ PROJECT UNSEEN ’"}
       </h2>
 
