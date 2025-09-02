@@ -4,7 +4,7 @@
 import { Provider } from "react-redux";
 import store from "@/store/index";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import React from "react";
+import React, { useEffect } from "react";
 import useAuthHook from "@/utils/useAuthHook";
 import { CopilotKit } from "@copilotkit/react-core";
 import "@copilotkit/react-ui/styles.css"; // Copilot UI styles
