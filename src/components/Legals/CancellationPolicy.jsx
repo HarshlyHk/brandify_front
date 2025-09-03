@@ -70,7 +70,7 @@ const CancellationPolicy = () => {
         <ul className="list-disc list-inside space-y-3">
           <li>
             The customer must dispatch the piece back from their end (DM us on
-            WhatsApp at <span className="font-semibold">8527877846</span> for
+            WhatsApp at <span className="font-semibold"> 9971741201</span> for
             the return address.) Please note: If you email us or fill the
             exchange form on the website, it will not be considered.
           </li>
