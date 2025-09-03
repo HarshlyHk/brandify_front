@@ -69,10 +69,18 @@ const CancellationPolicy = () => {
         </p>
         <ul className="list-disc list-inside space-y-3">
           <li>
-           The customer must dispatch the piece back from their end (DM us on WhatsApp at  <span className="font-semibold">8527877846</span> for the return address).
+            The customer must dispatch the piece back from their end (DM us on
+            WhatsApp at <span className="font-semibold">8527877846</span> for
+            the return address.) Please note: If you email us or fill the
+            exchange form on the website, it will not be considered.
           </li>
           <li>
-            Once we receive and verify the product in the same condition it was sent, we will dispatch the desired size to the customer’s address.
+            The customer must contact us on WhatsApp within 2 days of delivery
+            to initiate the return.
+          </li>
+          <li>
+            Once we receive and verify the product in the same condition it was
+            sent, we will dispatch the desired size to the customer’s address.
           </li>
         </ul>
 
