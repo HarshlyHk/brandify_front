@@ -8,6 +8,7 @@ import abandonedCartReducer from "@/features/abandonedCartSlice";
 import specialFramesReducer from "@/features/specialFramesSlice";
 import collabosReducer from "@/features/collaboSlice";
 import reviewReducer from "../features/reviewSlice";
+import comboReducer from "@/features/comboSlice";
 
 const store = configureStore({
   reducer: {
@@ -19,6 +20,8 @@ const store = configureStore({
     abandonedCart: abandonedCartReducer,
     specialFrames: specialFramesReducer,
     collabo: collabosReducer,
+    combo: comboReducer,
+
     review: reviewReducer,
   },
 });

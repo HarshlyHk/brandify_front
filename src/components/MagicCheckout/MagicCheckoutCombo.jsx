@@ -5,7 +5,7 @@ import {
 } from "../../utils/loadRazorpay";
 import axiosInstance from "@/config/axiosInstance";
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import { useRouter } from "next/navigation";
 import Lottie from "lottie-react"; // Import Lottie
 import paymentAnimation from "@/assets/lottie/Payment.json"; // Import your animation JSON file
 
@@ -16,24 +16,29 @@ const MagicCheckoutCombo = ({
   buttonName = "CHECKOUT",
   disabled = false,
   setDrawerOpen,
+  resetSelectedSizes,
 }) => {
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
   const [loadingOrder, setLoadingOrder] = useState(false);
   useEffect(() => {
     loadRazorpayMagicScript().then((loaded) => setIsRazorpayLoaded(loaded));
   }, []);
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const handlePayment = async () => {
     const referralCode =
       typeof window !== "undefined" && localStorage.getItem("referralCode");
     const utmParams = {
       Source: typeof window !== "undefined" && localStorage.getItem("Source"),
-      Placement: typeof window !== "undefined" && localStorage.getItem("Placement"),
-      CampaignName: typeof window !== "undefined" && localStorage.getItem("CampaignName"),
-      AdSetName: typeof window !== "undefined" && localStorage.getItem("AdSetName"),
+      Placement:
+        typeof window !== "undefined" && localStorage.getItem("Placement"),
+      CampaignName:
+        typeof window !== "undefined" && localStorage.getItem("CampaignName"),
+      AdSetName:
+        typeof window !== "undefined" && localStorage.getItem("AdSetName"),
       AdName: typeof window !== "undefined" && localStorage.getItem("AdName"),
-      CampaignID: typeof window !== "undefined" && localStorage.getItem("CampaignID"),
+      CampaignID:
+        typeof window !== "undefined" && localStorage.getItem("CampaignID"),
       Term: typeof window !== "undefined" && localStorage.getItem("Term"),
       Fbclid: typeof window !== "undefined" && localStorage.getItem("Fbclid"),
     };
@@ -46,7 +51,6 @@ const MagicCheckoutCombo = ({
       })),
       utmParams,
       referal: referralCode,
-      insta_handle: instaHandle,
     };
 
     setLoadingOrder(true);
@@ -57,6 +61,7 @@ const MagicCheckoutCombo = ({
       );
       setDrawerOpen(false);
       setLoadingOrder(false);
+      resetSelectedSizes();
 
       const order = orderResponse.data.data;
       const orderId = order.id;
@@ -68,6 +73,7 @@ const MagicCheckoutCombo = ({
         order_id: orderId,
         show_coupons: true,
         handler: function (response) {
+          toast.loading("Verifying payment...");
           axiosInstance
             .post(
               "/razorpay/verify-payment",
@@ -86,7 +92,9 @@ const MagicCheckoutCombo = ({
               if (res.data.status === 200) {
                 toast.success("Order Placed Successfully!");
                 const order = res.data.data.updatedOrder;
-                navigate("/order-success/" + res?.data?.data?.navigateOrderId);
+                navigate.push(
+                  "/order-success/" + res?.data?.data?.navigateOrderId
+                );
               } else {
                 toast.error("Payment verification failed");
               }

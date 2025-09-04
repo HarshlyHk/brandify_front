@@ -18,6 +18,7 @@ import ThreeDOverlay from "@/components/Home/ThreeDOverlay";
 import BlindDrop from "@/components/Home/BlindDrop";
 import SpecialFrames from "@/components/Home/SpecialFrames";
 import DripUnder1199 from "@/components/Home/DripUnder1199";
+import Combo from "@/components/Home/Combo";
 const HomePage = () => {
   return (
     <div className="flex flex-col">
@@ -52,6 +53,10 @@ const HomePage = () => {
         <DripUnder1199 />
       </div>
 
+      <div className="md:px-8 mb-10 ">
+        <Combo />
+      </div>
+
       <div className="mb-10 block md:hidden">
         <Lookbooks />
       </div>
@@ -68,9 +73,10 @@ const HomePage = () => {
         <BigCarousel />
       </div>
 
-      <div className="prodcut-padding mb-10 md:hidden ">
+      {/* <div className="prodcut-padding mb-10 md:hidden ">
         <Comparison />
-      </div>
+      </div> */}
+
       {/* 
       <div className="mb-10 md:block hidden">
         <BottomsCarousel />
