@@ -44,7 +44,7 @@ const BlindDrop = () => {
     <div>
       <div className="flex flex-col items-center justify-center md:mt-10">
         <h2 className="text-center text-xl md:text-3xl font-bold">
-          ‘ PROJECT UNSEEN ’
+          ‘ DRIP HALL OF FAME ’
         </h2>
       </div>
 

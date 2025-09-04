@@ -9,8 +9,9 @@ export function Comparison() {
       <div className="flex md:flex-row flex-col justify-center md:justify-start items-center w-full md:gap-10  mt-0 ">
         <div className="rounded-t-3xl border-neutral-200 md:w-[600px] w-[370px] md:h-[600px] h-[370px] overflow-hidden">
           <ImageComparison
-            leftImage="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_9663 (1)_11zon_11zon.webp"
-            rightImage="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_9662 (1)_11zon_11zon (2).webp"
+            leftImage="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_9903.webp"
+            rightImage="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_9902.webp
+"
           />
         </div>
         <div className="flex flex-col items-center justify-center px-2 md:w-[500px] mt-6 md:mt-0 md:gap-2 gap-2">
@@ -22,7 +23,7 @@ export function Comparison() {
             WEAR, BUILT TO LAST.
           </p>
           <Link
-            href="/product-details/688e39e790de1793adcc481c?name=DS-SIGNATURE-SWEATPANTS"
+            href="/product-details/68952309bd483f4c8416d866?name=DS-SIGNATURE-SWEATPANTS-II "
             className=" md:px-6 md:py-3 px-6 py-3 rounded-none bg-[#000000] text-white  font-figtree text-[12px] hover:bg-transparent ease-in-out hover:rounded-[50px] border-2 border-[#4b4b4b] transition-all duration-500 hover:text-black mt-4 "
           >
             BUY NOW
