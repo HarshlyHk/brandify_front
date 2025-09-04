@@ -77,7 +77,7 @@ const ComboSlider = ({ combos, handleBuyNow }) => {
           combos.map((combo) => (
             <SwiperSlide key={combo._id}>
               <div className="group flex flex-col items-center relative pb-10">
-                <div className="relative w-full overflow-hidden border border-gray-300 rounded-md hover:shadow-lg transition-shadow duration-300">
+                <div className="relative w-full overflow-hidden border border-gray-300 rounded-md hover:shadow-lg transition-shadow duration-300 bg-[#fefefe]">
                   {/* Title */}
                   <h3 className=" md:text-lg uppercase text-center font-bold text-gray-800 mb-4 p-4">
                     {combo.title}

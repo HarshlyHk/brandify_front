@@ -56,7 +56,7 @@ const HomePage = () => {
       <div className="md:px-8 mb-10 ">
         <Combo />
       </div>
-     <div className="mb-20 block ">
+     <div className="mt-8 mb-20 block ">
         <Banner />
       </div>
       <div className="mb-10 block md:hidden">

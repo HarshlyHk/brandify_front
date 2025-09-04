@@ -86,7 +86,7 @@ const ComboPage = () => {
                 <>
                   <div
                     key={combo?._id}
-                    className="border-1 border-gray-400 rounded-md p-5 w-full m-auto "
+                    className="border-1 border-gray-400 rounded-md p-5 w-full m-auto bg-[#fdfdfd] "
                   >
                     <h3 className="text-lg uppercase text-center font-bold text-gray-800 mb-4">
                       {combo.title}
