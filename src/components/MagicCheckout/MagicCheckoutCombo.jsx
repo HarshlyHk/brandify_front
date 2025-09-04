@@ -6,8 +6,8 @@ import {
 import axiosInstance from "@/config/axiosInstance";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import Lottie from "lottie-react"; // Import Lottie
-import paymentAnimation from "@/assets/lottie/Payment.json"; // Import your animation JSON file
+import Lottie from "lottie-react";
+import paymentAnimation from "@/assets/lottie/Payment.json";
 
 const MagicCheckoutCombo = ({
   checkoutItem,
@@ -20,27 +20,27 @@ const MagicCheckoutCombo = ({
 }) => {
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
   const [loadingOrder, setLoadingOrder] = useState(false);
+  
   useEffect(() => {
     loadRazorpayMagicScript().then((loaded) => setIsRazorpayLoaded(loaded));
   }, []);
+  
   const navigate = useRouter();
 
   const handlePayment = async () => {
-    const referralCode =
-      typeof window !== "undefined" && localStorage.getItem("referralCode");
+    // Check if we're on the client side
+    if (typeof window === "undefined") return;
+
+    const referralCode = localStorage.getItem("referralCode");
     const utmParams = {
-      Source: typeof window !== "undefined" && localStorage.getItem("Source"),
-      Placement:
-        typeof window !== "undefined" && localStorage.getItem("Placement"),
-      CampaignName:
-        typeof window !== "undefined" && localStorage.getItem("CampaignName"),
-      AdSetName:
-        typeof window !== "undefined" && localStorage.getItem("AdSetName"),
-      AdName: typeof window !== "undefined" && localStorage.getItem("AdName"),
-      CampaignID:
-        typeof window !== "undefined" && localStorage.getItem("CampaignID"),
-      Term: typeof window !== "undefined" && localStorage.getItem("Term"),
-      Fbclid: typeof window !== "undefined" && localStorage.getItem("Fbclid"),
+      Source: localStorage.getItem("Source"),
+      Placement: localStorage.getItem("Placement"),
+      CampaignName: localStorage.getItem("CampaignName"),
+      AdSetName: localStorage.getItem("AdSetName"),
+      AdName: localStorage.getItem("AdName"),
+      CampaignID: localStorage.getItem("CampaignID"),
+      Term: localStorage.getItem("Term"),
+      Fbclid: localStorage.getItem("Fbclid"),
     };
 
     const orderPayload = {
@@ -114,13 +114,14 @@ const MagicCheckoutCombo = ({
         },
       };
 
-      const razorpay = new window.Razorpay(options);
-      razorpay.on("payment.failed", function (response) {
-        console.error("Payment failed", response);
-        alert("Payment Failed: " + response.error.description);
-      });
-
-      razorpay.open();
+      if (window.Razorpay) {
+        const razorpay = new window.Razorpay(options);
+        razorpay.on("payment.failed", function (response) {
+          console.error("Payment failed", response);
+          alert("Payment Failed: " + response.error.description);
+        });
+        razorpay.open();
+      }
     } catch (error) {
       setLoadingOrder(false);
       toast.error(
