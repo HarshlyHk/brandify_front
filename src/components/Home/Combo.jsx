@@ -79,7 +79,7 @@ const Combo = () => {
       <div>
         <ComboSlider combos={combos} handleBuyNow={handleBuyNow} />
       </div>
-
+{/* 
       <div className="gap-6  hidden">
         {combos.map((combo, index) => {
           const prevClass = `swiper-button-prev-${index}`;
@@ -89,17 +89,14 @@ const Combo = () => {
             <>
               {combo.isStarred && (
                 <>
-                  {/* //! Desktop */}
                   <div
                     key={combo?._id}
                     className="hidden md:block border-1 border-gray-400 rounded-md p-5 w-full m-auto "
                   >
-                    {/* Title */}
                     <h3 className="text-lg uppercase text-center font-bold text-gray-800 mb-4">
                       {combo.title}
                     </h3>
 
-                    {/* Images rendered side by side */}
                     <div className="flex items-center justify-center gap-10">
                       <Image
                         width={500}
@@ -110,7 +107,6 @@ const Combo = () => {
                       />
                     </div>
 
-                    {/* Price & CTA */}
                     <div className="mt-8 text-center border-t-1 border-gray-400 pt-4">
                       <p className="text-sm font-semibold text-gray-800 uppercase">
                         {combo?.totalPrice > 0
@@ -130,7 +126,7 @@ const Combo = () => {
             </>
           );
         })}
-      </div>
+      </div> */}
 
       {/* Drawer for size selection */}
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>

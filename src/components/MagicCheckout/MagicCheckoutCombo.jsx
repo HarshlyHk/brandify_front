@@ -20,11 +20,17 @@ const MagicCheckoutCombo = ({
 }) => {
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
   const [loadingOrder, setLoadingOrder] = useState(false);
-  
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
-    loadRazorpayMagicScript().then((loaded) => setIsRazorpayLoaded(loaded));
+    setIsMounted(true);
+    
+    // Only load Razorpay script on client side
+    if (typeof window !== "undefined") {
+      loadRazorpayMagicScript().then((loaded) => setIsRazorpayLoaded(loaded));
+    }
   }, []);
-  
+
   const navigate = useRouter();
 
   const handlePayment = async () => {
@@ -131,6 +137,11 @@ const MagicCheckoutCombo = ({
       return;
     }
   };
+
+  // Don't render anything until component is mounted
+  if (!isMounted) {
+    return null;
+  }
 
   if (!isRazorpayLoaded) {
     return <div>Loading Razorpay...</div>;
