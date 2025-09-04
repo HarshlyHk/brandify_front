@@ -121,21 +121,7 @@ const MagicCheckoutButton = ({
                 toast.success("Order Placed Successfully!");
                 //! Send purchase pixel to Meta
                 const order = res.data.data.updatedOrder;
-                // if (window.fbq && referralCode) {
-                //   const productIds = order.products.map(
-                //     (p) => p.product?._id || p.product
-                //   );
-                //   const totalValue = order.totalAmount;
-                //   window.fbq("track", "Purchase", {
-                //     content_name: order.products
-                //       .map((p) => p.name || "Unnamed")
-                //       .join(", "),
-                //     content_ids: productIds,
-                //     content_type: "product",
-                //     value: totalValue,
-                //     currency: "INR",
-                //   });
-                // }
+             
                 router.push(
                   "/order-success/" + res?.data?.data?.navigateOrderId
                 );

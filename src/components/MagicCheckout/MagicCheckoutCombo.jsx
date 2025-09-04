@@ -21,43 +21,42 @@ const MagicCheckoutCombo = ({
 }) => {
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
   const [loadingOrder, setLoadingOrder] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [fullPageLoading, setFullPageLoading] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-    loadRazorpayMagicScript().then((loaded) => setIsRazorpayLoaded(loaded));
+    if (typeof window !== "undefined") {
+      loadRazorpayMagicScript().then((loaded) => setIsRazorpayLoaded(loaded));
+    }
   }, []);
-
-  const navigate = useRouter();
+  const router = useRouter();
 
   const handlePayment = async () => {
     // Check if we're on the client side
-    if (typeof window === "undefined") return;
+    if (typeof window !== "undefined") {
+      const referralCode = localStorage.getItem("referralCode");
+      const utmParams = {
+        Source: localStorage.getItem("Source"),
+        Placement: localStorage.getItem("Placement"),
+        CampaignName: localStorage.getItem("CampaignName"),
+        AdSetName: localStorage.getItem("AdSetName"),
+        AdName: localStorage.getItem("AdName"),
+        CampaignID: localStorage.getItem("CampaignID"),
+        Term: localStorage.getItem("Term"),
+        Fbclid: localStorage.getItem("Fbclid"),
+      };
 
-    const referralCode = localStorage.getItem("referralCode");
-    const utmParams = {
-      Source: localStorage.getItem("Source"),
-      Placement: localStorage.getItem("Placement"),
-      CampaignName: localStorage.getItem("CampaignName"),
-      AdSetName: localStorage.getItem("AdSetName"),
-      AdName: localStorage.getItem("AdName"),
-      CampaignID: localStorage.getItem("CampaignID"),
-      Term: localStorage.getItem("Term"),
-      Fbclid: localStorage.getItem("Fbclid"),
-    };
+      const orderPayload = {
+        comboId: checkoutItem.comboId,
+        products: checkoutItem.products.map((product) => ({
+          productId: product.productId,
+          size: product.size,
+        })),
+        utmParams,
+        referal: referralCode,
+      };
 
-    const orderPayload = {
-      comboId: checkoutItem.comboId,
-      products: checkoutItem.products.map((product) => ({
-        productId: product.productId,
-        size: product.size,
-      })),
-      utmParams,
-      referal: referralCode,
-    };
+      setLoadingOrder(true);
 
-    setLoadingOrder(true);
-    try {
       const orderResponse = await axiosInstance.post(
         "/razorpay/create-magic-combo-order",
         orderPayload
@@ -94,7 +93,6 @@ const MagicCheckoutCombo = ({
             .then((res) => {
               if (res.data.status === 200) {
                 toast.success("Order Placed Successfully!");
-                const order = res.data.data.updatedOrder;
                 navigate.push(
                   "/order-success/" + res?.data?.data?.navigateOrderId
                 );
@@ -117,27 +115,18 @@ const MagicCheckoutCombo = ({
         },
       };
 
-      const razorpay = new window.Razorpay(options);
-      razorpay.on("payment.failed", function (response) {
-        console.error("Payment failed", response);
-        alert("Payment Failed: " + response.error.description);
-      });
-
-      razorpay.open();
-    } catch (error) {
-      setLoadingOrder(false);
-      toast.error(
-        error?.response?.data?.message ||
-          "Failed to create order. Please try again."
-      );
-      return;
+      if (window.Razorpay) {
+        const razorpay = new window.Razorpay(options);
+        razorpay.on("payment.failed", function (response) {
+          console.error("Payment failed", response);
+          alert("Payment Failed: " + response.error.description);
+        });
+        razorpay.open();
+      } else {
+        toast.error("Razorpay SDK not loaded");
+      }
     }
   };
-
-  // Don't render anything until component is mounted
-  if (!isMounted) {
-    return null;
-  }
 
   if (!isRazorpayLoaded) {
     return <div>Loading Razorpay...</div>;

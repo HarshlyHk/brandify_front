@@ -5,7 +5,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -33,14 +33,16 @@ const ComboSlider = ({ combos, handleBuyNow }) => {
   };
 
   // Update slidesPerView on resize
-  const [currentSlidesPerView, setCurrentSlidesPerView] = useState(
-    getSlidesPerView()
-  );
-  useState(() => {
+  const [currentSlidesPerView, setCurrentSlidesPerView] = useState(slidesPerView);
+
+  useEffect(() => {
+    // Set initial value after component mounts
+    setCurrentSlidesPerView(getSlidesPerView());
+
     const handleResize = () => setCurrentSlidesPerView(getSlidesPerView());
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  });
+  }, []);
 
   // Navigation handlers
   const handlePrev = () => {
