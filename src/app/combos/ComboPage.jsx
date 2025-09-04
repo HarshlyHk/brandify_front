@@ -157,8 +157,14 @@ const ComboPage = () => {
                     key={product.productId}
                     className="flex items-center justify-between gap-4 p-3 text-black "
                   >
-                    <Link href={`/product/${product.productId}`}>
-                      <img
+                    <Link
+                      href={`/product-details/${
+                        product.productId
+                      }?name=${product.name.replace(/[\s–]+/g, "-")}`}
+                    >
+                      <Image
+                        width={500}
+                        height={500}
                         src={product.images[0]}
                         alt={product.name}
                         className="w-20 h-20 md:w-28 md:h-28 object-cover rounded-[5px]"

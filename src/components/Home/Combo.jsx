@@ -79,54 +79,6 @@ const Combo = () => {
       <div>
         <ComboSlider combos={combos} handleBuyNow={handleBuyNow} />
       </div>
-      {/* 
-      <div className="gap-6  hidden">
-        {combos.map((combo, index) => {
-          const prevClass = `swiper-button-prev-${index}`;
-          const nextClass = `swiper-button-next-${index}`;
-
-          return (
-            <>
-              {combo.isStarred && (
-                <>
-                  <div
-                    key={combo?._id}
-                    className="hidden md:block border-1 border-gray-400 rounded-md p-5 w-full m-auto "
-                  >
-                    <h3 className="text-lg uppercase text-center font-bold text-gray-800 mb-4">
-                      {combo.title}
-                    </h3>
-
-                    <div className="flex items-center justify-center gap-10">
-                      <Image
-                        width={500}
-                        height={500}
-                        src={combo?.imageUrl}
-                        alt={combo?.title}
-                        className="w-[400px] h-full object-cover  rounded-[5px] "
-                      />
-                    </div>
-
-                    <div className="mt-8 text-center border-t-1 border-gray-400 pt-4">
-                      <p className="text-sm font-semibold text-gray-800 uppercase">
-                        {combo?.totalPrice > 0
-                          ? `Get This Combo at Just ₹${combo.totalPrice}`
-                          : "Price not available"}
-                      </p>
-                      <button
-                        onClick={() => handleBuyNow(combo)}
-                        className="mt-3 px-10 py-4 rounded-[5px] bg-[#ff3737] text-white text-xs hover:bg-transparent hover:text-black  border-black transition-all duration-300"
-                      >
-                        BUY NOW
-                      </button>
-                    </div>
-                  </div>
-                </>
-              )}
-            </>
-          );
-        })}
-      </div> */}
 
       {/* Drawer for size selection */}
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
@@ -162,8 +114,14 @@ const Combo = () => {
                     key={product.productId}
                     className="flex items-center justify-between gap-4 p-3 text-black "
                   >
-                    <Link href={`/product/${product.productId}`}>
-                      <img
+                    <Link
+                      href={`/product-details/${
+                        product.productId
+                      }?name=${product.name.replace(/[\s–]+/g, "-")}`}
+                    >
+                      <Image
+                        width={500}
+                        height={500}
                         src={product.images[0]}
                         alt={product.name}
                         className="w-20 h-20 md:w-28 md:h-28 object-cover rounded-[5px]"
