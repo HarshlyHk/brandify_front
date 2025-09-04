@@ -24,7 +24,7 @@ const MagicCheckoutCombo = ({
 
   useEffect(() => {
     setIsMounted(true);
-    
+
     // Only load Razorpay script on client side
     if (typeof window !== "undefined") {
       loadRazorpayMagicScript().then((loaded) => setIsRazorpayLoaded(loaded));
@@ -120,14 +120,15 @@ const MagicCheckoutCombo = ({
         },
       };
 
-      if (window.Razorpay) {
-        const razorpay = new window.Razorpay(options);
-        razorpay.on("payment.failed", function (response) {
-          console.error("Payment failed", response);
-          alert("Payment Failed: " + response.error.description);
-        });
-        razorpay.open();
-      }
+      const razorpay = new window.Razorpay(options);
+      razorpay.on("payment.failed", function (response) {
+        console.error("Payment failed", response);
+        alert("Payment Failed: " + response.error.description);
+      });
+
+      razorpay.open();
+
+
     } catch (error) {
       setLoadingOrder(false);
       toast.error(
