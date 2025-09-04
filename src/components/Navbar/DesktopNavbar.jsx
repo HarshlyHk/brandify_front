@@ -36,7 +36,7 @@ const navItems = [
     link: "/all-products/steal-the-drip",
     color: "text-red-500",
   },
-  { name: "BLIND DROP", link: "/all-products/blind-drop" },
+  { name: "COMBOS", link: "/combos" },
 
   // { name: "COMBO | UPTO 50% OFF", link: "/combo-page" },
 ];

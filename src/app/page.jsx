@@ -56,7 +56,9 @@ const HomePage = () => {
       <div className="md:px-8 mb-10 ">
         <Combo />
       </div>
-
+     <div className="mb-20 block ">
+        <Banner />
+      </div>
       <div className="mb-10 block md:hidden">
         <Lookbooks />
       </div>
@@ -88,9 +90,7 @@ const HomePage = () => {
         <Comparison />
       </div>
 
-      <div className="mb-20 block ">
-        <Banner />
-      </div>
+ 
       <div className="mb-10 hidden md:block">
         <DripCult />
       </div>

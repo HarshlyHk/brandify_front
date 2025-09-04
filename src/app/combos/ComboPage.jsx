@@ -32,36 +32,37 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Image from "next/image";
-import { formatIndianPrice } from "@/utils/formatPrice";
-import ComboSlider from "./ComboSlider";
-import { FaExternalLinkAlt } from "react-icons/fa";
 
-const Combo = () => {
+const ComboPage = () => {
   const { combos, loading } = useSelector((state) => state.combo);
   const dispatch = useDispatch();
-  const [selectedSizes, setSelectedSizes] = useState({});
+  const [selectedSizes, setSelectedSizes] = useState([]);
   const [selectedCombo, setSelectedCombo] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [openSizeChart, setOpenSizeChart] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0); // Scroll to top on component mount
+    }
     if (!combos.length) {
       dispatch(fetchCombos());
     }
   }, [dispatch]);
 
-  const handleSizeChange = (productId, size) => {
-    setSelectedSizes((prev) => ({
-      ...prev,
-      [productId]: size,
-    }));
+  const handleSizeChange = (productIdx, size) => {
+    setSelectedSizes((prev) => {
+      const updated = [...prev];
+      updated[productIdx] = size;
+      return updated;
+    });
   };
 
   const handleBuyNow = (combo) => {
     setSelectedCombo(combo);
+    setSelectedSizes([]); // Reset sizes when opening drawer for a new combo
     setDrawerOpen(true);
   };
-
   const resetSelectedSizes = () => {
     setSelectedSizes({});
   };
@@ -71,27 +72,21 @@ const Combo = () => {
   }
 
   return (
-    <div className="relative xl:px-10 md:mt-0 mt-8">
-      <h2 className="font-bold text-center ">MUST BUY COMBOS</h2>
+    <div className="combo-padding mt-10">
+      <h2 className="text-2xl font-bold text-center mb-4">
+        Combos | <span className="text-red-500"> UPTO 50% OFF</span>
+      </h2>
 
       {/* Combos List */}
-
-      <div>
-        <ComboSlider combos={combos} handleBuyNow={handleBuyNow} />
-      </div>
-      {/* 
-      <div className="gap-6  hidden">
-        {combos.map((combo, index) => {
-          const prevClass = `swiper-button-prev-${index}`;
-          const nextClass = `swiper-button-next-${index}`;
-
-          return (
-            <>
-              {combo.isStarred && (
+      <div className="flex flex-col gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2  gap-6">
+          {combos.map((combo, index) => {
+            return (
+              <>
                 <>
                   <div
                     key={combo?._id}
-                    className="hidden md:block border-1 border-gray-400 rounded-md p-5 w-full m-auto "
+                    className="border-1 border-gray-400 rounded-md p-5 w-full m-auto "
                   >
                     <h3 className="text-lg uppercase text-center font-bold text-gray-800 mb-4">
                       {combo.title}
@@ -115,18 +110,18 @@ const Combo = () => {
                       </p>
                       <button
                         onClick={() => handleBuyNow(combo)}
-                        className="mt-3 px-10 py-4 rounded-[5px] bg-[#ff3737] text-white text-xs hover:bg-transparent hover:text-black  border-black transition-all duration-300"
+                        className="flex justify-center items-center w-fit py-[12px] px-[30px] text-[10px] tracking-[0.2em] bg-black text-white border-transparent border-[1px] mx-auto mt-4 "
                       >
                         BUY NOW
                       </button>
                     </div>
                   </div>
                 </>
-              )}
-            </>
-          );
-        })}
-      </div> */}
+              </>
+            );
+          })}
+        </div>{" "}
+      </div>
 
       {/* Drawer for size selection */}
       <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
@@ -267,4 +262,4 @@ const Combo = () => {
   );
 };
 
-export default Combo;
+export default ComboPage;

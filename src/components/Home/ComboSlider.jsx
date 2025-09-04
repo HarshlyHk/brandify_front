@@ -57,7 +57,7 @@ const ComboSlider = ({ combos, handleBuyNow }) => {
   const isAtEnd = activeIndex >= totalSlides - currentSlidesPerView;
 
   return (
-    <div className="relative">
+    <div className="relative py-2">
       <Swiper
         ref={swiperRef}
         modules={[Navigation, Pagination]}
@@ -77,7 +77,7 @@ const ComboSlider = ({ combos, handleBuyNow }) => {
           combos.map((combo) => (
             <SwiperSlide key={combo._id}>
               <div className="group flex flex-col items-center relative pb-10">
-                <div className="relative w-full overflow-hidden border border-gray-300  bg-white hover:shadow-lg transition-shadow duration-300">
+                <div className="relative w-full overflow-hidden border border-gray-300 rounded-md hover:shadow-lg transition-shadow duration-300">
                   {/* Title */}
                   <h3 className=" md:text-lg uppercase text-center font-bold text-gray-800 mb-4 p-4">
                     {combo.title}
@@ -104,7 +104,7 @@ const ComboSlider = ({ combos, handleBuyNow }) => {
                     </p>
                     <button
                       onClick={() => handleBuyNow(combo)}
-                      className="flex justify-center items-center w-fit py-[12px] px-[30px] text-[12px] tracking-[0.2em] bg-black text-white border-transparent border-[1px] mx-auto mt-4 "
+                      className="flex justify-center items-center w-fit py-[12px] px-[30px] text-[10px] tracking-[0.2em] bg-black text-white border-transparent border-[1px] mx-auto mt-4 "
                     >
                       BUY NOW
                     </button>
