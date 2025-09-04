@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import {
   loadRazorpayScript,
@@ -24,11 +25,7 @@ const MagicCheckoutCombo = ({
 
   useEffect(() => {
     setIsMounted(true);
-
-    // Only load Razorpay script on client side
-    if (typeof window !== "undefined") {
-      loadRazorpayMagicScript().then((loaded) => setIsRazorpayLoaded(loaded));
-    }
+    loadRazorpayMagicScript().then((loaded) => setIsRazorpayLoaded(loaded));
   }, []);
 
   const navigate = useRouter();
@@ -127,8 +124,6 @@ const MagicCheckoutCombo = ({
       });
 
       razorpay.open();
-
-
     } catch (error) {
       setLoadingOrder(false);
       toast.error(
