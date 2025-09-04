@@ -7,6 +7,7 @@ const ImageComparison = ({ leftImage, rightImage }) => {
       <ReactCompareSlider
         itemOne={<ReactCompareSliderImage src={leftImage} alt="Before" />}
         itemTwo={<ReactCompareSliderImage src={rightImage} alt="After" />}
+        position={70}
       />
     </div>
   );

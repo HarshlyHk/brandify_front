@@ -86,9 +86,9 @@ const HomePage = () => {
       <div className=" lg:px-20 px-4 mb-10">
         <HomeBlanks />
       </div>
-      <div className="prodcut-padding mb-10 md:block hidden">
+      {/* <div className="prodcut-padding mb-10 md:block hidden">
         <Comparison />
-      </div>
+      </div> */}
 
  
       <div className="mb-10 hidden md:block">

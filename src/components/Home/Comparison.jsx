@@ -10,8 +10,7 @@ export function Comparison() {
         <div className="rounded-t-3xl border-neutral-200 md:w-[600px] w-[370px] md:h-[600px] h-[370px] overflow-hidden">
           <ImageComparison
             leftImage="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_9903.webp"
-            rightImage="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_9902.webp
-"
+            rightImage="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_9902.webp"
           />
         </div>
         <div className="flex flex-col items-center justify-center px-2 md:w-[500px] mt-6 md:mt-0 md:gap-2 gap-2">
