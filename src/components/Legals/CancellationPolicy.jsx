@@ -37,7 +37,7 @@ const CancellationPolicy = () => {
                     className="underline underline-offset-2 text-green-500"
                   >
                     WhatsApp us +91 99717 41201
-                  </a> {" "}
+                  </a>{" "}
                   or{" "}
                   <a
                     href="mailto:dripstudios09@gmail.com?subject=Exchange%20Request"
@@ -73,13 +73,19 @@ const CancellationPolicy = () => {
               <strong>all logistics charges (both ways)</strong> will be covered
               by us.
             </p>
+            <p className="mt-2 font-semibold">
+              ⚠️ Customers must provide a clear <strong>unboxing video</strong>{" "}
+              as proof for any return or exchange request.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Discounted Articles */}
       <section>
-        <h3 className="text-2xl font-semibold mb-4 mt-4">2. Discounted Articles</h3>
+        <h3 className="text-2xl font-semibold mb-4 mt-4">
+          2. Discounted Articles
+        </h3>
 
         <div className="space-y-6">
           <div>

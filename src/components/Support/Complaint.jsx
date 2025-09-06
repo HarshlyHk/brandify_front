@@ -180,9 +180,14 @@ const ReturnExchange = () => {
                   <strong>all logistics charges (both ways)</strong> will be
                   covered by us.
                 </p>
+                <p className="mt-2 font-semibold">
+                  ⚠️ Customers must provide a clear{" "}
+                  <strong>unboxing video</strong> as proof for any return or
+                  exchange request.
+                </p>
               </div>
             </div>
-          </section>  
+          </section>
 
           {/* Discounted Articles */}
           <section>
