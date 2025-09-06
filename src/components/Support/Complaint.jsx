@@ -1,6 +1,8 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import axiosInstance from "@/config/axiosInstance";
+import { IoLogoWhatsapp } from "react-icons/io";
+import { MdEmail } from "react-icons/md";
 
 import Link from "next/link";
 
@@ -82,80 +84,189 @@ const ReturnExchange = () => {
           </div>
         </div>
       ) : (
-        <div className=" md:w-[600px] w-full mx-auto mt-16 p-8 rounded-[10px] ">
+        <div className=" md:w-[800px] w-full mx-auto mt-6 md:mt-16 p-8 rounded-[10px] ">
           <h1 className="text-2xl font-semibold mb-6 text-center uppercase">
             Exchange Product
           </h1>
-          <p className="text-sm text-gray-500 mb-2 text-center">
-            Fill in the form below to submit exchange request.
-          </p>
-          <p className="text-sm text-gray-500 mb-8 text-center">
-            ₹99 will be charged for exchange of product. This is to cover the
-            shipping cost and handling fees.
-          </p>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            <div className="flex gap-4 flex-col md:flex-row">
-              <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Order ID
-                </label>
-                <input
-                  type="text"
-                  name="orderId"
-                  value={formData.orderId}
-                  onChange={handleChange}
-                  className="w-full border border-zinc-200 rounded-[5px] p-4 text-sm focus:outline-none focus:border-black transition"
-                  placeholder="e.g., order_xY********qwbde"
-                  required
+          {/* contact us icons for whatsapp and email */}
+          <div className=" w-full mb-8">
+            <p className="text-base text-gray-500 mb-6 flex items-center justify-center gap-4">
+              <a
+                href="https://wa.me/919971741201"
+                target="_blank"
+                rel="noopener noreferrer"
+                className=" flex items-center "
+              >
+                <IoLogoWhatsapp
+                  className="inline-block mr-1 text-green-500"
+                  size={24}
                 />
+                WhatsApp{" "}
+              </a>{" "}
+              <a
+                href="mailto:dripstudios09@gmail.com?subject=Exchange%20Request"
+                target="_blank"
+                className="flex items-center "
+              >
+                <MdEmail
+                  className="inline-block mr-1 text-blue-500"
+                  size={24}
+                />
+                Email
+              </a>
+            </p>
+          </div>
+
+          <section>
+            <h3 className="text-2xl font-semibold mb-4">
+              1. Normal Priced Articles
+            </h3>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-medium">Exchange</h3>
+                <ul className="list-disc list-inside space-y-2 mt-2">
+                  <li>
+                    Exchanges are accepted within{" "}
+                    <strong>3 days of delivery</strong>.
+                  </li>
+                  <li>
+                    To initiate a request, contact us via{" "}
+                    <a
+                      href="https://wa.me/919971741201"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-2 text-green-500"
+                    >
+                      WhatsApp us +91 99717 41201
+                    </a>{" "}
+                    or{" "}
+                    <a
+                      href="mailto:dripstudios09@gmail.com?subject=Exchange%20Request"
+                      target="_blank"
+                      className="underline underline-offset-2 text-blue-500"
+                    >
+                      email at dripstudios09@gmail.com
+                    </a>
+                    .
+                  </li>
+                  <li>
+                    Our team will respond within <strong>24 hours</strong>.
+                  </li>
+                  <li>
+                    We will arrange a pickup, and once collected, the
+                    replacement will be dispatched within{" "}
+                    <strong>48 hours</strong>.
+                  </li>
+                  <li>
+                    A nominal <strong>₹150 exchange fee</strong> will be
+                    applicable per article.
+                  </li>
+                </ul>
               </div>
 
-              <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full border border-zinc-200 rounded-[5px] p-4 text-sm focus:outline-none focus:border-black transition"
-                  placeholder="e.g., John Doe"
-                  required
-                />
+              <div>
+                <h3 className="text-xl font-medium">Return</h3>
+                <p className="mt-2">Returns are accepted only if:</p>
+                <ul className="list-disc list-inside space-y-2 mt-2">
+                  <li>Incorrect product delivered</li>
+                  <li>Defective or damaged article</li>
+                  <li>Visible stains or quality issues</li>
+                  <li>Wrong size delivered (different from the order)</li>
+                </ul>
+                <p className="mt-2">
+                  In such cases, customers can opt for a{" "}
+                  <strong>return or exchange</strong>, and{" "}
+                  <strong>all logistics charges (both ways)</strong> will be
+                  covered by us.
+                </p>
               </div>
             </div>
+          </section>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Message
-              </label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows="4"
-                className="w-full border border-zinc-200 rounded-[5px] p-4 text-sm focus:outline-none focus:border-black transition"
-                placeholder="Describe the reason to exchange the product..."
-                required
-              ></textarea>
+          {/* Discounted Articles */}
+          <section>
+            <h3 className="text-2xl font-semibold mb-4">
+              2. Discounted Articles
+            </h3>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-medium">Return & Exchange</h3>
+                <p className="mt-2">
+                  Returns and exchanges are <strong>not applicable</strong> on
+                  discounted/sale items, as they are already offered at up to{" "}
+                  <strong>50% off</strong>.
+                </p>
+                <p className="mt-2">
+                  In exceptional cases (e.g.,{" "}
+                  <strong>first-time customers</strong>
+                  ), an <strong>exchange may be permitted</strong> under these
+                  conditions:
+                </p>
+                <ul className="list-disc list-inside space-y-2 mt-2">
+                  <li>
+                    Only for a{" "}
+                    <strong>different size of the same article</strong>.
+                  </li>
+                  <li>If unavailable, swap for another product in stock.</li>
+                  <li>
+                    Request must be raised within{" "}
+                    <strong>48 hours of delivery</strong> via WhatsApp or email.
+                  </li>
+                  <li>
+                    Customer must ship the article back and share valid tracking
+                    details within <strong>7 working days</strong>.
+                  </li>
+                  <li>
+                    Exchange will be processed only if the article passes a{" "}
+                    <strong>quality check</strong>; otherwise, the same article
+                    will be returned.
+                  </li>
+                </ul>
+                <p className="mt-2 font-semibold">
+                  ⚠️ All handling, return, and reshipment charges are to be
+                  borne by the customer.
+                </p>
+              </div>
             </div>
+          </section>
 
-            {error && (
-              <p className="text-red-500 text-center text-sm">{error}</p>
-            )}
+          {/* Address */}
+          <section>
+            <h3 className="text-2xl font-semibold mb-4">
+              Return / Exchange Address
+            </h3>
+            <p className="mt-2">
+              <strong>S-1/201, Old Mahavir Nagar, New Delhi – 110018</strong>
+              <br />
+              <span>(Landmark: Near Aggarwal Sweets)</span>
+            </p>
 
-            <button
-              type="submit"
-              className="w-full bg-black text-white py-4 text-xs px-4 rounded-[5px] hover:bg-gray-800 transition"
-              disabled={loading}
-            >
-              {loading ? "Submitting..." : "Submit Request"}
-            </button>
-          </form>
-
-       
+            <div className="mt-4 space-y-2">
+              <p className="font-semibold">⚠️ Important:</p>
+              <ul className="list-disc list-inside space-y-2">
+                <li>
+                  Do not dispatch articles without prior confirmation from our
+                  team.
+                </li>
+                <li>
+                  Articles sent without approval will be{" "}
+                  <strong>returned to the sender</strong> and will{" "}
+                  <strong>not be processed</strong>.
+                </li>
+                <li>
+                  All complaints/requests must be raised only via{" "}
+                  <strong>WhatsApp (+91 99717 41201)</strong> or{" "}
+                  <strong>email (dripstudios09@gmail.com)</strong>.
+                </li>
+                <li>
+                  ⚠️ Complaints on any other number or email ID will{" "}
+                  <strong>not be entertained</strong>.
+                </li>
+              </ul>
+            </div>
+          </section>
         </div>
       )}
     </>

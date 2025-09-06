@@ -16,177 +16,145 @@ const CancellationPolicy = () => {
 
       <p className="text-sm text-gray-500">Last updated on November 9, 2023</p>
 
-      <p>
-        At <strong>DRIP CORPORATION</strong>, customer satisfaction is our top
-        priority. We strive to ensure that every product meets your
-        expectations. In case you're not completely satisfied, our refund and
-        cancellation policy provides a fair resolution process.
-      </p>
+      <section>
+        <h3 className="text-2xl font-semibold mb-4">
+          1. Normal Priced Articles
+        </h3>
 
-      <div className=" border-l-4 p-4 mb-6">
-        <p className="">
-          <strong>Important Notice:</strong> All prepaid orders cannot be
-          cancelled once the payment has been processed. This policy ensures
-          efficient order processing and inventory management.
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-xl font-medium">Exchange</h3>
+            <ul className="list-disc list-inside space-y-2 mt-2">
+              <li>
+                Exchanges are accepted within{" "}
+                <strong>3 days of delivery</strong>.
+                <li>
+                  To initiate a request, contact us via{" "}
+                  <a
+                    href="https://wa.me/919971741201"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2 text-green-500"
+                  >
+                    WhatsApp us +91 99717 41201
+                  </a> {" "}
+                  or{" "}
+                  <a
+                    href="mailto:dripstudios09@gmail.com?subject=Exchange%20Request"
+                    target="_blank"
+                    className="underline underline-offset-2 text-blue-500"
+                  >
+                    email at dripstudios09@gmail.com
+                  </a>
+                  .
+                </li>
+                We will arrange a pickup, and once collected, the replacement
+                will be dispatched within <strong>48 hours</strong>.
+              </li>
+              <li>
+                A nominal <strong>₹150 exchange fee</strong> will be applicable
+                per article.
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-medium">Return</h3>
+            <p className="mt-2">Returns are accepted only if:</p>
+            <ul className="list-disc list-inside space-y-2 mt-2">
+              <li>Incorrect product delivered</li>
+              <li>Defective or damaged article</li>
+              <li>Visible stains or quality issues</li>
+              <li>Wrong size delivered (different from the order)</li>
+            </ul>
+            <p className="mt-2">
+              In such cases, customers can opt for a{" "}
+              <strong>return or exchange</strong>, and{" "}
+              <strong>all logistics charges (both ways)</strong> will be covered
+              by us.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Discounted Articles */}
+      <section>
+        <h3 className="text-2xl font-semibold mb-4">2. Discounted Articles</h3>
+
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-xl font-medium">Return & Exchange</h3>
+            <p className="mt-2">
+              Returns and exchanges are <strong>not applicable</strong> on
+              discounted/sale items, as they are already offered at up to{" "}
+              <strong>50% off</strong>.
+            </p>
+            <p className="mt-2">
+              In exceptional cases (e.g., <strong>first-time customers</strong>
+              ), an <strong>exchange may be permitted</strong> under these
+              conditions:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2">
+              <li>
+                Only for a <strong>different size of the same article</strong>.
+              </li>
+              <li>If unavailable, swap for another product in stock.</li>
+              <li>
+                Request must be raised within{" "}
+                <strong>48 hours of delivery</strong> via WhatsApp or email.
+              </li>
+              <li>
+                Customer must ship the article back and share valid tracking
+                details within <strong>7 working days</strong>.
+              </li>
+              <li>
+                Exchange will be processed only if the article passes a{" "}
+                <strong>quality check</strong>; otherwise, the same article will
+                be returned.
+              </li>
+            </ul>
+            <p className="mt-2 font-semibold">
+              ⚠️ All handling, return, and reshipment charges are to be borne by
+              the customer.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Address */}
+      <section>
+        <h3 className="text-2xl font-semibold mb-4">
+          Return / Exchange Address
+        </h3>
+        <p className="mt-2">
+          <strong>S-1/201, Old Mahavir Nagar, New Delhi – 110018</strong>
+          <br />
+          <span>(Landmark: Near Aggarwal Sweets)</span>
         </p>
-      </div>
 
-      <p className="font-semibold">
-        We offer exchanges under the following conditions:
-      </p>
-      <ul className="list-disc list-inside space-y-3">
-        <li>
-          Articles purchased under the "Blind Drop", "Festive Sale", or "Drip
-          Under ₹1199" categories are not eligible for return. However,
-          exchanges will be accepted only in case of a defective item.
-        </li>
-        <li>
-          An unboxing video is mandatory as proof; without it, claims will not
-          be considered due to potential scams.
-        </li>
-        <li>
-          Eligibility Timeframe: Exchange requests must be made within 2 days of
-          the delivery date.
-        </li>
-
-        <p className="font-semibold">
-          For Discounted Articles (first-time shoppers):
-        </p>
-        <ul className="list-disc list-inside space-y-3">
-          <li>
-            No return/exchange on discounted articles (as they are already
-            offered at nearly half price).
-          </li>
-          <li>
-            Return/exchange is only applicable if the product is received
-            damaged or torn.
-          </li>
-        </ul>
-
-        <p className="font-semibold">
-          For first-time shoppers who face a size issue with discounted
-          articles:
-        </p>
-        <ul className="list-disc list-inside space-y-3">
-          <li>
-            The customer must dispatch the piece back from their end (DM us on
-            WhatsApp at <span className="font-semibold"> 9971741201</span> for
-            the return address.) Please note: If you email us or fill the
-            exchange form on the website, it will not be considered.
-          </li>
-          <li>
-            The customer must contact us on WhatsApp within 2 days of delivery
-            to initiate the return.
-          </li>
-          <li>
-            Once we receive and verify the product in the same condition it was
-            sent, we will dispatch the desired size to the customer’s address.
-          </li>
-        </ul>
-
-        <li className=" font-semibold">How to Request:</li>
-        <p className="px-5">
-          Customers can initiate an exchange through any of the following
-          methods:
-        </p>
-        <ul style={{ listStyleType: "disc" }} className="ml-10">
-          <li>
-            The{" "}
-            <Link href="/support/return-and-refund" className="text-blue-500">
-              Exchange Panel
-            </Link>{" "}
-            on our website
-          </li>
-          <li>
-            The{" "}
-            <Link href="/support/contact-us" className="text-blue-500">
-              {" "}
-              Contact Us{" "}
-            </Link>
-            section on our website
-          </li>
-          <li>
-            Email us directly at{" "}
-            <span className="text-blue-500"> ifeeldrip@gmail.com</span>{" "}
-          </li>
-        </ul>
-        <li className=" font-semibold">What Can Be Exchanged:</li>
-        <ul style={{ listStyleType: "disc" }} className="ml-10">
-          <li>
-            You can exchange your product for a different size of the same item
-            (subject to availability).
-          </li>
-          <li>You can also exchange it for a different product.</li>
-          <ul className="list-disc list-inside ">
+        <div className="mt-4 space-y-2">
+          <p className="font-semibold">⚠️ Important:</p>
+          <ul className="list-disc list-inside space-y-2">
             <li>
-              If the new product has a lower value, the difference will be
-              credited to your account as store credits
+              Do not dispatch articles without prior confirmation from our team.
             </li>
             <li>
-              If the new product has a higher value, you will be required to pay
-              the additional amount.
+              Articles sent without approval will be{" "}
+              <strong>returned to the sender</strong> and will{" "}
+              <strong>not be processed</strong>.
             </li>
-          </ul>
-        </ul>
-        <li className=" font-semibold">Exchange Fee:</li>
-        <p className="pl-5">
-          A fixed charge of ₹149 will be applicable on all exchange requests.
-          This fee covers handling and shipping.
-        </p>
-        <li className="font-semibold">Processing Time for Exchanges</li>
-        <ul className="list-disc list-inside pl-5">
-          <li>
-            Please allow up to 7 business days for processing return or exchange
-            requests.
-          </li>
-          <li>
-            Each request is reviewed individually and handled step-by-step to
-            ensure fair resolution.
-          </li>
-          <li>
-            We request you to maintain patience while our team ensures your
-            issue is handled with care and urgency.
-          </li>
-        </ul>
-        <li className=" font-semibold">Customer Care Support</li>
-        <p>
-          If you have any doubts, issues, or questions related to return or
-          exchange:
-        </p>
-        <ul className="list-disc list-inside pl-5">
-          <li>
-            Text us via SMS or WhatsApp only (Calls are not accepted directly).
-          </li>
-          <li>
-            Customer care working hours: Tuesday to Saturday, 10:00 AM – 8:00 PM
-          </li>
-          <li>We will respond within 24 hours.</li>
-          <li>
-            If you request a callback, we will call you back within 24 hours
-            from the time of your request.
-          </li>
-        </ul>
-        <li className=" font-semibold">Important Notes</li>
-        <ul className="list-disc list-inside pl-5">
-          <li>
-            Items sent for exchange must be unused, unwashed, and in original
-            packaging.
-          </li>
-          <li>
-            Store credits issued against returns can be used anytime; they do
-            not expire.
-          </li>
-          <li>Return and exchange rights will be forfeited in case of:</li>
-          <ul className="list-disc list-inside pl-5">
-            <li>Late requests (after 2 days of delivery)</li>
-            <li>Lack of required proof (like unboxing video for return)</li>
             <li>
-              If the product is not in its original condition, is damaged, or is
-              missing parts for reasons not due to our error.
+              All complaints/requests must be raised only via{" "}
+              <strong>WhatsApp (+91 99717 41201)</strong> or{" "}
+              <strong>email (dripstudios09@gmail.com)</strong>.
+            </li>
+            <li>
+              ⚠️ Complaints on any other number or email ID will{" "}
+              <strong>not be entertained</strong>.
             </li>
           </ul>
-        </ul>
-      </ul>
+        </div>
+      </section>
 
       <p className="text-sm text-gray-500 italic">
         <strong>Disclaimer:</strong> This policy is determined solely by DRIP

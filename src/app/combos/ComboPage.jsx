@@ -50,17 +50,15 @@ const ComboPage = () => {
     }
   }, [dispatch]);
 
-  const handleSizeChange = (productIdx, size) => {
-    setSelectedSizes((prev) => {
-      const updated = [...prev];
-      updated[productIdx] = size;
-      return updated;
-    });
+  const handleSizeChange = (productId, size) => {
+    setSelectedSizes((prev) => ({
+      ...prev,
+      [productId]: size,
+    }));
   };
 
   const handleBuyNow = (combo) => {
     setSelectedCombo(combo);
-    setSelectedSizes([]); // Reset sizes when opening drawer for a new combo
     setDrawerOpen(true);
   };
   const resetSelectedSizes = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import Complaint from "@/components/Support/Complaint"
+import ReturnExchange from "@/components/Support/Complaint"
 
 // metadata for the page
 export const metadata = {
@@ -10,7 +10,7 @@ export const metadata = {
 const page = () => {
   return (
     <div>
-      <Complaint />
+      <ReturnExchange />
     </div>
   );
 };
