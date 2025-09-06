@@ -182,11 +182,11 @@ const ReturnExchange = () => {
                 </p>
               </div>
             </div>
-          </section>
+          </section>  
 
           {/* Discounted Articles */}
           <section>
-            <h3 className="text-2xl font-semibold mb-4">
+            <h3 className="text-2xl font-semibold mb-4 mt-4">
               2. Discounted Articles
             </h3>
 
@@ -234,7 +234,7 @@ const ReturnExchange = () => {
 
           {/* Address */}
           <section>
-            <h3 className="text-2xl font-semibold mb-4">
+            <h3 className="text-2xl font-semibold mb-4 mt-4">
               Return / Exchange Address
             </h3>
             <p className="mt-2">

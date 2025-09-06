@@ -79,7 +79,7 @@ const CancellationPolicy = () => {
 
       {/* Discounted Articles */}
       <section>
-        <h3 className="text-2xl font-semibold mb-4">2. Discounted Articles</h3>
+        <h3 className="text-2xl font-semibold mb-4 mt-4">2. Discounted Articles</h3>
 
         <div className="space-y-6">
           <div>
@@ -123,7 +123,7 @@ const CancellationPolicy = () => {
 
       {/* Address */}
       <section>
-        <h3 className="text-2xl font-semibold mb-4">
+        <h3 className="text-2xl font-semibold mb-4 mt-4">
           Return / Exchange Address
         </h3>
         <p className="mt-2">
