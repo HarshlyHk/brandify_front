@@ -173,6 +173,13 @@ const ReturnExchange = () => {
                   <li>Defective or damaged article</li>
                   <li>Visible stains or quality issues</li>
                   <li>Wrong size delivered (different from the order)</li>
+                  <li>
+                    If you have received a wrong product or incorrect size and
+                    contact us within <strong>3 days of delivery</strong>, we
+                    will gladly exchange it for the correct product or size at
+                    no additional cost. Please note that only exchange is
+                    available in such cases, and returns are not applicable.
+                  </li>
                 </ul>
                 <p className="mt-2">
                   In such cases, customers can opt for a{" "}
@@ -180,6 +187,7 @@ const ReturnExchange = () => {
                   <strong>all logistics charges (both ways)</strong> will be
                   covered by us.
                 </p>
+
                 <p className="mt-2 font-semibold">
                   ⚠️ Customers must provide a clear{" "}
                   <strong>unboxing video</strong> as proof for any return or
