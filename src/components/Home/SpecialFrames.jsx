@@ -8,9 +8,11 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const SpecialFrames = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { specialFrames, loading } = useSelector(
     (state) => state.specialFrames
   );
@@ -18,6 +20,11 @@ const SpecialFrames = () => {
   useEffect(() => {
     dispatch(fetchSpecialFrames());
   }, [dispatch]);
+
+  const handleBuyNow = (link) => {
+    console.log("Navigating to:", link);
+    router.push(link);
+  };
 
   return (
     <div className="special-frames-container">
@@ -45,6 +52,14 @@ const SpecialFrames = () => {
                 priority
                 quality={90} // <-- Add this line
               />
+              {frame?.productUrl != "#" && (
+                <button
+                  onClick={() => handleBuyNow(frame?.productUrl)}
+                  className="flex z-10 justify-center items-center w-fit py-[12px] px-[30px] text-[10px] tracking-[0.2em] bg-white text-black  absolute bottom-10 left-1/2 transform -translate-x-1/2 border-transparent border-[1px] mx-auto mt-4 shadow-md"
+                >
+                  BUY NOW
+                </button>
+              )}
             </div>
           </SwiperSlide>
         ))}
