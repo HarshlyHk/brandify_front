@@ -1,4 +1,3 @@
-// app/providers.tsx or lib/providers.tsx
 "use client";
 
 import { Provider } from "react-redux";
@@ -22,12 +21,41 @@ function AuthWrapper({ children }) {
       console.error("Error while posting traffic data:", error);
     }
   };
+
+  const trackSession = async () => {
+    try {
+      await axiosInstance.post("/traffic/session");
+      if (typeof window !== "undefined") {
+        // Set session expiry to 2 hours from now
+        const expiryTime = Date.now() + (2 * 60 * 60 * 1000); // 2 hours
+        sessionStorage.setItem("sessionTracked", expiryTime.toString());
+      }
+    } catch (error) {
+      console.error("Error while tracking session:", error);
+    }
+  };
+
+  const isSessionActive = () => {
+    if (typeof window === "undefined") return false;
+    
+    const sessionTime = sessionStorage.getItem("sessionTracked");
+    if (!sessionTime) return false;
+    
+    const expiryTime = parseInt(sessionTime);
+    return Date.now() < expiryTime;
+  };
+
   useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      !localStorage.getItem("trafficPostRequested")
-    ) {
-      fetchTrafficData();
+    if (typeof window !== "undefined") {
+      // Track unique visitor (once per browser using localStorage)
+      if (!localStorage.getItem("trafficPostRequested")) {
+        fetchTrafficData();
+      }
+
+      // Track session (once per 2-hour session using sessionStorage)
+      if (!isSessionActive()) {
+        trackSession();
+      }
     }
   }, []);
 
