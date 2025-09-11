@@ -170,6 +170,12 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
                 </p>
               </div>
             )}
+            <div className="flex items-center gap-2">
+              <p>|</p>
+              <p className="text-[0.9rem] md:text-[1rem] font-semibold text-red-500">
+                ON SALE
+              </p>
+            </div>
           </div>
           <p className="text-[11px] md:text-[12px] mt-2 text-gray-500">
             Shipping Calculated at Checkout
