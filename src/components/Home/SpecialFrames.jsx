@@ -57,7 +57,7 @@ const SpecialFrames = () => {
                   onClick={() => handleBuyNow(frame?.productUrl)}
                   className="flex z-10 justify-center items-center w-fit py-[12px] px-[30px] text-[10px] tracking-[0.2em] bg-white text-black  absolute bottom-10 left-1/2 transform -translate-x-1/2 border-transparent border-[1px] mx-auto mt-4 shadow-md"
                 >
-                  BUY NOW
+                  SHOP NOW
                 </button>
               )}
             </div>

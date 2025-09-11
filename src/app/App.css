@@ -56,6 +56,16 @@
   src: url("../assets/fonts/Emilio.ttf");
 }
 
+@font-face{
+  font-family: "Lemon Regular";
+  src: url("/LEMONMILK-Regular.otf") ;
+}
+@font-face{
+  font-family: "Lemon Medium";
+  src: url("/LEMONMILK-Medium.otf") ;
+}
+
+
 * {
   font-family: "Figtree", sans-serif;
 }
@@ -140,6 +150,13 @@ h2 {
 }
 .font-emillio {
   font-family: "Emillio", sans-serif !important;
+}
+
+.font-lemon-regular {
+  font-family: "Lemon Regular", sans-serif !important;
+}
+.font-lemon-medium {
+  font-family: "Lemon Medium", sans-serif !important;
 }
 
 .def-bg-color {
