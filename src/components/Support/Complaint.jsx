@@ -131,24 +131,15 @@ const ReturnExchange = () => {
                     <strong>3 days of delivery</strong>.
                   </li>
                   <li>
-                    To initiate a request, contact us via{" "}
+                    To initiate a request,{" "}
                     <a
                       href="https://wa.me/919971741201"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="underline underline-offset-2 text-green-500"
                     >
-                      WhatsApp us +91 99717 41201
-                    </a>{" "}
-                    or{" "}
-                    <a
-                      href="mailto:dripstudios09@gmail.com?subject=Exchange%20Request"
-                      target="_blank"
-                      className="underline underline-offset-2 text-blue-500"
-                    >
-                      email at dripstudios09@gmail.com
+                      WhatsApp us at +91 99717 41201
                     </a>
-                    .
                   </li>
                   <li>
                     Our team will respond within <strong>24 hours</strong>.

@@ -29,24 +29,15 @@ const CancellationPolicy = () => {
                 Exchanges are accepted within{" "}
                 <strong>3 days of delivery</strong>.
                 <li>
-                  To initiate a request, contact us via{" "}
+                  To initiate a request,
                   <a
                     href="https://wa.me/919971741201"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline underline-offset-2 text-green-500"
                   >
-                    WhatsApp us +91 99717 41201
-                  </a>{" "}
-                  or{" "}
-                  <a
-                    href="mailto:dripstudios09@gmail.com?subject=Exchange%20Request"
-                    target="_blank"
-                    className="underline underline-offset-2 text-blue-500"
-                  >
-                    email at dripstudios09@gmail.com
+                    WhatsApp us at +91 99717 41201
                   </a>
-                  .
                 </li>
                 We will arrange a pickup, and once collected, the replacement
                 will be dispatched within <strong>48 hours</strong>.
@@ -56,7 +47,11 @@ const CancellationPolicy = () => {
                 per article.
               </li>
               <li>
-                If you have received a wrong product or incorrect size and contact us within <strong>3 days of delivery</strong>, we will gladly exchange it for the correct product or size at no additional cost. Please note that only exchange is available in such cases, and returns are not applicable.
+                If you have received a wrong product or incorrect size and
+                contact us within <strong>3 days of delivery</strong>, we will
+                gladly exchange it for the correct product or size at no
+                additional cost. Please note that only exchange is available in
+                such cases, and returns are not applicable.
               </li>
             </ul>
           </div>
