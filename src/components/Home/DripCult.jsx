@@ -1,10 +1,14 @@
 import axiosInstance from "@/config/axiosInstance";
 import DripCultSlider from "./DripCultSlider";
+import API_URL from "@/config/API_URL";
 
 const DripCult = async () => {
   try {
-    const res = await axiosInstance.get(
-      `product/get-product-category/dripcult?limit=40&sort=relevance`
+    const res = await fetch(
+      `${API_URL}product/get-product-category/dripcult?limit=40&sort=relevance`,
+      {
+        next: { revalidate: 300 }, // Revalidate once every 5 minutes
+      }
     );
     const products = res?.data?.data?.products || [];
 

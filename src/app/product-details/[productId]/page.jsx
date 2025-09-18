@@ -1,18 +1,22 @@
 // app/product/[productId]/page.tsx
 
 import React, { Suspense } from "react";
-import axiosInstance from "@/config/axiosInstance";
 import ImageGallery from "@/components/SingleProduct/ImageGallery";
 import ProductTabs from "@/components/SingleProduct/ProductTabs";
 import RelatedProducts from "@/components/SingleProduct/RelatedProducts";
 import { Comparison } from "@/components/Home/Comparison";
 import Categories from "@/components/Categories/Categories";
 import CollaboVideo from "@/components/SingleProduct/CollaboVideo";
-export async function generateMetadata({ params }) {
-  const res = await axiosInstance.get(
-    `product/get-product-all-details/${params.productId}`
+import API_URL from "@/config/API_URL";
+
+export async function generateMetadata({ params: asyncParams }) {
+  const params = await asyncParams;
+  const res = await fetch(
+    `${API_URL}product/get-product-all-details/${params.productId}`,
+    { next: { revalidate: 6000 } }
   );
-  const product = res.data.data.product;
+  const data = await res.json();
+  const product = data.data.product;
 
   return {
     title: product.name,
@@ -40,14 +44,18 @@ const SingleProductPage = async ({ params: asyncParams }) => {
   let frequentlyBought = [];
 
   try {
-    const response = await axiosInstance.get(
-      `product/get-product-all-details/${productId}`
+    console.log("Loading product details for ID:", productId);
+    const response = await fetch(
+      `${API_URL}product/get-product-all-details/${productId}`,
+      {
+        next: { revalidate: 60 },
+      }
     );
-    const data = response?.data?.data;
+    const data = await response.json();
 
-    product = data?.product;
-    relatedProducts = data?.relatedProducts || [];
-    frequentlyBought = data?.frequentlyBoughtTogether || [];
+    product = data?.data?.product;
+    relatedProducts = data?.data?.relatedProducts || [];
+    frequentlyBought = data?.data?.frequentlyBoughtTogether || [];
   } catch (error) {
     console.error("Error loading product:", error);
     return (
