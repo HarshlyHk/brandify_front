@@ -152,46 +152,46 @@ const ComboPage = () => {
                 </div>
                 {selectedCombo?.products.map((product) => (
                   <div
-                    key={product._id}
+                    key={product?._id}
                     className="flex items-center justify-between gap-4 p-3 text-black "
                   >
                     <Link
                       href={`/product-details/${
-                        product._id
+                        product?._id
                       }?name=${product.name.replace(/[\s–]+/g, "-")}`}
                     >
                       <Image
                         width={500}
                         height={500}
-                        src={product.images[0]}
-                        alt={product.name}
+                        src={product?.images[0]}
+                        alt={product?.name}
                         className="w-20 h-20 md:w-28 md:h-28 object-cover rounded-[5px]"
                       />
                     </Link>
                     <div className="flex-1 text-xs px-2">
-                      <p className="">{product.name}</p>
+                      <p className="">{product?.name}</p>
                       <p>
-                        ₹ {product.comboPrice}{" "}
+                        ₹ {product?.comboPrice}{" "}
                         <span className="line-through text-gray-500">
-                          ₹ {product.originalPrice}
+                          ₹ {product?.originalPrice}
                         </span>
                       </p>
                     </div>
                     <div className="w-32">
                       <Select
                         onValueChange={(value) =>
-                          handleSizeChange(product.productId, value)
+                          handleSizeChange(product?.productId, value)
                         }
                       >
                         <SelectTrigger className="w-full">
                           <SelectValue
                             placeholder={
-                              selectedSizes[product.productId] || "Select Size"
+                              selectedSizes[product?.productId] || "Select Size"
                             }
                           />
                         </SelectTrigger>
                         <SelectContent>
-                          {product.sizeVariations.map((size, idx) => (
+                          {product?.sizeVariations?.map((size, idx) => (
                             <SelectItem
                               key={idx}
                               value={size.size}
