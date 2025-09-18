@@ -222,7 +222,7 @@ export const Card = ({ card, index, layout = false }) => {
                         </p>
                       </div>
                       <Link
-                        href={`/product/${
+                        href={`/product-details/${
                           product._id
                         }?name=${product.name.replace(/[\s–]+/g, "-")}`}
                         onClick={() => {
@@ -293,7 +293,7 @@ export const Card = ({ card, index, layout = false }) => {
                 </p>
               </div>
               <Link
-                href={`/product/${product._id}?name=${product.name.replace(
+                href={`/product-details/${product._id}?name=${product.name.replace(
                   /[\s–]+/g,
                   "-"
                 )}`}

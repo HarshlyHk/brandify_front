@@ -9,8 +9,9 @@ const DripCult = async () => {
       {
         next: { revalidate: 300 }, // Revalidate once every 5 minutes
       }
-    );
-    const products = res?.data?.data?.products || [];
+    );  
+    const data = await res.json();
+    const products = data?.data?.products || [];
 
     if (!products.length) {
       return (
