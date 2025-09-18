@@ -107,14 +107,14 @@ const Combo = () => {
                     Size Chart
                   </button>
                 </div>
-                {selectedCombo?.products.map((product) => (
+                {selectedCombo?.products?.map((product) => (
                   <div
-                    key={product._id}
+                    key={product?._id}
                     className="flex items-center justify-between gap-4 p-3 text-black "
                   >
                     <Link
                       href={`/product-details/${
-                        product._id
+                        product?._id
                       }?name=${product.name.replace(/[\s–]+/g, "-")}`}
                     >
                       <Image
