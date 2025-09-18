@@ -32,9 +32,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Image from "next/image";
-import { formatIndianPrice } from "@/utils/formatPrice";
 import ComboSlider from "./ComboSlider";
-import { FaExternalLinkAlt } from "react-icons/fa";
 
 const Combo = () => {
   const { combos, loading } = useSelector((state) => state.combo);
