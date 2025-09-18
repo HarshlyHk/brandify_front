@@ -152,12 +152,12 @@ const ComboPage = () => {
                 </div>
                 {selectedCombo?.products.map((product) => (
                   <div
-                    key={product.productId}
+                    key={product._id}
                     className="flex items-center justify-between gap-4 p-3 text-black "
                   >
                     <Link
                       href={`/product-details/${
-                        product.productId
+                        product._id
                       }?name=${product.name.replace(/[\s–]+/g, "-")}`}
                     >
                       <Image
