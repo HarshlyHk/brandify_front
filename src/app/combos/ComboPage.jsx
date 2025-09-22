@@ -237,7 +237,7 @@ const ComboPage = () => {
               className={`text-white md:rounded-md px-4 py-5 md:py-5 text-xs w-full border-1 border-black bg-black md:static fixed bottom-0 left-0 right-0 rounded-none ${
                 allSizesSelected
                   ? ""
-                  : "opacity-50 cursor-not-allowed"
+                  : "opacity-50 cursor-not-allowed" 
               }`}
               disabled={!allSizesSelected}
             />
