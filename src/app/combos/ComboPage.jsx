@@ -36,7 +36,7 @@ import Image from "next/image";
 const ComboPage = () => {
   const { combos, loading } = useSelector((state) => state.combo);
   const dispatch = useDispatch();
-  const [selectedSizes, setSelectedSizes] = useState([]);
+  const [selectedSizes, setSelectedSizes] = useState({});
   const [selectedCombo, setSelectedCombo] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [openSizeChart, setOpenSizeChart] = useState(false);
@@ -61,6 +61,7 @@ const ComboPage = () => {
     setSelectedCombo(combo);
     setDrawerOpen(true);
   };
+  
   const resetSelectedSizes = () => {
     setSelectedSizes({});
   };
@@ -68,6 +69,11 @@ const ComboPage = () => {
   if (loading) {
     return <div className="text-center text-gray-500">Loading...</div>;
   }
+
+  // Check if all sizes are selected for the current combo
+  const allSizesSelected = selectedCombo?.products?.every(product => 
+    selectedSizes[product._id]
+  );
 
   return (
     <div className="combo-padding mt-10">
@@ -179,16 +185,13 @@ const ComboPage = () => {
                     </div>
                     <div className="w-32">
                       <Select
+                        value={selectedSizes[product._id] || ""}
                         onValueChange={(value) =>
-                          handleSizeChange(product?.productId, value)
+                          handleSizeChange(product._id, value)
                         }
                       >
                         <SelectTrigger className="w-full">
-                          <SelectValue
-                            placeholder={
-                              selectedSizes[product?.productId] || "Select Size"
-                            }
-                          />
+                          <SelectValue placeholder="Select Size" />
                         </SelectTrigger>
                         <SelectContent>
                           {product?.sizeVariations?.map((size, idx) => (
@@ -222,28 +225,21 @@ const ComboPage = () => {
               checkoutItem={{
                 comboId: selectedCombo?._id,
                 products: selectedCombo?.products.map((product) => ({
-                  productId: product.productId,
-                  size: selectedSizes[product.productId],
+                  productId: product._id,
+                  size: selectedSizes[product._id],
                 })),
               }}
               resetSelectedSizes={resetSelectedSizes}
               user={null}
               buttonName={
-                Object.keys(selectedSizes).length ===
-                selectedCombo?.products.length
-                  ? "CHECKOUT"
-                  : "SELECT ALL SIZES"
+                allSizesSelected ? "CHECKOUT" : "SELECT ALL SIZES"
               }
               className={`text-white md:rounded-md px-4 py-5 md:py-5 text-xs w-full border-1 border-black bg-black md:static fixed bottom-0 left-0 right-0 rounded-none ${
-                Object.keys(selectedSizes).length ===
-                selectedCombo?.products.length
+                allSizesSelected
                   ? ""
-                  : "opacity-100 cursor-not-allowed"
+                  : "opacity-50 cursor-not-allowed"
               }`}
-              disabled={
-                Object.keys(selectedSizes).length !==
-                selectedCombo?.products?.length
-              }
+              disabled={!allSizesSelected}
             />
           </DrawerFooter>
         </DrawerContent>

@@ -68,6 +68,11 @@ const Combo = () => {
     return <div className="text-center text-gray-500">Loading...</div>;
   }
 
+  // Check if all sizes are selected for the current combo
+  const allSizesSelected = selectedCombo?.products?.every(
+    (product) => selectedSizes[product._id] // Use product._id consistently
+  );
+
   return (
     <div className="relative xl:px-10 md:mt-0 mt-8">
       <h2 className="font-bold text-center ">MUST BUY COMBOS</h2>
@@ -136,16 +141,13 @@ const Combo = () => {
                     </div>
                     <div className="w-32">
                       <Select
+                        value={selectedSizes[product._id] || ""}
                         onValueChange={(value) =>
-                          handleSizeChange(product.productId, value)
+                          handleSizeChange(product._id, value) // Use product._id consistently
                         }
                       >
                         <SelectTrigger className="w-full">
-                          <SelectValue
-                            placeholder={
-                              selectedSizes[product.productId] || "Select Size"
-                            }
-                          />
+                          <SelectValue placeholder="Select Size" />
                         </SelectTrigger>
                         <SelectContent>
                           {product.sizeVariations.map((size, idx) => (
@@ -179,28 +181,21 @@ const Combo = () => {
               checkoutItem={{
                 comboId: selectedCombo?._id,
                 products: selectedCombo?.products.map((product) => ({
-                  productId: product.productId,
-                  size: selectedSizes[product.productId],
+                  productId: product._id, // Use product._id consistently
+                  size: selectedSizes[product._id],
                 })),
               }}
               resetSelectedSizes={resetSelectedSizes}
               user={null}
               buttonName={
-                Object.keys(selectedSizes).length ===
-                selectedCombo?.products.length
-                  ? "CHECKOUT"
-                  : "SELECT ALL SIZES"
+                allSizesSelected ? "CHECKOUT" : "SELECT ALL SIZES"
               }
               className={`text-white md:rounded-md px-4 py-5 md:py-5 text-xs w-full border-1 border-black bg-black md:static fixed bottom-0 left-0 right-0 rounded-none ${
-                Object.keys(selectedSizes).length ===
-                selectedCombo?.products.length
+                allSizesSelected
                   ? ""
-                  : "opacity-100 cursor-not-allowed"
+                  : "opacity-50 cursor-not-allowed"
               }`}
-              disabled={
-                Object.keys(selectedSizes).length !==
-                selectedCombo?.products?.length
-              }
+              disabled={!allSizesSelected}
             />
           </DrawerFooter>
         </DrawerContent>
