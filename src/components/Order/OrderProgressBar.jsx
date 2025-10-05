@@ -22,6 +22,8 @@ const OrderProgressBar = ({ createdAt }) => {
     { label: "Delivered", icon: <FaShoppingBag /> },
   ];
 
+  if (!createdAt) return null;
+
   return (
     <div className="w-full max-w-2xl mx-auto px-4 py-6">
       <div className="relative">
@@ -36,11 +38,11 @@ const OrderProgressBar = ({ createdAt }) => {
             />
           ))}
         </div>
-        
+
         {/* Steps */}
         <div className="flex justify-between relative">
           {steps.map((s, idx) => (
-            <div key={s.label} className="flex flex-col items-center">
+            <div key={s?.label} className="flex flex-col items-center">
               <div
                 className={`w-8 h-8 flex items-center justify-center rounded-full border-2 transition-colors duration-300 ${
                   step > idx
@@ -57,7 +59,7 @@ const OrderProgressBar = ({ createdAt }) => {
                   step > idx ? "text-gray-800" : "text-gray-500"
                 }`}
               >
-                {s.label}
+                {s?.label}
               </span>
             </div>
           ))}

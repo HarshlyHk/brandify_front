@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSingleOrder } from "@/features/OrderSlice";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
+import OrderProgressBar from "./OrderProgressBar";
 const ViewOrder = () => {
   const { orderId } = useParams();
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const ViewOrder = () => {
       <div className="w-full max-w-4xl bg-white p-6 sm:p-10 rounded-[5px] border-1">
         {/* Order Summary */}
         <div className="mb-8">
+          <OrderProgressBar createdAt={order?.createdAt} />
           <h3 className="text-lg font-semibold mb-4 border-b pb-1 uppercase">
             Order Summary
           </h3>
