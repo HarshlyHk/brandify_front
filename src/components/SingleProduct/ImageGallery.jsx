@@ -280,7 +280,7 @@ const ImageGallery = ({ item, loading, frequentlyBought }) => {
                 ₹1199
               </div>
               {item?.isFastDelivery == true && (
-                <div className="text-purple-700 hidden md:flex text-[9px] sm:text-[10px] w-fit font-semibold px-2 py-2 mt-4 mb-2 bg-[#f1e2f6] rounded-[5px] items-center gap-2">
+                <div className="text-purple-700 flex text-[9px] sm:text-[10px] w-fit font-semibold px-2 py-2 mt-4 mb-2 bg-[#f1e2f6] rounded-[5px] items-center gap-2">
                   <FaTruck className=" text-sm" />{" "}
                   SAME DAY DISPATCH
                 </div>
