@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button"; // If you have a Button component
 import axiosInstance from "@/config/axiosInstance";
 import { toast } from "sonner";
-
+import OrderProgressBar from "@/components/Order/OrderProgressBar";
 const OrderSuccess = () => {
   const { orderId } = useParams();
   const dispatch = useDispatch();
@@ -252,6 +252,7 @@ const OrderSuccess = () => {
             </div>
           )}
 
+        <OrderProgressBar createdAt={order.createdAt} />
         {/* Order Summary */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold mb-4 border-b pb-1 uppercase font-helvetica">
@@ -261,9 +262,6 @@ const OrderSuccess = () => {
             <p className="font-helvetica">
               <strong className="font-helvetica">Order ID:</strong>{" "}
               {order.transactionId}
-            </p>
-            <p className="font-helvetica">
-              <strong className="font-helvetica">Status:</strong> {order.status}
             </p>
             <p className="font-helvetica">
               <strong className="font-helvetica">Payment Method:</strong>{" "}
