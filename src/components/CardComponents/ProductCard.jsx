@@ -48,7 +48,7 @@ const ProductCard = ({ item, linkPrefix, category }) => {
           </div>
         )} */}
         {item?.preeBook && !item?.category?.includes("blind-drop") && (
-          <div className="absolute top-2 right-2 text-[10px] font-bold px-2 py-1 text-gray-700 rounded">
+          <div className="absolute top-0 right-0 md:top-2 md:right-2 text-[8px] md:text-[10px] font-bold px-2 py-1 text-gray-700 rounded">
             <p>PRE-BOOK</p>
           </div>
         )}
