@@ -15,7 +15,7 @@ const ThreeDOverlay = () => (
       className="absolute top-0 left-0 w-full h-full object-cover"
     >
       <source
-        src="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/0714.mp4"
+        src="https://pub-047aa9653e2346718393f69be234faf1.r2.dev/drip-studios-main-hero-video.mp4"
         type="video/mp4"
       />
     </video>

@@ -12,6 +12,18 @@ const formatIndianPrice = (price) => {
   return price.toLocaleString("en-IN");
 };
 
+// Add mapping for specific product IDs to the 4 custom thumbnails
+const customThumbnails = {
+  "68ee8add695367824282da94": // Gray Basic Bottoms
+    "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_1350_3_11zon.webp",
+  "68ee8ace695367824282d619": // Luxe Bottoms
+    "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_1323.WEBP",
+  "68ee8aab695367824282d2df": // Apex God
+    "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_1321_5_11zon.webp",
+  "68ee8a43695367824282babc": // Hply Flex
+    "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_1327_7_11zon.webp",
+};
+
 const BlindDrop = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
@@ -26,7 +38,7 @@ const BlindDrop = () => {
     setLoading(true);
     try {
       const { data } = await axiosInstance.get(
-        `product/get-product-category/blind-drop?limit=${limit}&sort=relevance`
+        `product/get-product-category/reign?limit=${limit}&sort=relevance`
       );
       setData(data.data.products);
     } catch (error) {
@@ -44,7 +56,7 @@ const BlindDrop = () => {
     <div>
       <div className="flex flex-col items-center justify-center md:mt-10">
         <h2 className="text-center text-xl md:text-3xl font-bold">
-          ‘ DRIP HALL OF FAME ’
+          ‘ COLD REIGN ’
         </h2>
       </div>
 
@@ -97,18 +109,30 @@ const ProductCard = ({ item, linkPrefix }) => {
 
   const productUrl = `/product-details/${item?._id}?name=${linkPrefix}`;
 
+  // helper to pick custom thumbnail if mapping exists
+  const getThumbnail = () => {
+    if (!item) return "";
+    const id = item?._id;
+    if (id && customThumbnails[id]) return customThumbnails[id];
+    // fallback to the first API thumbnail (if available)
+    return item?.thumbnails && item.thumbnails.length ? item.thumbnails[0] : "";
+  };
+
   return (
     <div className="relative group transition-all duration-500 product-card cursor-default">
       {/* Product Image with Link */}
       <Link
         href={productUrl}
-        className="w-full aspect-square block relative overflow-hidden"
+        className="w-full block relative overflow-hidden"
+        // enforce 5:7 aspect ratio: height = width * 7/5 => padding-top: 140%
+        style={{ paddingTop: "140%" }}
       >
         <img
-          src={item.thumbnails[0]}
+          src={getThumbnail()}
           alt={item?.name}
           loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+          // absolutely position the image to fill the padded container and maintain cover
+          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-800 ease-out"
         />
       </Link>
 
