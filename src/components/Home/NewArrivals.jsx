@@ -1,11 +1,10 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 import axiosInstance from "@/config/axiosInstance";
 import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
 
 const NewArrivals = () => {
   const [data, setData] = useState([]);
@@ -33,7 +32,6 @@ const NewArrivals = () => {
     getProduct();
   }, []);
 
-
   if (loading) {
     return <Skeleton className="w-full h-[500px] rounded-xl" />;
   }
@@ -42,7 +40,7 @@ const NewArrivals = () => {
     <div className="py-10 px-0 md:px-5 relative">
       <div className="flex flex-col items-center justify-center">
         <h2 className="text-center uppercase text-xl md:text-3xl font-bold text-red-500">
-          SEASON CLOSURE - 50% OFF
+          DRIP UNDER ₹1199
         </h2>
       </div>
 
@@ -50,7 +48,11 @@ const NewArrivals = () => {
         {data.map((product) => (
           <div
             key={product._id}
-            onClick={() => router.push(`/product-details/${product._id}?name=${product?.name}`)}
+            onClick={() =>
+              router.push(
+                `/product-details/${product._id}?name=${product?.name}`
+              )
+            }
             className="flex-shrink-0 w-[300px] h-[360px] flex flex-col items-center group relative"
           >
             {product?.specialSale && (
