@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
@@ -116,24 +116,78 @@ const DripUnder1199 = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const getMondayMidAfterNoonIST = () => {
+      const now = new Date();
+      const istOffset = 5.5 * 60 * 60 * 1000;
+      const utcNow = now.getTime() + now.getTimezoneOffset() * 60000;
+      const istNow = new Date(utcNow + istOffset);
+
+      // Get current day (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+      const currentDay = istNow.getDay();
+
+      // Calculate days to add to reach Monday (i.e., Sunday 12 PM = Monday 00:00 AM)
+      const daysToMonday = (1 - currentDay + 7) % 7;
+
+      const nextMondayMidnight = new Date(istNow);
+      nextMondayMidnight.setDate(istNow.getDate() + daysToMonday);
+      nextMondayMidnight.setHours(12, 0, 0, 0); // Set to 00:00 IST
+
+      return nextMondayMidnight.getTime();
+    };
+
+    const target = getMondayMidAfterNoonIST();
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        setTimer("00 hr 00 min 00 sec");
+        return;
+      }
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setTimer(
+        `${hours.toString().padStart(2, "0")} hr ${minutes
+          .toString()
+          .padStart(2, "0")} min ${seconds.toString().padStart(2, "0")} sec`
+      );
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   if (loading) {
     return <Skeleton className="w-full h-[500px] rounded-xl" />;
   }
 
   return (
     <div className="py-10 px-0 md:px-5 relative">
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center gap-2">
         <h2 className="text-center uppercase text-xl md:text-3xl font-bold text-red-500 !mb-0">
           {/* DRIPCULT - CERTIFIED HEAT */}
           DRIP UNDER ₹1199
         </h2>
+        <div className="text-[14px]  text-gray-700 flex items-center gap-2">
+          <span className="font-mono rounded uppercase">
+            [ Countdown {timer} ]{" "}
+          </span>
+        </div>
       </div>
 
       <div className="relative pt-10 pb-4">
         <div ref={sliderRef} className="keen-slider pl-4">
           {data.map((product) => (
             <Link
-              href={`/product-details/${product?._id}?name=${product?.name?.replace(/[\s–]+/g, "-")}`}
+              href={`/product-details/${
+                product?._id
+              }?name=${product?.name?.replace(/[\s–]+/g, "-")}`}
               key={product._id}
               className="keen-slider__slide flex flex-col items-center group relative  pb-10"
             >
