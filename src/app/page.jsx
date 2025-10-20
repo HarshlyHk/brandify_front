@@ -39,24 +39,23 @@ const HomePage = () => {
         <Categories />
       </div>
 
-      <div className="prodcut-padding-2 mb-10 ">
-        <BlindDrop />
-      </div>
-      <div className="mb-0 block md:hidden">
-        <SpecialFrames />
-      </div>
-
       <div className="block md:hidden">
         <NewArrivals />
       </div>
       <div className="mb-10 hidden md:block">
         <DripUnder1199 />
       </div>
+      <div className="mb-0 block md:hidden">
+        <SpecialFrames />
+      </div>
+      <div className="prodcut-padding-2 mb-10 ">
+        <BlindDrop />
+      </div>
 
       <div className="md:px-8 mb-10 ">
         <Combo />
       </div>
-     <div className="mt-8 mb-20 block ">
+      <div className="mt-8 mb-20 block ">
         <Banner />
       </div>
       <div className="mb-10 block md:hidden">
@@ -90,7 +89,6 @@ const HomePage = () => {
         <Comparison />
       </div> */}
 
- 
       <div className="mb-10 hidden md:block">
         <DripCult />
       </div>

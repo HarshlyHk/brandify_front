@@ -131,7 +131,7 @@ const DripUnder1199 = () => {
 
       const nextMondayMidnight = new Date(istNow);
       nextMondayMidnight.setDate(istNow.getDate() + daysToMonday);
-      nextMondayMidnight.setHours(12, 0, 0, 0); // Set to 00:00 IST
+      nextMondayMidnight.setHours(24, 0, 0, 0); // Set to 00:00 IST
 
       return nextMondayMidnight.getTime();
     };

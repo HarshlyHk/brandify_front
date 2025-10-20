@@ -35,7 +35,7 @@ const NewArrivals = () => {
   useEffect(() => {
     const getMondayMidAfterNoonIST = () => {
       const now = new Date();
-      const istOffset = 5.5 * 60 * 60 * 1000;
+      const istOffset = 0 * 60 * 60 * 1000;
       const utcNow = now.getTime() + now.getTimezoneOffset() * 60000;
       const istNow = new Date(utcNow + istOffset);
 
@@ -47,7 +47,7 @@ const NewArrivals = () => {
 
       const nextMondayMidnight = new Date(istNow);
       nextMondayMidnight.setDate(istNow.getDate() + daysToMonday);
-      nextMondayMidnight.setHours(12, 0, 0, 0); // Set to 00:00 IST
+      nextMondayMidnight.setHours(24, 0, 0, 0); // Set to 00:00 IST
 
       return nextMondayMidnight.getTime();
     };
