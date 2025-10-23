@@ -14,13 +14,13 @@ const formatIndianPrice = (price) => {
 
 // Add mapping for specific product IDs to the 4 custom thumbnails
 const customThumbnails = {
-  "68ee8add695367824282da94": // Gray Basic Bottoms
-    "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_1350_3_11zon.webp",
+  "68fa654769536782421a728b": // Gray Basic Bottoms
+    "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/akjdhia923b.webp",
   "68ee8ace695367824282d619": // Luxe Bottoms
     "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_1323.WEBP",
   "68ee8aab695367824282d2df": // Apex God
     "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_1321_5_11zon.webp",
-  "68ee8a43695367824282babc": // Hply Flex
+  "68ee8a43695367824282babc": // Holy Flex
     "https://pub-047aa9653e2346718393f69be234faf1.r2.dev/IMG_1327_7_11zon.webp",
 };
 
