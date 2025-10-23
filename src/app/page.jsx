@@ -39,7 +39,7 @@ const HomePage = () => {
         <Categories />
       </div>
 
-      <div className="block md:hidden">
+      <div className="block md:hidden mb-10">
         <NewArrivals />
       </div>
       <div className="mb-10 hidden md:block">
@@ -48,7 +48,7 @@ const HomePage = () => {
       <div className="mb-0 block md:hidden">
         <SpecialFrames />
       </div>
-      <div className="prodcut-padding-2 mb-10 ">
+      <div className="prodcut-padding-2 mt-10 ">
         <BlindDrop />
       </div>
 
