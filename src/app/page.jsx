@@ -48,10 +48,9 @@ const HomePage = () => {
       <div className="mb-0 block md:hidden">
         <SpecialFrames />
       </div>
-      <div className="prodcut-padding-2 mt-10 ">
+      <div className="prodcut-padding-2 mt-10 md:mt-0 ">
         <BlindDrop />
       </div>
-
       <div className="md:px-8 mb-10 ">
         <Combo />
       </div>
