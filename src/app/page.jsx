@@ -20,102 +20,67 @@ import SpecialFrames from "@/components/Home/SpecialFrames";
 import DripUnder1199 from "@/components/Home/DripUnder1199";
 import Combo from "@/components/Home/Combo";
 const HomePage = () => {
-  return (
-    <div className="flex flex-col">
-      <PageLoader />
-      <div className="">
-        <Marquee />
-      </div>
+    return (
+        <div className="flex flex-col">
+            <PageLoader />
 
-      {/* Video only for mobile */}
-      <div className="md:hidden relative z-[2]">
-        <ThreeDOverlay />
-      </div>
-      <div className="md:block hidden">
-        <Carousel />
-      </div>
+            <div className="prodcut-padding-2 mt-10 md:mt-0 ">
+                <BlindDrop />
+            </div>
 
-      <div className="mb-10">
-        <Categories />
-      </div>
+            <div className="prodcut-padding-2 mb-10 md:hidden">
+                <FixYourDripHere productLimit={6} />
+            </div>
 
-      <div className="block md:hidden mb-10">
-        <NewArrivals />
-      </div>
-      <div className="mb-10 hidden md:block">
-        <DripUnder1199 />
-      </div>
-      <div className="mb-0 block md:hidden">
-        <SpecialFrames />
-      </div>
-      <div className="prodcut-padding-2 mt-10 md:mt-0 ">
-        <BlindDrop />
-      </div>
-      <div className="md:px-8 mb-10 ">
-        <Combo />
-      </div>
-      <div className="mt-8 mb-20 block ">
-        <Banner />
-      </div>
-      <div className="mb-10 block md:hidden">
-        <Lookbooks />
-      </div>
+            <div className="prodcut-padding-2 mb-10 hidden md:block">
+                <FixYourDripHere productLimit={8} />
+            </div>
 
-      <div className="prodcut-padding-2 mb-10 md:hidden">
-        <FixYourDripHere productLimit={6} />
-      </div>
-
-      <div className="prodcut-padding-2 mb-10 hidden md:block">
-        <FixYourDripHere productLimit={8} />
-      </div>
-
-      <div className="md:px-8 mb-10 md:mt-10 md:mb-20">
-        <BigCarousel />
-      </div>
-
-      {/* <div className="prodcut-padding mb-10 md:hidden ">
+            {/* <div className="prodcut-padding mb-10 md:hidden ">
         <Comparison />
       </div> */}
 
-      {/* 
+            {/* 
       <div className="mb-10 md:block hidden">
         <BottomsCarousel />
       </div> */}
-      <div className=" lg:px-20 px-4 mb-10">
-        <HomeBlanks />
-      </div>
-      {/* <div className="prodcut-padding mb-10 md:block hidden">
+            <div className=" lg:px-20 px-4 mb-10">
+                <HomeBlanks />
+            </div>
+            {/* <div className="prodcut-padding mb-10 md:block hidden">
         <Comparison />
       </div> */}
 
-      <div className="mb-10 hidden md:block">
-        <DripCult />
-      </div>
+            <div className="mb-10 hidden md:block">
+                <DripCult />
+            </div>
 
-      <CopilotPopup
-        labels={{
-          title: "DRIP STUDIOS",
-          initial: `How can I help you today? Here are some things I can assist you with:
+            <CopilotPopup
+                labels={{
+                    title: "DRIP STUDIOS",
+                    initial: `How can I help you today? Here are some things I can assist you with:
               - Track your order
               - Register a complaint
               - Check delivery time
               - Learn about our store location`,
-        }}
-        instructions="AI help that shows up right when you need it"
-      />
+                }}
+                instructions="AI help that shows up right when you need it"
+            />
 
-      <div className="flex flex-col  items-center justify-center gap-28 mb-10 text-lg mt-20">
-        <a
-          href="https://www.instagram.com/drip.co.in/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaInstagram className="text-xl text-black" size={35} />
-        </a>
-        <span className="tracking-wide font-bold">PROUDLY MADE IN INDIA</span>
-      </div>
-    </div>
-  );
+            <div className="flex flex-col  items-center justify-center gap-28 mb-10 text-lg mt-20">
+                <a
+                    href="https://www.instagram.com/drip.co.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <FaInstagram className="text-xl text-black" size={35} />
+                </a>
+                <span className="tracking-wide font-bold">
+                    PROUDLY MADE IN INDIA
+                </span>
+            </div>
+        </div>
+    );
 };
 
 export default HomePage;
