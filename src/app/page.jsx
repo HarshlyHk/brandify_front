@@ -1,8 +1,5 @@
 import React from "react";
-import Categories from "@/components/Categories/Categories";
-import Banner from "@/components/Home/Banner";
-import BigCarousel from "@/components/Home/BigCarousel";
-import { Comparison } from "@/components/Home/Comparison";
+import Mainbg from "@/assets/images/thumbnail.webp";
 import DripCult from "@/components/Home/DripCult";
 import HomeBlanks from "@/components/Home/HomeBlanks";
 import FixYourDripHere from "@/components/Home/FixYourDripHere";
@@ -23,6 +20,7 @@ const HomePage = () => {
     return (
         <div className="flex flex-col">
             <PageLoader />
+            <div className="mainbg h-[80vh] "></div>
 
             <div className="prodcut-padding-2 mt-10 md:mt-0 ">
                 <BlindDrop />
