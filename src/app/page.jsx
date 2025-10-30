@@ -57,7 +57,7 @@ const HomePage = () => {
 
             <CopilotPopup
                 labels={{
-                    title: "DRIP STUDIOS",
+                    title: "Brandify",
                     initial: `How can I help you today? Here are some things I can assist you with:
               - Track your order
               - Register a complaint
@@ -66,19 +66,6 @@ const HomePage = () => {
                 }}
                 instructions="AI help that shows up right when you need it"
             />
-
-            <div className="flex flex-col  items-center justify-center gap-28 mb-10 text-lg mt-20">
-                <a
-                    href="https://www.instagram.com/drip.co.in/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <FaInstagram className="text-xl text-black" size={35} />
-                </a>
-                <span className="tracking-wide font-bold">
-                    PROUDLY MADE IN INDIA
-                </span>
-            </div>
         </div>
     );
 };

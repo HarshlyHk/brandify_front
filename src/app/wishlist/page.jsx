@@ -1,18 +1,16 @@
-import React from "react";
+"use client";
+import React, { use } from "react";
 import Wishlist from "./wishlist-client";
-
-export const metadata = {
-  title: "My Wishlist",
-  description: "View and manage your wishlist",
-};
+import Lottie from "lottie-react";
+import WorkFromHome from "@/assets/lottie/work-from-home.json"; // Import your animation JSON file
 
 const page = () => {
-  return (
-  
-      <div>
-        <Wishlist />
-      </div>
-  );
+    return (
+        <div className="h-screen flex justify-center items-center">
+            <Lottie animationData={WorkFromHome} loop={true} />
+            {/* <Wishlist /> */}
+        </div>
+    );
 };
 
 export default page;

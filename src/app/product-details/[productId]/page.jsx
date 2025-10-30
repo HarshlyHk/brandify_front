@@ -10,102 +10,82 @@ import CollaboVideo from "@/components/SingleProduct/CollaboVideo";
 import API_URL from "@/config/API_URL";
 
 export async function generateMetadata({ params: asyncParams }) {
-  const params = await asyncParams;
-  const res = await fetch(
-    `${API_URL}product/get-product-all-details/${params.productId}`,
-    { next: { revalidate: 6000 } }
-  );
-  const data = await res.json();
-  const product = data.data.product;
+    const params = await asyncParams;
+    const res = await fetch(
+        `${API_URL}product/get-product-all-details/${params.productId}`,
+        { next: { revalidate: 6000 } }
+    );
+    const data = await res.json();
+    const product = data.data.product;
 
-  return {
-    title: product.name,
-    description: product.shortDescription,
-    openGraph: {
-      title: product.name,
-      images: [
-        {
-          url: product.thumbnails[0],
-          width: 1200,
-          height: 630,
-          alt: product.name,
+    return {
+        title: product.name,
+        description: product.shortDescription,
+        openGraph: {
+            title: product.name,
+            images: [
+                {
+                    url: product.thumbnails[0],
+                    width: 1200,
+                    height: 630,
+                    alt: product.name,
+                },
+            ],
         },
-      ],
-    },
-  };
+    };
 }
 
 const SingleProductPage = async ({ params: asyncParams }) => {
-  const params = await asyncParams;
-  const productId = params.productId;
+    const params = await asyncParams;
+    const productId = params.productId;
 
-  let product = null;
-  let relatedProducts = [];
-  let frequentlyBought = [];
+    let product = null;
+    let relatedProducts = [];
+    let frequentlyBought = [];
 
-  try {
-    console.log("Loading product details for ID:", productId);
-    const response = await fetch(
-      `${API_URL}product/get-product-all-details/${productId}`,
-      {
-        next: { revalidate: 60 },
-      }
-    );
-    const data = await response.json();
+    try {
+        console.log("Loading product details for ID:", productId);
+        const response = await fetch(
+            `${API_URL}product/get-product-all-details/${productId}`,
+            {
+                next: { revalidate: 60 },
+            }
+        );
+        const data = await response.json();
 
-    product = data?.data?.product;
-    relatedProducts = data?.data?.relatedProducts || [];
-    frequentlyBought = data?.data?.frequentlyBoughtTogether || [];
-  } catch (error) {
-    console.error("Error loading product:", error);
-    return (
-      <div className="p-10 text-center text-red-600">Product not found</div>
-    );
-  }
-
-  return (
-    <>
-      <Categories page="single-product" />
-
-      <Suspense fallback={<div>Loading...</div>}>
-        <div className="md:px-4 md:py-10 py-5">
-          <ImageGallery
-            item={product}
-            loading={false}
-            frequentlyBought={frequentlyBought}
-          />
-
-          <ProductTabs
-            description={product?.description}
-            coreFeatures={product?.coreFeatures}
-            careGuide={product?.careGuide}
-            reviews={product?.reviews}
-            loading={false}
-          />
-
-          <div className="prodcut-padding-2 mb-20">
-            <h2 className="text-center mt-8">YOU MAY ALSO LIKE</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-[5px] gap-y-[10px] md:gap-y-[30px]">
-              {relatedProducts.map((item) => (
-                <RelatedProducts
-                  item={item}
-                  linkPrefix={item?.name?.replace(/[\s–]+/g, "-")}
-                  key={item?._id}
-                />
-              ))}
+        product = data?.data?.product;
+        relatedProducts = data?.data?.relatedProducts || [];
+        frequentlyBought = data?.data?.frequentlyBoughtTogether || [];
+    } catch (error) {
+        console.error("Error loading product:", error);
+        return (
+            <div className="p-10 text-center text-red-600">
+                Product not found
             </div>
-          </div>
+        );
+    }
 
-          <div className="md:px-40">
-            <Comparison />
-          </div>
-          <div>
-            <CollaboVideo productId={productId} />
-          </div>
-        </div>
-      </Suspense>
-    </>
-  );
+    return (
+        <>
+            <Suspense fallback={<div>Loading...</div>}>
+                <div className="md:px-4 md:py-10 py-5">
+                    <ImageGallery
+                        item={product}
+                        loading={false}
+                        frequentlyBought={frequentlyBought}
+                    />
+
+                    <ProductTabs
+                        description={product?.description}
+                        coreFeatures={product?.coreFeatures}
+                        careGuide={product?.careGuide}
+                        reviews={product?.reviews}
+                        loading={false}
+                    />
+                </div>
+            </Suspense>
+        </>
+    );
 };
 
 export default SingleProductPage;
